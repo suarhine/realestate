@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <context-param>
+        <param-name>version</param-name>
+        <param-value>1.4.0</param-value>
+    </context-param>
+    <request-character-encoding>UTF-8</request-character-encoding>
+    <context-param>
+        <param-name>version.build</param-name>
+        <param-value>21.07.12</param-value>
+    </context-param>
+    <context-param>
+        <param-name>version.branch</param-name>
+        <param-value></param-value>
+    </context-param>
+    <servlet-mapping>
+        <servlet-name>jsp</servlet-name>
+        <url-pattern>*.jsp</url-pattern>
+        <url-pattern>*.jspx</url-pattern>
+        <url-pattern>/js/config.js</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

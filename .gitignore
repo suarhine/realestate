@@ -1,0 +1,6 @@
+/target/
+/src/main/webapp/**/*.css
+/src/main/webapp/**/*.css.map
+/src/main/webapp/**/*.js
+/src/main/webapp/**/*.js.map
+!/src/main/webapp/WEB-INF/**/*.js

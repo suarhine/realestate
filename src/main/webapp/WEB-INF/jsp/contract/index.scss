@@ -1,0 +1,7 @@
+@import "../css/index.css";
+.search-pane {
+    display: flex;
+    > input {
+        flex: 1;
+    }
+}
