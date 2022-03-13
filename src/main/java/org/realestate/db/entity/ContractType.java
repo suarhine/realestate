@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,6 +47,8 @@ public class ContractType implements Serializable {
     private String desc;
     @Column(name = "active")
     private Boolean active;
+    @OneToMany(mappedBy = "type")
+    private List<Contract> contractList;
 
     public ContractType() {
     }
@@ -117,6 +119,14 @@ public class ContractType implements Serializable {
         this.active = active;
     }
 
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -139,7 +149,7 @@ public class ContractType implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.ContractType[ id=" + id + " ]";
+        return "ContractType[ id=" + id + " ]";
     }
 
 }

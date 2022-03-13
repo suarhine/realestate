@@ -1,12 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,8 +42,12 @@ public class ContractLessee implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contractLessee")
-    private List<ContractLesseeAddress> contractLesseeAddressList;
+    @JoinColumn(name = "contact", referencedColumnName = "id")
+    @ManyToOne
+    private Address contact;
+    @JoinColumn(name = "registry", referencedColumnName = "id")
+    @ManyToOne
+    private Address registry;
 //    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 //    @OneToOne(optional = false)
 //    private Contract contract;
@@ -70,6 +72,14 @@ public class ContractLessee implements Serializable {
         this.id = id;
         this.name = name;
     }
+//
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Contract getId() {
         return id;
@@ -111,12 +121,20 @@ public class ContractLessee implements Serializable {
         this.code = code;
     }
 
-    public List<ContractLesseeAddress> getContractLesseeAddressList() {
-        return contractLesseeAddressList;
+    public Address getContact() {
+        return contact;
     }
 
-    public void setContractLesseeAddressList(List<ContractLesseeAddress> contractLesseeAddressList) {
-        this.contractLesseeAddressList = contractLesseeAddressList;
+    public void setContact(Address contact) {
+        this.contact = contact;
+    }
+
+    public Address getRegistry() {
+        return registry;
+    }
+
+    public void setRegistry(Address registry) {
+        this.registry = registry;
     }
 //
 //    public Contract getContract() {
@@ -149,7 +167,7 @@ public class ContractLessee implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.ContractLessee[ id=" + id + " ]";
+        return "ContractLessee[ id=" + id + " ]";
     }
 
 }

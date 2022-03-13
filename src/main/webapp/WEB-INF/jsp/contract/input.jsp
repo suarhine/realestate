@@ -7,17 +7,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="f" uri="/functions" %>
-<jsp:useBean id="l" class="org.realestate.view.bean.LookupBean" />
+<jsp:useBean id="l" class="org.realestate.view.bean.Lookup" />
+<jsp:useBean id="o" class="org.realestate.view.bean.Option" />
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="module" src="index.js"></script>
+    <link rel="stylesheet" href="index.css" />
     <title>JSP Page</title>
   </head>
-  <body>
+  <body data-page="input">
     <form method="post">
       <input name="id" value="${param.id}" type="hidden" />
-      <table>
+      <table class="-no-border">
         <thead>
           <tr>
             <td colspan="4">ข้อมูลสัญญาเช่า</td>
@@ -30,7 +33,7 @@
               <select name="type">
                 <option value=""></option>
                 <c:forEach var="i" items="${l.contractType}">
-                    <option value="${i.id}">${i.label}</option>
+                    <option value="${i.id}" ${find.type == i ? 'selected' : ''}>${i.label}</option>
                 </c:forEach>
               </select>
             </td>
@@ -82,70 +85,79 @@
           </tr>
           <tr>
             <td>บ้านเลขที่</td>
-            <td><input name="lessee.registry.house" valuex="\${find.contractLessee.registry.house}" type="text" /></td>
+            <td><input name="lessee.registry.house" value="${find.contractLessee.registry.house}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.house" valuex="\${find.contractLessee.contact.house}" type="text" /></td>
+            <td><input name="lessee.contact.house" value="${find.contractLessee.contact.house}" type="text" /></td>
           </tr>
           <tr>
             <td>หมู่ที่</td>
-            <td><input name="lessee.registry.village" valuex="\${find.contractLessee.registry.village}" type="text" /></td>
+            <td><input name="lessee.registry.village" value="${find.contractLessee.registry.village}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.village" valuex="\${find.contractLessee.contact.village}" type="text" /></td>
+            <td><input name="lessee.contact.village" value="${find.contractLessee.contact.village}" type="text" /></td>
           </tr>
           <tr>
             <td>ตรอก/ซอย</td>
-            <td><input name="lessee.registry.soi" valuex="\${find.contractLessee.registry.soi}" type="text" /></td>
+            <td><input name="lessee.registry.soi" value="${find.contractLessee.registry.soi}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.soi" valuex="\${find.contractLessee.contact.soi}" type="text" /></td>
+            <td><input name="lessee.contact.soi" value="${find.contractLessee.contact.soi}" type="text" /></td>
           </tr>
           <tr>
             <td>ถนน</td>
-            <td><input name="lessee.registry.road" valuex="\${find.contractLessee.registry.road}" type="text" /></td>
+            <td><input name="lessee.registry.road" value="${find.contractLessee.registry.road}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.road" valuex="\${find.contractLessee.contact.road}" type="text" /></td>
+            <td><input name="lessee.contact.road" value="${find.contractLessee.contact.road}" type="text" /></td>
           </tr>
           <tr>
             <td>ตำบล/แขวง</td>
-            <td><input name="lessee.registry.subdistrict" valuex="\${find.contractLessee.registry.subdistrict}" type="text" /></td>
+            <td><input name="lessee.registry.subdistrict" value="${find.contractLessee.registry.subdistrict}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.subdistrict" valuex="\${find.contractLessee.contact.subdistrict}" type="text" /></td>
+            <td><input name="lessee.contact.subdistrict" value="${find.contractLessee.contact.subdistrict}" type="text" /></td>
           </tr>
           <tr>
             <td>อำเภอ/เขต</td>
-            <td><input name="lessee.registry.district" valuex="\${find.contractLessee.registry.district}" type="text" /></td>
+            <td><input name="lessee.registry.district" value="${find.contractLessee.registry.district}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.district" valuex="\${find.contractLessee.contact.district}" type="text" /></td>
+            <td><input name="lessee.contact.district" value="${find.contractLessee.contact.district}" type="text" /></td>
           </tr>
           <tr>
             <td>จังหวัด</td>
-            <td><input name="lessee.registry.province" valuex="\${find.contractLessee.registry.province}" type="text" /></td>
+            <td><input name="lessee.registry.province" value="${find.contractLessee.registry.province}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.province" valuex="\${find.contractLessee.contact.province}" type="text" /></td>
+            <td><input name="lessee.contact.province" value="${find.contractLessee.contact.province}" type="text" /></td>
           </tr>
           <tr>
             <td>รหัสไปรษณีย์</td>
-            <td><input name="lessee.registry.zipcode" valuex="\${find.contractLessee.registry.zipcode}" type="text" /></td>
+            <td><input name="lessee.registry.zipcode" value="${find.contractLessee.registry.zipcode}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.zipcode" valuex="\${find.contractLessee.contact.zipcode}" type="text" /></td>
+            <td><input name="lessee.contact.zipcode" value="${find.contractLessee.contact.zipcode}" type="text" /></td>
           </tr>
           <tr>
             <td>หมายเลขโทรศัพท์</td>
-            <td><input name="lessee.registry.phone" valuex="\${find.contractLessee.registry.phone}" type="text" /></td>
+            <td><input name="lessee.registry.phone" value="${find.contractLessee.registry.phone}" type="text" /></td>
             <td></td>
-            <td><input name="lessee.contact.phone" valuex="\${find.contractLessee.contact.phone}" type="text" /></td>
+            <td><input name="lessee.contact.phone" value="${find.contractLessee.contact.phone}" type="text" /></td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <td colspan="4"><hr/></td>
           </tr>
           <tr>
-            <td>ทรัพย์สินที่เช่า</td>
+            <td colspan="4">ทรัพย์สินที่เช่า</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
             <td>
               <select name="realestate.type">
                 <option value=""></option>
-                <option value="1">ที่ดิน</option>
-                <option value="2">อาคารหรือสิ่งก่อสร้าง</option>
-                <option value="3">อื่นๆ</option>
+                <c:forEach var="i" items="${l.contractRealestateType}">
+                    <option value="${i.id}" ${find.contractRealestate.type == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td></td>
-            <td><input name="realestate.name" value="${find.contractRealestate.name}" type="text" /></td>
+            <td colspan="2"><input name="realestate.name" value="${find.contractRealestate.name}" type="text" /></td>
           </tr>
           <tr>
             <td>ที่ตั้งทรัพย์สินที่เช่า</td>
@@ -155,32 +167,32 @@
           </tr>
           <tr>
             <td>เลขที่</td>
-            <td><input name="realestate.house" value="${find.contractRealestate.house}" type="text" /></td>
+            <td><input name="realestate.address.house" value="${find.contractRealestate.address.house}" type="text" /></td>
             <td>หมู่ที่</td>
-            <td><input name="realestate.village" value="${find.contractRealestate.village}" type="text" /></td>
+            <td><input name="realestate.address.village" value="${find.contractRealestate.address.village}" type="text" /></td>
           </tr>
           <tr>
             <td>ตรอก/ซอย</td>
-            <td><input name="realestate.soi" value="${find.contractRealestate.soi}" type="text" /></td>
+            <td><input name="realestate.address.soi" value="${find.contractRealestate.address.soi}" type="text" /></td>
             <td>ใกล้เคียงกับ</td>
             <td><input name="realestate.nearby" value="${find.contractRealestate.nearby}" type="text" /></td>
           </tr>
           <tr>
             <td>ถนน</td>
-            <td><input name="realestate.road" value="${find.contractRealestate.road}" type="text" /></td>
+            <td><input name="realestate.address.road" value="${find.contractRealestate.address.road}" type="text" /></td>
             <td>ตำบล/แขวง</td>
-            <td><input name="realestate.subdistrict" value="${find.contractRealestate.subdistrict}" type="text" /></td>
+            <td><input name="realestate.address.subdistrict" value="${find.contractRealestate.address.subdistrict}" type="text" /></td>
           </tr>
           <tr>
             <td>อำเภอ/เขต</td>
-            <td><input name="realestate.district" value="${find.contractRealestate.district}" type="text" /></td>
+            <td><input name="realestate.address.district" value="${find.contractRealestate.address.district}" type="text" /></td>
             <td>จังหวัด</td>
-            <td><input name="realestate.province" value="${find.contractRealestate.province}" type="text" /></td>
+            <td><input name="realestate.address.province" value="${find.contractRealestate.address.province}" type="text" /></td>
           </tr>
           <tr>
-            <td colspan="2">ตั้งอยู่บนที่ดินตรงตามประกาศกระทรวงมหาดไทย</td>
-            <td>ลงวันที่</td>
-            <td><input name="realestate." value="" type="date" /></td>
+            <td colspan="2">ตั้งอยู่บนที่ดินตรงตามประกาศกระทรวงมหาดไทยลงวันที่</td>
+            <td></td>
+            <td><input name="realestate.moi_declare" value="${f:format(find.contractRealestate.moiDeclare, 'yyyy-MM-dd')}" type="date" /></td>
           </tr>
           <tr>
             <td>หมายเลขที่ดิน</td>
@@ -190,108 +202,127 @@
           </tr>
           <tr>
             <td>จำนวนเนื่อที่ทรัพสินที่เช่าประมาณ</td>
-            <td><input name="realestate.space_rai" value="${find.contractRealestate.spaceRai}" type="text" pattern="\d+" />ไร่</td>
-            <td><input name="realestate.space_ngan" value="${find.contractRealestate.spaceNgan}" type="text" pattern="[0-4]" />งาน</td>
-            <td><input name="realestate.space_sqwah" value="${find.contractRealestate.spaceSqwah}" type="text" pattern="\d\d(\.\d+)?" />ตรว.</td>
+            <td><input name="realestate.space_rai" value="${find.contractRealestate.space >= 400 ? f:format(find.contractRealestate.space / 400, '0') : ''}" type="text" pattern="\d+" />ไร่</td>
+            <td><input name="realestate.space_ngan" value="${find.contractRealestate.space >= 100 ? f:format(find.contractRealestate.space % 400 / 100, '0') : ''}" type="text" pattern="[0-3]" />งาน</td>
+            <td><input name="realestate.space_sqwah" value="${f:format(find.contractRealestate.space % 100, '.####')}" type="text" pattern="\d\d(\.\d+)?" />ตรว.</td>
           </tr>
           <tr>
             <td>วัตถุประสงค์เพื่อ</td>
             <td>
               <select name="objective">
                 <option value=""></option>
-                <option value="1">เพื่ออยู่อาศัย</option>
-                <option value="2">เพื่อประกอบกิจการต่างๆ</option>
-                <option value="3">เพื่ออื่นๆ</option>
+                <c:forEach var="i" items="${l.contractObjective}">
+                    <option value="${i.id}" ${i.additional ? 'data-enable="objective_text"' : ''} ${find.objective == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
             <td></td>
             <td><input name="objective_text" value="${find.objectiveText}" type="text" /></td>
           </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <td colspan="4"><hr/></td>
+          </tr>
+          <tr>
+            <td colspan="4">นัดชำระสัญญาเช่า</td>
+          </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>วันที่เริ่มต้นสัญญาเช่า</td>
-            <td><input name="started" value="${f:format(find.started, 'yyyy-MM-dd')}" type="date" /></td>
-            <td colspan="2">ระยะเวลาการเช่า (จำนวนปี/จำนวนเดือน)</td>
+            <td colspan="3"><input name="started" value="${f:format(find.started, 'yyyy-MM-dd')}" type="date" /></td>
           </tr>
           <tr>
             <td>วันที่สิ้นสุดสัญญาเช่า</td>
             <td><input name="ended" value="${f:format(find.ended, 'yyyy-MM-dd')}" type="date" /></td>
-            <td></td>
-            <td><input name="" value="" type="text" placeholder="คำนวนอัตโนมัติ" /></td>
+            <td>ระยะเวลาการเช่า</td>
+            <td data-pane="rental-period"></td>
           </tr>
           <tr>
             <td>ค่าเช่า</td>
             <td>
-              <select name="">
+              <select name="rental_fee_type" data-fee-detail="rental_fee">
                 <option value=""></option>
-                <option value="1">เท่ากันทุกเดือน</option>
-                <option value="2">เท่ากันทุกปี</option>
-                <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+                <c:forEach var="i" items="${l.contractFeeType}">
+                    <option value="${i.id}" ${find.rentalFeeType == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td>จำนวนเงิน</td>
-            <td>
-              <input name="" value="" type="tel" />
-            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="3"></td>
           </tr>
           <tr>
             <td>ค่าผ่อนชำระค่าเช่า</td>
             <td>
-              <select name="">
+              <select name="installment_rental_fee_type" data-fee-detail>
                 <option value=""></option>
-                <option value="1">เท่ากันทุกเดือน</option>
-                <option value="2">เท่ากันทุกปี</option>
-                <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+                <c:forEach var="i" items="${l.contractFeeType}">
+                    <option value="${i.id}" ${find.installmentRentalFeeType == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td>จำนวนเงิน</td>
-            <td>
-              <input name="" value="" type="tel" />
-            </td>
+            <td></td>
+            <td></td>
           </tr>
           <tr>
-            <td>ค่าตอบแทน <input name="" value="" type="text" /></td>
+            <td></td>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td>ค่าตอบแทน<input name="commission_label" value="${find.commissionLabel}" type="text" /></td>
             <td>
-              <select name="">
+              <select name="commission_fee_type" data-fee-detail>
                 <option value=""></option>
-                <option value="1">เท่ากันทุกเดือน</option>
-                <option value="2">เท่ากันทุกปี</option>
-                <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+                <c:forEach var="i" items="${l.contractFeeType}">
+                    <option value="${i.id}" ${find.commissionFeeType == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td>จำนวนเงิน</td>
-            <td>
-              <input name="" value="" type="tel" />
-            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="3"></td>
           </tr>
           <tr>
             <td>ค่าใช้ประโยชน์</td>
             <td>
-              <select name="">
+              <select name="utilization_fee_type" data-fee-detail>
                 <option value=""></option>
-                <option value="1">เท่ากันทุกเดือน</option>
-                <option value="2">เท่ากันทุกปี</option>
-                <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+                <c:forEach var="i" items="${l.contractFeeType}">
+                    <option value="${i.id}" ${find.utilizationFeeType == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td>จำนวนเงิน</td>
-            <td>
-              <input name="" value="" type="tel" />
-            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="3"></td>
           </tr>
           <tr>
             <td>ค่าเช่าช่วง</td>
             <td>
-              <select name="">
+              <select name="period_rental_fee_type" data-fee-detail>
                 <option value=""></option>
-                <option value="1">เท่ากันทุกเดือน</option>
-                <option value="2">เท่ากันทุกปี</option>
-                <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+                <c:forEach var="i" items="${l.contractFeeType}">
+                    <option value="${i.id}" ${find.periodRentalFeeType == i ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
               </select>
             </td>
-            <td>จำนวนเงิน</td>
-            <td>
-              <input name="" value="" type="tel" />
-            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="3"></td>
           </tr>
           <tr>
             <td colspan="4">ชำระค่าเช่าล่วงหน้า ณ วันทำสัญญา</td>
@@ -303,9 +334,9 @@
           </tr>
           <tr>
             <td>ระหว่างวันที่</td>
-            <td><input name="" value="" type="date" /></td>
+            <td><input name="plan.prepaid_started" value="${f:format(find.contractPlan.prepaidStarted, 'yyyy-MM-dd')}" type="date" /></td>
             <td>จนถึงวันที่</td>
-            <td><input name="" value="" type="date" /></td>
+            <td><input name="plan.prepaid_ended" value="${f:format(find.contractPlan.prepaidEnded, 'yyyy-MM-dd')}" type="date" /></td>
           </tr>
           <tr>
             <td colspan="4">
@@ -314,78 +345,99 @@
           </tr>
           <tr>
             <td>ระหว่างวันที่</td>
-            <td><input name="" value="" type="date" /></td>
+            <td><input name="plan.nextpaid_started" value="${f:format(find.contractPlan.nextpaidStarted, 'yyyy-MM-dd')}" type="date" /></td>
             <td>จนถึงวันที่</td>
-            <td><input name="" value="" type="date" /></td>
+            <td><input name="plan.nextpaid_ended" value="${f:format(find.contractPlan.nextpaidEnded, 'yyyy-MM-dd')}" type="date" /></td>
           </tr>
           <tr>
             <td colspan="4">เงื่อนไขการชำระค่าเช่า</td>
           </tr>
           <tr>
             <td>เป็นรายเดือน</td>
-            <td colspan="3">ภายในวันที่<input name="" value="" type="text" />ของเดือนถัดไป</td>
+            <td colspan="3">ภายในวันที่<input name="plan.deadline_monthly" value="${find.contractPlan.deadlineMonthly}" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />ของเดือนถัดไป</td>
           </tr>
           <tr>
             <td>เป็นรายปี</td>
             <td colspan="3">
               <!--ทุกวันเริ่มต้นของสัญญาเช่าในแต่ละปี-->
-              ภายในวันที่<input name="" value="" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />เดือน<input name="" value="" type="text" placeholder="ค่าเริ่มต้นเป็นเดือนที่ลงสัญญา" />ของปีถัดไป</td>
+              ภายในวันที่
+              <input name="plan.deadline_yearly_date" value="${find.contractPlan.deadlineYearlyDate}" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />
+              เดือน
+              <select name="plan.deadline_yearly">
+                <option value="">ค่าเริ่มต้นเป็นเดือนที่ลงสัญญา</option>
+                <c:forEach var="i" items="${o.month}">
+                    <option value="${i.value}" ${find.contractPlan.deadlineYearly == i.value ? 'selected' : ''}>${i.label}</option>
+                </c:forEach>
+              </select>
+              ของปีถัดไป</td>
           </tr>
           <tr>
             <td colspan="2">เป็นรายงวด (แบ่งชำระเป็นรายงวด ๆ ละเดือน)</td>
             <td>ภายในวันที่</td>
-            <td><input name="" value="" type="text" /></td>
+            <td><input name="plan.deadline" value="${f:format(find.contractPlan.deadline, 'yyyy-MM-dd')}" type="date" /></td>
           </tr>
           <tr>
             <td>อัตราชำระเบี้ยปรับ</td>
             <td colspan="3">
-              ร้อยละ <select onchange="this.value === '+' && this.replaceWith(document.createElement('input'))">
-                <option value=""></option>
-                <option value="1.25">1.25</option>
-                <option value="1.50">1.50</option>
-                <option value="+">...</option>
-              </select> ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
+              ร้อยละ <c:if test="${find.contractPlan.finerate == 1.25 || find.contractPlan.finerate == 1.5 || find.contractPlan.finerate == null}">
+                  <select name="plan.finerate">
+                    <option value=""></option>
+                    <option value="1.25" ${find.contractPlan.finerate == 1.25 ? 'selected' : ''}>1.25</option>
+                    <option value="1.50" ${find.contractPlan.finerate == 1.5 ? 'selected' : ''}>1.50</option>
+                    <option value="+">...</option>
+                  </select>
+              </c:if><c:if test="${!(find.contractPlan.finerate == 1.25 || find.contractPlan.finerate == 1.5 || find.contractPlan.finerate == null)}">
+                  <input name="plan.finerate" value="${find.contractPlan.finerate}" />
+              </c:if>ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
             </td>
           </tr>
+        <thead>
           <tr>
-            <td colspan="4">ในวันทำสัญญา ได้นำหลักประกันสัญญา</td>
+            <td colspan="4"><hr/></td>
           </tr>
           <tr>
-            <td>เป็นเงินสด/จำนวนเงิน</td>
-            <td><input name="" value="" type="text" />บาท</td>
-            <td></td>
-            <td>(<input name="" value="" type="text" />)</td>
+            <td colspan="4">หลักประกันสัญญาเช่า</td>
           </tr>
-          <tr>
-            <td>ตามใบเสร็จรับเงิน</td>
-            <td>เลขที่ RCPT<input name="" value="" type="text" /></td>
-            <td>ลงวันที่</td>
-            <td><input name="" value="" type="text" /></td>
-          </tr>
-          <tr>
-            <td>แคชเชียร์เช็คธนาคาร/จำนวนเงิน</td>
-            <td><input name="" value="" type="text" />บาท</td>
-            <td></td>
-            <td>(<input name="" value="" type="text" />)</td>
-          </tr>
-          <tr>
-            <td>ตามใบเสร็จรับเงิน</td>
-            <td>เลขที่ RCPT<input name="" value="" type="text" /></td>
-            <td>ลงวันที่</td>
-            <td><input name="" value="" type="text" /></td>
-          </tr>
-          <tr>
-            <td>เป็นหนังสือค้ำประกันของธนาคาร</td>
-            <td><input name="" value="" type="text" />บาท</td>
-            <td></td>
-            <td>(<input name="" value="" type="text" />)</td>
-          </tr>
-          <tr>
-            <td>เลขที่</td>
-            <td><input name="" value="" type="text" /></td>
-            <td>ลงวันที่</td>
-            <td><input name="" value="" type="text" /></td>
-          </tr>
+        </thead>
+        <tr>
+          <td colspan="4">ในวันทำสัญญา ได้นำหลักประกันสัญญา</td>
+        </tr>
+        <tr>
+          <td>เป็นเงินสด/จำนวนเงิน</td>
+          <td><input name="collateral.cash" value="${f:format(find.contractCollateral.cash, '0.##')}" type="text" />บาท</td>
+          <td></td>
+          <td>(<input name="collateral.cash_text" value="${find.contractCollateral.cashText}" type="text" />)</td>
+        </tr>
+        <tr>
+          <td>ตามใบเสร็จรับเงิน</td>
+          <td>เลขที่ RCPT<input name="collateral.cash_rcpt" value="${find.contractCollateral.cashRcpt}" type="text" /></td>
+          <td>ลงวันที่</td>
+          <td><input name="collateral.cash_rcpt_dated" value="${f:format(find.contractCollateral.cashRcptDated, 'yyyy-MM-dd')}" type="date" /></td>
+        </tr>
+        <tr>
+          <td>แคชเชียร์เช็คธนาคาร/จำนวนเงิน</td>
+          <td><input name="collateral.cashier_cheque" value="${f:format(find.contractCollateral.cashierCheque, '0.##')}" type="text" />บาท</td>
+          <td></td>
+          <td>(<input name="collateral.cashier_cheque_text" value="${find.contractCollateral.cashierChequeText}" type="text" />)</td>
+        </tr>
+        <tr>
+          <td>ตามใบเสร็จรับเงิน</td>
+          <td>เลขที่ RCPT<input name="collateral.cashier_cheque_rcpt" value="${find.contractCollateral.cashierChequeRcpt}" type="text" /></td>
+          <td>ลงวันที่</td>
+          <td><input name="collateral.cashier_cheque_rcpt_date" value="${f:format(find.contractCollateral.cashierChequeRcptDated, 'yyyy-MM-dd')}" type="date" /></td>
+        </tr>
+        <tr>
+          <td>เป็นหนังสือค้ำประกันของธนาคาร</td>
+          <td><input name="collateral.bank_collateral" value="${f:format(find.contractCollateral.bankCollateral, '0.##')}" type="text" />บาท</td>
+          <td></td>
+          <td>(<input name="collateral.bank_collateral_text" value="${find.contractCollateral.bankCollateralText}" type="text" />)</td>
+        </tr>
+        <tr>
+          <td>เลขที่</td>
+          <td><input name="collateral.bank_collateral_no" value="${find.contractCollateral.bankCollateralNo}" type="text" /></td>
+          <td>ลงวันที่</td>
+          <td><input name="collateral.bank_collateral_dated" value="${f:format(find.contractCollateral.bankCollateralDated, 'yyyy-MM-dd')}" type="date" /></td>
+        </tr>
         </tbody>
         <tfoot>
           <tr>

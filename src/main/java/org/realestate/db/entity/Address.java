@@ -1,11 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -14,14 +14,17 @@ import javax.validation.constraints.Size;
  * @author Pathompong
  */
 @Entity
-@Table(name = "contract_lessee_address")
+@Table(name = "address")
 @NamedQueries({
-    @NamedQuery(name = "ContractLesseeAddress.findAll", query = "SELECT c FROM ContractLesseeAddress c")})
-public class ContractLesseeAddress implements Serializable {
+    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")})
+public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ContractLesseeAddressPK contractLesseeAddressPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Size(max = 2147483647)
     @Column(name = "house")
     private String house;
@@ -50,27 +53,26 @@ public class ContractLesseeAddress implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "phone")
     private String phone;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private ContractLessee contractLessee;
+    @OneToMany(mappedBy = "address")
+    private List<ContractRealestate> contractRealestateList;
+    @OneToMany(mappedBy = "contact")
+    private List<ContractLessee> contractLesseeList;
+    @OneToMany(mappedBy = "registry")
+    private List<ContractLessee> contractLesseeList1;
 
-    public ContractLesseeAddress() {
+    public Address() {
     }
 
-    public ContractLesseeAddress(ContractLesseeAddressPK contractLesseeAddressPK) {
-        this.contractLesseeAddressPK = contractLesseeAddressPK;
+    public Address(Integer id) {
+        this.id = id;
     }
 
-    public ContractLesseeAddress(int id, int type) {
-        this.contractLesseeAddressPK = new ContractLesseeAddressPK(id, type);
+    public Integer getId() {
+        return id;
     }
 
-    public ContractLesseeAddressPK getContractLesseeAddressPK() {
-        return contractLesseeAddressPK;
-    }
-
-    public void setContractLesseeAddressPK(ContractLesseeAddressPK contractLesseeAddressPK) {
-        this.contractLesseeAddressPK = contractLesseeAddressPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getHouse() {
@@ -145,29 +147,45 @@ public class ContractLesseeAddress implements Serializable {
         this.phone = phone;
     }
 
-    public ContractLessee getContractLessee() {
-        return contractLessee;
+    public List<ContractRealestate> getContractRealestateList() {
+        return contractRealestateList;
     }
 
-    public void setContractLessee(ContractLessee contractLessee) {
-        this.contractLessee = contractLessee;
+    public void setContractRealestateList(List<ContractRealestate> contractRealestateList) {
+        this.contractRealestateList = contractRealestateList;
+    }
+
+    public List<ContractLessee> getContractLesseeList() {
+        return contractLesseeList;
+    }
+
+    public void setContractLesseeList(List<ContractLessee> contractLesseeList) {
+        this.contractLesseeList = contractLesseeList;
+    }
+
+    public List<ContractLessee> getContractLesseeList1() {
+        return contractLesseeList1;
+    }
+
+    public void setContractLesseeList1(List<ContractLessee> contractLesseeList1) {
+        this.contractLesseeList1 = contractLesseeList1;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (contractLesseeAddressPK != null ? contractLesseeAddressPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContractLesseeAddress)) {
+        if (!(object instanceof Address)) {
             return false;
         }
-        ContractLesseeAddress other = (ContractLesseeAddress) object;
-        if ((this.contractLesseeAddressPK == null && other.contractLesseeAddressPK != null) || (this.contractLesseeAddressPK != null && !this.contractLesseeAddressPK.equals(other.contractLesseeAddressPK))) {
+        Address other = (Address) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -175,7 +193,7 @@ public class ContractLesseeAddress implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.ContractLesseeAddress[ contractLesseeAddressPK=" + contractLesseeAddressPK + " ]";
+        return "Address[ id=" + id + " ]";
     }
 
 }

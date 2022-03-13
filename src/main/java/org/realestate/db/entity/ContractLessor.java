@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
@@ -35,7 +34,7 @@ public class ContractLessor implements Serializable {
     @Column(name = "name")
     private String name;
     @Size(max = 2147483647)
-    @Column(name = "role")
+    @Column(name = "\"role\"")
     private String role;
 //    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 //    @OneToOne(optional = false)
@@ -61,6 +60,14 @@ public class ContractLessor implements Serializable {
         this.id = id;
         this.name = name;
     }
+//
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Contract getId() {
         return id;
@@ -116,7 +123,7 @@ public class ContractLessor implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.ContractLessor[ id=" + id + " ]";
+        return "ContractLessor[ id=" + id + " ]";
     }
 
 }

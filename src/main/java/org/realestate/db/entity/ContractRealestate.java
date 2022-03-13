@@ -1,11 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,8 +32,6 @@ public class ContractRealestate implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "name")
     private String name;
-    @Column(name = "type")
-    private Integer type;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -43,39 +41,24 @@ public class ContractRealestate implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "nearby")
     private String nearby;
-    @Size(max = 2147483647)
-    @Column(name = "house")
-    private String house;
-    @Size(max = 2147483647)
-    @Column(name = "village")
-    private String village;
-    @Size(max = 2147483647)
-    @Column(name = "soi")
-    private String soi;
-    @Size(max = 2147483647)
-    @Column(name = "road")
-    private String road;
-    @Size(max = 2147483647)
-    @Column(name = "subdistrict")
-    private String subdistrict;
-    @Size(max = 2147483647)
-    @Column(name = "district")
-    private String district;
-    @Size(max = 2147483647)
-    @Column(name = "province")
-    private String province;
+    @Column(name = "moi_declare")
+    @Temporal(TemporalType.DATE)
+    private Date moiDeclare;
     @Size(max = 2147483647)
     @Column(name = "deed_code")
     private String deedCode;
     @Size(max = 2147483647)
     @Column(name = "deed_no")
     private String deedNo;
-    @Column(name = "space_rai")
-    private Integer spaceRai;
-    @Column(name = "space_ngan")
-    private Integer spaceNgan;
-    @Column(name = "space_sqwah")
-    private Double spaceSqwah;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "\"space\"")
+    private Double space;
+    @JoinColumn(name = "type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractRealestateType type;
+    @JoinColumn(name = "address", referencedColumnName = "id")
+    @ManyToOne
+    private Address address;
 //    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 //    @OneToOne(optional = false)
 //    private Contract contract;
@@ -99,20 +82,20 @@ public class ContractRealestate implements Serializable {
 //        this.id = id;
 //    }
 
+    public Contract getId() {
+        return id;
+    }
+
+    public void setId(Contract id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public String getCode() {
@@ -139,60 +122,12 @@ public class ContractRealestate implements Serializable {
         this.nearby = nearby;
     }
 
-    public String getHouse() {
-        return house;
+    public Date getMoiDeclare() {
+        return moiDeclare;
     }
 
-    public void setHouse(String house) {
-        this.house = house;
-    }
-
-    public String getVillage() {
-        return village;
-    }
-
-    public void setVillage(String village) {
-        this.village = village;
-    }
-
-    public String getSoi() {
-        return soi;
-    }
-
-    public void setSoi(String soi) {
-        this.soi = soi;
-    }
-
-    public String getRoad() {
-        return road;
-    }
-
-    public void setRoad(String road) {
-        this.road = road;
-    }
-
-    public String getSubdistrict() {
-        return subdistrict;
-    }
-
-    public void setSubdistrict(String subdistrict) {
-        this.subdistrict = subdistrict;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
+    public void setMoiDeclare(Date moiDeclare) {
+        this.moiDeclare = moiDeclare;
     }
 
     public String getDeedCode() {
@@ -211,28 +146,28 @@ public class ContractRealestate implements Serializable {
         this.deedNo = deedNo;
     }
 
-    public Integer getSpaceRai() {
-        return spaceRai;
+    public Double getSpace() {
+        return space;
     }
 
-    public void setSpaceRai(Integer spaceRai) {
-        this.spaceRai = spaceRai;
+    public void setSpace(Double space) {
+        this.space = space;
     }
 
-    public Integer getSpaceNgan() {
-        return spaceNgan;
+    public ContractRealestateType getType() {
+        return type;
     }
 
-    public void setSpaceNgan(Integer spaceNgan) {
-        this.spaceNgan = spaceNgan;
+    public void setType(ContractRealestateType type) {
+        this.type = type;
     }
 
-    public Double getSpaceSqwah() {
-        return spaceSqwah;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setSpaceSqwah(Double spaceSqwah) {
-        this.spaceSqwah = spaceSqwah;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 //
 //    public Contract getContract() {
@@ -265,7 +200,7 @@ public class ContractRealestate implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.ContractRealestate[ id=" + id + " ]";
+        return "ContractRealestate[ id=" + id + " ]";
     }
 
 }

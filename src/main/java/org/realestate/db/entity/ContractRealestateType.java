@@ -6,7 +6,6 @@ package org.realestate.db.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,10 +15,10 @@ import javax.validation.constraints.Size;
  * @author Pathompong
  */
 @Entity
-@Table(name = "contract_objective")
+@Table(name = "contract_realestate_type")
 @NamedQueries({
-    @NamedQuery(name = "ContractObjective.findAll", query = "SELECT c FROM ContractObjective c")})
-public class ContractObjective implements Serializable {
+    @NamedQuery(name = "ContractRealestateType.findAll", query = "SELECT c FROM ContractRealestateType c")})
+public class ContractRealestateType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,19 +46,15 @@ public class ContractObjective implements Serializable {
     private String desc;
     @Column(name = "active")
     private Boolean active;
-    @Column(name = "additional")
-    private Boolean additional;
-    @OneToMany(mappedBy = "objective")
-    private List<Contract> contractList;
 
-    public ContractObjective() {
+    public ContractRealestateType() {
     }
 
-    public ContractObjective(Integer id) {
+    public ContractRealestateType(Integer id) {
         this.id = id;
     }
 
-    public ContractObjective(Integer id, Date updated, int updater) {
+    public ContractRealestateType(Integer id, Date updated, int updater) {
         this.id = id;
         this.updated = updated;
         this.updater = updater;
@@ -121,22 +116,6 @@ public class ContractObjective implements Serializable {
         this.active = active;
     }
 
-    public Boolean getAdditional() {
-        return additional;
-    }
-
-    public void setAdditional(Boolean additional) {
-        this.additional = additional;
-    }
-
-    public List<Contract> getContractList() {
-        return contractList;
-    }
-
-    public void setContractList(List<Contract> contractList) {
-        this.contractList = contractList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -147,10 +126,10 @@ public class ContractObjective implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContractObjective)) {
+        if (!(object instanceof ContractRealestateType)) {
             return false;
         }
-        ContractObjective other = (ContractObjective) object;
+        ContractRealestateType other = (ContractRealestateType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -159,7 +138,7 @@ public class ContractObjective implements Serializable {
 
     @Override
     public String toString() {
-        return "ContractObjective[ id=" + id + " ]";
+        return "ContractRealestateType[ id=" + id + " ]";
     }
 
 }

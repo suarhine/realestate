@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.realestate.db.entity;
 
@@ -36,8 +35,6 @@ public class Contract implements Serializable {
     @NotNull
     @Column(name = "updater")
     private int updater;
-    @Column(name = "type")
-    private Integer type;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -50,8 +47,6 @@ public class Contract implements Serializable {
     @Column(name = "note_dated")
     @Temporal(TemporalType.DATE)
     private Date noteDated;
-    @Column(name = "objective")
-    private Integer objective;
     @Size(max = 2147483647)
     @Column(name = "objective_text")
     private String objectiveText;
@@ -61,8 +56,36 @@ public class Contract implements Serializable {
     @Column(name = "ended")
     @Temporal(TemporalType.DATE)
     private Date ended;
+    @Size(max = 2147483647)
+    @Column(name = "commission_label")
+    private String commissionLabel;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractLessor contractLessor;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    private ContractPlan contractPlan;
+    @JoinColumn(name = "commission_fee_type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractFeeType commissionFeeType;
+    @JoinColumn(name = "installment_rental_fee_type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractFeeType installmentRentalFeeType;
+    @JoinColumn(name = "period_rental_fee_type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractFeeType periodRentalFeeType;
+    @JoinColumn(name = "rental_fee_type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractFeeType rentalFeeType;
+    @JoinColumn(name = "utilization_fee_type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractFeeType utilizationFeeType;
+    @JoinColumn(name = "objective", referencedColumnName = "id")
+    @ManyToOne
+    private ContractObjective objective;
+    @JoinColumn(name = "type", referencedColumnName = "id")
+    @ManyToOne
+    private ContractType type;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    private ContractCollateral contractCollateral;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractRealestate contractRealestate;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
@@ -105,14 +128,6 @@ public class Contract implements Serializable {
         this.updater = updater;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     public String getCode() {
         return code;
     }
@@ -145,14 +160,6 @@ public class Contract implements Serializable {
         this.noteDated = noteDated;
     }
 
-    public Integer getObjective() {
-        return objective;
-    }
-
-    public void setObjective(Integer objective) {
-        this.objective = objective;
-    }
-
     public String getObjectiveText() {
         return objectiveText;
     }
@@ -177,12 +184,92 @@ public class Contract implements Serializable {
         this.ended = ended;
     }
 
+    public String getCommissionLabel() {
+        return commissionLabel;
+    }
+
+    public void setCommissionLabel(String commissionLabel) {
+        this.commissionLabel = commissionLabel;
+    }
+
     public ContractLessor getContractLessor() {
         return contractLessor;
     }
 
     public void setContractLessor(ContractLessor contractLessor) {
         this.contractLessor = contractLessor;
+    }
+
+    public ContractPlan getContractPlan() {
+        return contractPlan;
+    }
+
+    public void setContractPlan(ContractPlan contractPlan) {
+        this.contractPlan = contractPlan;
+    }
+
+    public ContractFeeType getCommissionFeeType() {
+        return commissionFeeType;
+    }
+
+    public void setCommissionFeeType(ContractFeeType commissionFeeType) {
+        this.commissionFeeType = commissionFeeType;
+    }
+
+    public ContractFeeType getInstallmentRentalFeeType() {
+        return installmentRentalFeeType;
+    }
+
+    public void setInstallmentRentalFeeType(ContractFeeType installmentRentalFeeType) {
+        this.installmentRentalFeeType = installmentRentalFeeType;
+    }
+
+    public ContractFeeType getPeriodRentalFeeType() {
+        return periodRentalFeeType;
+    }
+
+    public void setPeriodRentalFeeType(ContractFeeType periodRentalFeeType) {
+        this.periodRentalFeeType = periodRentalFeeType;
+    }
+
+    public ContractFeeType getRentalFeeType() {
+        return rentalFeeType;
+    }
+
+    public void setRentalFeeType(ContractFeeType rentalFeeType) {
+        this.rentalFeeType = rentalFeeType;
+    }
+
+    public ContractFeeType getUtilizationFeeType() {
+        return utilizationFeeType;
+    }
+
+    public void setUtilizationFeeType(ContractFeeType utilizationFeeType) {
+        this.utilizationFeeType = utilizationFeeType;
+    }
+
+    public ContractObjective getObjective() {
+        return objective;
+    }
+
+    public void setObjective(ContractObjective objective) {
+        this.objective = objective;
+    }
+
+    public ContractType getType() {
+        return type;
+    }
+
+    public void setType(ContractType type) {
+        this.type = type;
+    }
+
+    public ContractCollateral getContractCollateral() {
+        return contractCollateral;
+    }
+
+    public void setContractCollateral(ContractCollateral contractCollateral) {
+        this.contractCollateral = contractCollateral;
     }
 
     public ContractRealestate getContractRealestate() {
@@ -223,7 +310,7 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return "org.realestate.db.entity.Contract[ id=" + id + " ]";
+        return "Contract[ id=" + id + " ]";
     }
 
 }

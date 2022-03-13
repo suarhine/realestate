@@ -10,6 +10,7 @@ import static org.realestate.ctrl.app.ApplicationInstance.*;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import org.realestate.db.fix.ContractFeeTypeFix;
 
 /**
  * Web application lifecycle listener.
@@ -25,6 +26,14 @@ public class ApplicationListener implements ServletContextListener {
             throw new IllegalStateException("already deployed");
         }
         context = event.getServletContext();
+        new Thread(() -> {
+            try {
+                for (var value : ContractFeeTypeFix.values()) {
+                    value.find();
+                }
+            } catch (Throwable x) {
+            }
+        }).start();
     }
 
     @Override

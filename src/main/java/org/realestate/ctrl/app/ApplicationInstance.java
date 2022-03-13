@@ -5,6 +5,7 @@
  */
 package org.realestate.ctrl.app;
 
+import java.util.Locale;
 import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
@@ -46,5 +47,9 @@ public class ApplicationInstance {
 
     public static <E, I, M extends Model<E, I>> M model(Class<E> entity) {
         return model(entity, null);
+    }
+
+    public static Locale locale() {
+        return new Locale("th", "TH");
     }
 }

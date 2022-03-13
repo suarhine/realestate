@@ -5,7 +5,6 @@
 package org.realestate.db.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,26 +15,17 @@ import javax.validation.constraints.Size;
  * @author Pathompong
  */
 @Entity
-@Table(name = "contract_objective")
+@Table(name = "contract_fee_type")
 @NamedQueries({
-    @NamedQuery(name = "ContractObjective.findAll", query = "SELECT c FROM ContractObjective c")})
-public class ContractObjective implements Serializable {
+    @NamedQuery(name = "ContractFeeType.findAll", query = "SELECT c FROM ContractFeeType c")})
+public class ContractFeeType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -47,22 +37,28 @@ public class ContractObjective implements Serializable {
     private String desc;
     @Column(name = "active")
     private Boolean active;
-    @Column(name = "additional")
-    private Boolean additional;
-    @OneToMany(mappedBy = "objective")
+    @OneToMany(mappedBy = "commissionFeeType")
     private List<Contract> contractList;
+    @OneToMany(mappedBy = "installmentRentalFeeType")
+    private List<Contract> contractList1;
+    @OneToMany(mappedBy = "periodRentalFeeType")
+    private List<Contract> contractList2;
+    @OneToMany(mappedBy = "rentalFeeType")
+    private List<Contract> contractList3;
+    @OneToMany(mappedBy = "utilizationFeeType")
+    private List<Contract> contractList4;
 
-    public ContractObjective() {
+    public ContractFeeType() {
     }
 
-    public ContractObjective(Integer id) {
+    public ContractFeeType(Integer id) {
         this.id = id;
     }
 
-    public ContractObjective(Integer id, Date updated, int updater) {
+    public ContractFeeType(int id, String code) {
         this.id = id;
-        this.updated = updated;
-        this.updater = updater;
+        this.code = code;
+        this.label = code;
     }
 
     public Integer getId() {
@@ -71,22 +67,6 @@ public class ContractObjective implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
     }
 
     public String getCode() {
@@ -121,20 +101,44 @@ public class ContractObjective implements Serializable {
         this.active = active;
     }
 
-    public Boolean getAdditional() {
-        return additional;
-    }
-
-    public void setAdditional(Boolean additional) {
-        this.additional = additional;
-    }
-
     public List<Contract> getContractList() {
         return contractList;
     }
 
     public void setContractList(List<Contract> contractList) {
         this.contractList = contractList;
+    }
+
+    public List<Contract> getContractList1() {
+        return contractList1;
+    }
+
+    public void setContractList1(List<Contract> contractList1) {
+        this.contractList1 = contractList1;
+    }
+
+    public List<Contract> getContractList2() {
+        return contractList2;
+    }
+
+    public void setContractList2(List<Contract> contractList2) {
+        this.contractList2 = contractList2;
+    }
+
+    public List<Contract> getContractList3() {
+        return contractList3;
+    }
+
+    public void setContractList3(List<Contract> contractList3) {
+        this.contractList3 = contractList3;
+    }
+
+    public List<Contract> getContractList4() {
+        return contractList4;
+    }
+
+    public void setContractList4(List<Contract> contractList4) {
+        this.contractList4 = contractList4;
     }
 
     @Override
@@ -147,10 +151,10 @@ public class ContractObjective implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContractObjective)) {
+        if (!(object instanceof ContractFeeType)) {
             return false;
         }
-        ContractObjective other = (ContractObjective) object;
+        ContractFeeType other = (ContractFeeType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -159,7 +163,7 @@ public class ContractObjective implements Serializable {
 
     @Override
     public String toString() {
-        return "ContractObjective[ id=" + id + " ]";
+        return "ContractFeeType[ id=" + id + " ]";
     }
 
 }
