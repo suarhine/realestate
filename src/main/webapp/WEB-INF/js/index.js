@@ -1,11 +1,11 @@
-import '/web/js/jquery-3.5.1.min.js';
-import '/web/js/jquery-ui-1.12.1/jquery-ui.min.js';
-import '/web/js/jquery-ui-1.12.1/widget.strict.js';
-import '/web/js/jquery-ui-1.12.1/widgets/tooltip.js';
-import '/web/js/jquery-ui-1.12.1/widgets/datepicker-yearoffset.js';
-import '/web/js/jquery-ui-1.12.1/i18n/datepicker-th.js';
-import '/web/js/jquery-3.5.1.plugin.js';
-import '/web/js/functions.js';
+import '../../../../../web/src/main/webapp/js/jquery-3.5.1.min.js';
+import '../../../../../web/src/main/webapp/js/jquery-ui-1.12.1/jquery-ui.min.js';
+import '../../../../../web/src/main/webapp/js/jquery-ui-1.12.1/widget.strict.js';
+import '../../../../../web/src/main/webapp/js/jquery-ui-1.12.1/widgets/tooltip.js';
+import '../../../../../web/src/main/webapp/js/jquery-ui-1.12.1/widgets/datepicker-yearoffset.js';
+import '../../../../../web/src/main/webapp/js/jquery-ui-1.12.1/i18n/datepicker-th.js';
+import '../../../../../web/src/main/webapp/js/jquery-3.5.1.plugin.js';
+import '../../../../../web/src/main/webapp/js/functions.js';
 import config from './config.js';
 export const fn = {
   date: {

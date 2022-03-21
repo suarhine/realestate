@@ -49,12 +49,7 @@ public class CharacterEncodingFilter implements Filter {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException, ServletException {
-        if (request.getMethod().matches("POST|PUT|DELETE")) {
-            request.setCharacterEncoding(PAGE_CHARSET);
-        }
-        if (!request.getRequestURI().matches(".+[.]css|.+[.]m?js")) {
-            response.setCharacterEncoding(PAGE_CHARSET);
-        }
+        request.setCharacterEncoding(PAGE_CHARSET);
     }
 
     /**
