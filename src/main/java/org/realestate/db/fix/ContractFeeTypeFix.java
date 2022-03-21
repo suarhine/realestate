@@ -6,7 +6,7 @@ package org.realestate.db.fix;
 
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 
-import org.realestate.db.entity.ContractFeeType;
+import org.realestate.db.entity.ContractAppointmentFeeType;
 
 /**
  *
@@ -22,10 +22,10 @@ public enum ContractFeeTypeFix {
         this.id = id;
     }
 
-    public ContractFeeType find() {
-        var find = model(ContractFeeType.class).find(id);
+    public ContractAppointmentFeeType find() {
+        var find = model(ContractAppointmentFeeType.class).find(id);
         if (find == null) {
-            model(ContractFeeType.class).add(find = new ContractFeeType(id, name()));
+            model(ContractAppointmentFeeType.class).add(find = new ContractAppointmentFeeType(id, name()));
         }
         return find;
     }

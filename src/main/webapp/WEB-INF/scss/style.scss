@@ -1,0 +1,44 @@
+/*---- table border ----*/
+/*
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    &:not(.-no-border) {
+        border: 1px solid gray;
+        > thead, > tbody, > tfoot {
+            > tr > td {
+                border: 1px solid gray;
+            }
+        }
+        &:not(.-no-outer) {
+            border: 1px solid black;
+        }
+        &:not(.-outer) {
+            > tbody, &:not(.-body-only) > * {
+                > tr > td {
+                    border: 1px solid black;
+                }
+            }
+        }
+        &.-input-no-border {
+            > tbody, &:not(.-body-only) > * {
+                > tr > td {
+                    input {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+    &.-full-input {
+        > thead, > tbody, > tfoot {
+            > tr > td {
+                > input, > form > input  {
+                    border: 0;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+*/

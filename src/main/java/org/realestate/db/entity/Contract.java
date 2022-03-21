@@ -6,6 +6,7 @@ package org.realestate.db.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -56,36 +57,23 @@ public class Contract implements Serializable {
     @Column(name = "ended")
     @Temporal(TemporalType.DATE)
     private Date ended;
-    @Size(max = 2147483647)
-    @Column(name = "commission_label")
-    private String commissionLabel;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
-    private ContractLessor contractLessor;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractPlan contractPlan;
-    @JoinColumn(name = "commission_fee_type", referencedColumnName = "id")
-    @ManyToOne
-    private ContractFeeType commissionFeeType;
-    @JoinColumn(name = "installment_rental_fee_type", referencedColumnName = "id")
-    @ManyToOne
-    private ContractFeeType installmentRentalFeeType;
-    @JoinColumn(name = "period_rental_fee_type", referencedColumnName = "id")
-    @ManyToOne
-    private ContractFeeType periodRentalFeeType;
-    @JoinColumn(name = "rental_fee_type", referencedColumnName = "id")
-    @ManyToOne
-    private ContractFeeType rentalFeeType;
-    @JoinColumn(name = "utilization_fee_type", referencedColumnName = "id")
-    @ManyToOne
-    private ContractFeeType utilizationFeeType;
     @JoinColumn(name = "objective", referencedColumnName = "id")
     @ManyToOne
     private ContractObjective objective;
     @JoinColumn(name = "type", referencedColumnName = "id")
     @ManyToOne
     private ContractType type;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
+    private List<ContractAppointment> contractAppointmentList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
+    @OrderBy("pk.dating")
+    private List<ContractAppointmentDating> contractAppointmentDatingList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractCollateral contractCollateral;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    private ContractLessor contractLessor;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractRealestate contractRealestate;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
@@ -184,68 +172,12 @@ public class Contract implements Serializable {
         this.ended = ended;
     }
 
-    public String getCommissionLabel() {
-        return commissionLabel;
-    }
-
-    public void setCommissionLabel(String commissionLabel) {
-        this.commissionLabel = commissionLabel;
-    }
-
-    public ContractLessor getContractLessor() {
-        return contractLessor;
-    }
-
-    public void setContractLessor(ContractLessor contractLessor) {
-        this.contractLessor = contractLessor;
-    }
-
     public ContractPlan getContractPlan() {
         return contractPlan;
     }
 
     public void setContractPlan(ContractPlan contractPlan) {
         this.contractPlan = contractPlan;
-    }
-
-    public ContractFeeType getCommissionFeeType() {
-        return commissionFeeType;
-    }
-
-    public void setCommissionFeeType(ContractFeeType commissionFeeType) {
-        this.commissionFeeType = commissionFeeType;
-    }
-
-    public ContractFeeType getInstallmentRentalFeeType() {
-        return installmentRentalFeeType;
-    }
-
-    public void setInstallmentRentalFeeType(ContractFeeType installmentRentalFeeType) {
-        this.installmentRentalFeeType = installmentRentalFeeType;
-    }
-
-    public ContractFeeType getPeriodRentalFeeType() {
-        return periodRentalFeeType;
-    }
-
-    public void setPeriodRentalFeeType(ContractFeeType periodRentalFeeType) {
-        this.periodRentalFeeType = periodRentalFeeType;
-    }
-
-    public ContractFeeType getRentalFeeType() {
-        return rentalFeeType;
-    }
-
-    public void setRentalFeeType(ContractFeeType rentalFeeType) {
-        this.rentalFeeType = rentalFeeType;
-    }
-
-    public ContractFeeType getUtilizationFeeType() {
-        return utilizationFeeType;
-    }
-
-    public void setUtilizationFeeType(ContractFeeType utilizationFeeType) {
-        this.utilizationFeeType = utilizationFeeType;
     }
 
     public ContractObjective getObjective() {
@@ -264,12 +196,36 @@ public class Contract implements Serializable {
         this.type = type;
     }
 
+    public List<ContractAppointment> getContractAppointmentList() {
+        return contractAppointmentList;
+    }
+
+    public void setContractAppointmentList(List<ContractAppointment> contractAppointmentList) {
+        this.contractAppointmentList = contractAppointmentList;
+    }
+
+    public List<ContractAppointmentDating> getContractAppointmentDatingList() {
+        return contractAppointmentDatingList;
+    }
+
+    public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
+        this.contractAppointmentDatingList = contractAppointmentDatingList;
+    }
+
     public ContractCollateral getContractCollateral() {
         return contractCollateral;
     }
 
     public void setContractCollateral(ContractCollateral contractCollateral) {
         this.contractCollateral = contractCollateral;
+    }
+
+    public ContractLessor getContractLessor() {
+        return contractLessor;
+    }
+
+    public void setContractLessor(ContractLessor contractLessor) {
+        this.contractLessor = contractLessor;
     }
 
     public ContractRealestate getContractRealestate() {
@@ -313,4 +269,20 @@ public class Contract implements Serializable {
         return "Contract[ id=" + id + " ]";
     }
 
+    @PostPersist
+    @SuppressWarnings("unused")
+    private void postPersist() {
+        try {
+            for (var e : contractAppointmentList) {
+                e.getPk().setId(id);
+            }
+        } catch (NullPointerException x) {
+        }
+        try {
+            for (var e : contractAppointmentDatingList) {
+                e.getPk().setId(id);
+            }
+        } catch (NullPointerException x) {
+        }
+    }
 }

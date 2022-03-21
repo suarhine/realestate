@@ -10,10 +10,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js"></script>
     <title>ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</title>
   </head>
   <body>
-    <h1>ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</h1>
+    <h1 data-ref="">ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</h1>
     <div class="left-menu-container">
       <div>
         <ul>

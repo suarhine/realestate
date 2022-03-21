@@ -7,8 +7,10 @@ package org.realestate.ctrl.page.contract;
 
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.notnull;
+import static org.web.jsp.fn.Functions.pivot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -90,9 +92,23 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        var entity = flag(request, Integer.class, "id")
-                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
-                : new Contract();
+//        var entity = flag(request, Integer.class, "id")
+//                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
+//                : new Contract();
+        Contract entity;
+        if (flag(request, Integer.class, "id")) {
+            entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
+        } else {
+            entity = new Contract();
+            entity.setContractLessor(new ContractLessor(entity));
+            entity.setContractLessee(new ContractLessee(entity));
+            entity.getContractLessee().setRegistry(new Address());
+            entity.getContractLessee().setContact(new Address());
+            entity.setContractRealestate(new ContractRealestate(entity));
+            entity.getContractRealestate().setAddress(new Address());
+            entity.setContractPlan(new ContractPlan(entity));
+            entity.setContractCollateral(new ContractCollateral(entity));
+        }
         entity.setUpdated(new Date());
         entity.setUpdater(UsersFix.system.id);
         entity.setType(flag(request, Integer.class, "type") ? notnull(model(ContractType.class).find(param(request, Integer.class, "type")), "type = " + param(request, "type")) : null);
@@ -104,21 +120,20 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.setObjectiveText(param(request, "objective_text"));
         entity.setStarted(param(request, Date.class, "started", "yyyy-MM-dd"));
         entity.setEnded(param(request, Date.class, "ended", "yyyy-MM-dd"));
-        entity.setRentalFeeType(flag(request, Integer.class, "rental_fee_type") ? notnull(model(ContractFeeType.class).find(param(request, Integer.class, "rental_fee_type")), "rental_fee_type = " + param(request, "rental_fee_type")) : null);
-        entity.setInstallmentRentalFeeType(flag(request, Integer.class, "installment_rental_fee_type") ? notnull(model(ContractFeeType.class).find(param(request, Integer.class, "installment_rental_fee_type")), "installment_rental_fee_type = " + param(request, "installment_rental_fee_type")) : null);
-        entity.setCommissionLabel(param(request, "commission_label"));
-        entity.setCommissionFeeType(flag(request, Integer.class, "commission_fee_type") ? notnull(model(ContractFeeType.class).find(param(request, Integer.class, "commission_fee_type")), "commission_fee_type = " + param(request, "commission_fee_type")) : null);
-        entity.setUtilizationFeeType(flag(request, Integer.class, "utilization_fee_type") ? notnull(model(ContractFeeType.class).find(param(request, Integer.class, "utilization_fee_type")), "utilization_fee_type = " + param(request, "utilization_fee_type")) : null);
-        entity.setPeriodRentalFeeType(flag(request, Integer.class, "period_rental_fee_type") ? notnull(model(ContractFeeType.class).find(param(request, Integer.class, "period_rental_fee_type")), "period_rental_fee_type = " + param(request, "period_rental_fee_type")) : null);
+//        entity.setRentalFeeType(flag(request, Integer.class, "rental_fee_type") ? notnull(model(ContractAppointmentFeeType.class).find(param(request, Integer.class, "rental_fee_type")), "rental_fee_type = " + param(request, "rental_fee_type")) : null);
+//        entity.setInstallmentRentalFeeType(flag(request, Integer.class, "installment_rental_fee_type") ? notnull(model(ContractAppointmentFeeType.class).find(param(request, Integer.class, "installment_rental_fee_type")), "installment_rental_fee_type = " + param(request, "installment_rental_fee_type")) : null);
+//        entity.setCommissionLabel(param(request, "commission_label"));
+//        entity.setCommissionFeeType(flag(request, Integer.class, "commission_fee_type") ? notnull(model(ContractAppointmentFeeType.class).find(param(request, Integer.class, "commission_fee_type")), "commission_fee_type = " + param(request, "commission_fee_type")) : null);
+//        entity.setUtilizationFeeType(flag(request, Integer.class, "utilization_fee_type") ? notnull(model(ContractAppointmentFeeType.class).find(param(request, Integer.class, "utilization_fee_type")), "utilization_fee_type = " + param(request, "utilization_fee_type")) : null);
+//        entity.setPeriodRentalFeeType(flag(request, Integer.class, "period_rental_fee_type") ? notnull(model(ContractAppointmentFeeType.class).find(param(request, Integer.class, "period_rental_fee_type")), "period_rental_fee_type = " + param(request, "period_rental_fee_type")) : null);
 
-        entity.setContractLessor(new ContractLessor(entity, param(request, "lessor.name")));
-        entity.getContractLessor().setName(param(request, "lessor.role"));
+        entity.getContractLessor().setName(param(request, "lessor.name"));
+        entity.getContractLessor().setRole(param(request, "lessor.role"));
 
-        entity.setContractLessee(new ContractLessee(entity, param(request, "lessee.name")));
+        entity.getContractLessee().setName(param(request, "lessee.name"));
         entity.getContractLessee().setCode(param(request, "lessee.code"));
         entity.getContractLessee().setRepresentative(param(request, "lessee.representative"));
         entity.getContractLessee().setRepresentativeRole(param(request, "lessee.representative_role"));
-        entity.getContractLessee().setRegistry(new Address());
         entity.getContractLessee().getRegistry().setHouse(param(request, "lessee.registry.house"));
         entity.getContractLessee().getRegistry().setVillage(param(request, "lessee.registry.village"));
         entity.getContractLessee().getRegistry().setSoi(param(request, "lessee.registry.soi"));
@@ -128,7 +143,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractLessee().getRegistry().setProvince(param(request, "lessee.registry.province"));
         entity.getContractLessee().getRegistry().setZipcode(param(request, "lessee.registry.zipcode"));
         entity.getContractLessee().getRegistry().setPhone(param(request, "lessee.registry.phone"));
-        entity.getContractLessee().setContact(new Address());
         entity.getContractLessee().getContact().setHouse(param(request, "lessee.contact.house"));
         entity.getContractLessee().getContact().setVillage(param(request, "lessee.contact.village"));
         entity.getContractLessee().getContact().setSoi(param(request, "lessee.contact.soi"));
@@ -138,7 +152,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractLessee().getContact().setProvince(param(request, "lessee.contact.province"));
         entity.getContractLessee().getContact().setZipcode(param(request, "lessee.contact.zipcode"));
         entity.getContractLessee().getContact().setPhone(param(request, "lessee.contact.phone"));
-        entity.setContractRealestate(new ContractRealestate(entity));
         entity.getContractRealestate().setName(param(request, "realestate.name"));
         entity.getContractRealestate().setType(flag(request, Integer.class, "realestate.type") ? notnull(model(ContractRealestateType.class).find(param(request, Integer.class, "realestate.type")), "realestate.type = " + param(request, "realestate.type")) : null);
         entity.getContractRealestate().setCode(param(request, "realestate.code"));
@@ -146,7 +159,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractRealestate().setNearby(param(request, "realestate.nearby"));
         entity.getContractRealestate().setDeedCode(param(request, "realestate.deed_code"));
         entity.getContractRealestate().setDeedNo(param(request, "realestate.deed_no"));
-        entity.getContractRealestate().setAddress(new Address());
         entity.getContractRealestate().getAddress().setHouse(param(request, "realestate.address.house"));
         entity.getContractRealestate().getAddress().setVillage(param(request, "realestate.address.village"));
         entity.getContractRealestate().getAddress().setSoi(param(request, "realestate.address.soi"));
@@ -169,7 +181,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         }
         entity.getContractRealestate().setSpace(space);
 
-        entity.setContractPlan(new ContractPlan(entity));
         entity.getContractPlan().setPrepaidStarted(param(request, Date.class, "prepaid_started", "yyyy-MM-dd"));
         entity.getContractPlan().setPrepaidEnded(param(request, Date.class, "prepaid_ended", "yyyy-MM-dd"));
         entity.getContractPlan().setNextpaidStarted(param(request, Date.class, "nextpaid_started", "yyyy-MM-dd"));
@@ -180,7 +191,38 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractPlan().setDeadline(param(request, Date.class, "plan.deadline", "yyyy-MM-dd"));
         entity.getContractPlan().setFinerate(param(request, Double.class, "plan.finerate"));
 
-        entity.setContractCollateral(new ContractCollateral(entity));
+        entity.setContractAppointmentList(new ArrayList<>());
+        entity.setContractAppointmentDatingList(new ArrayList<>());
+        for (var find : model(ContractAppointmentType.class).finds()) {
+            if (flag(request, Integer.class, find.getCode() + ".fee_type")) {
+                entity.getContractAppointmentList().add(new ContractAppointment(
+                        entity,
+                        find,
+                        model(ContractAppointmentFeeType.class).find(
+                                param(request, Integer.class, find.getCode() + ".fee_type")
+                        ),
+                        param(request, String.class, find.getCode() + ".label"),
+                        param(request, Double.class, find.getCode() + ".amount")
+                ));
+                for (var entry : pivot(new Object[][]{
+                    param(request, Date[].class, find.getCode() + ".dating", "yyyy-MM-dd"),
+                    param(request, Double[].class, find.getCode() + ".dating.amount")
+                })) {
+                    if (entry[0] != null && entry[1] != null) {
+                        entity.getContractAppointmentDatingList().add(new ContractAppointmentDating(entity, find, (Date) entry[0], (Double) entry[1]));
+                    }
+                }
+            } else if (flag(request, String.class, find.getCode() + ".label")) {
+                entity.getContractAppointmentList().add(new ContractAppointment(
+                        entity,
+                        find,
+                        null,
+                        param(request, String.class, find.getCode() + ".label"),
+                        null
+                ));
+            }
+        }
+
         entity.getContractCollateral().setCash(param(request, Double.class, "collateral.cash"));
         entity.getContractCollateral().setCashText(param(request, "collateral.cash_text"));
         entity.getContractCollateral().setCashRcpt(param(request, "collateral.cash_rcpt"));

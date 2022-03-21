@@ -12,10 +12,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js"></script>
     <title>JSP Page</title>
   </head>
   <body>
-    <table class="list -full-input">
+    <table class="list -border">
       <thead>
         <tr>
           <td colspan="6">
@@ -41,7 +42,7 @@
       </thead>
       <tbody>
         <c:forEach var="i" items="${finds}">
-            <tr onclick="location.href = '?id=${i.id}'" style="cursor: pointer;">
+            <tr data-ref="?id=${i.id}">
               <td>${i.code}</td>
               <td>${f:format(i.dated, 'yyyy-MM-dd')}</td>
               <td>${i.contractRealestate.name}</td>

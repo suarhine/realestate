@@ -13,10 +13,10 @@ window.jQuery && (function ($) {
           ended.setDate(ended.getDate() + 15);
           let dif = fn.date.dif(started, ended);
           let html = '';
-          if(dif.year > 0) {
+          if (dif.year > 0) {
             html += ' ' + dif.year + ' ปี';
           }
-          if(dif.month > 0) {
+          if (dif.month > 0) {
             html += ' ' + dif.month + ' เดือน';
           }
           $form.pane('rental-period').html(html.substr(1));
@@ -32,15 +32,16 @@ window.jQuery && (function ($) {
           if (started > ended) {
             return;
           }
-          let name = this.dataset.feeDetail;
+          let $selected = $this.find(':selected');
+          let name = this.dataset.feeDetail || this.getAttribute('name');
           let value = this.value;
           switch (value) {
             case '1':
             case '2':
               $this.parent().next().html('จำนวนเงิน').next().html(`
-                <input name="${this.dataset.feeDetail}_period_amount" value="${$this.find(':selected').attr('data-curr-period-amount') || ''}" />
+                <input name="${name}.amount" value="${$selected.attr('data-amount') || ''}" />
               `).find('input').on('change keyup', function () {
-                $this.find(':selected').attr('data-curr-period-amount', this.value);
+                $selected.attr('data-amount', this.value);
                 if (!+this.value) {
                   $pane.html('');
                   return;
@@ -54,7 +55,7 @@ window.jQuery && (function ($) {
                   date.push(new Date(i));
                 }
                 $pane.html(`
-                <table>
+                <table class="-border">
                   <thead>
                     <tr>
                      <td>วันที่</td>
@@ -63,12 +64,12 @@ window.jQuery && (function ($) {
                   </thead>
                   <tbody>${date.map(e => `
                     <tr>
-                      <td>${e.toLocaleDateString('th', {
+                      <td><input name="${name}.dating" value="${e.toISOString().substring(0, 10)}" type="hidden" />${e.toLocaleDateString('th', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit'
                   })}</td>
-                      <td>${this.value}</td>
+                      <td><input name="${name}.dating.amount" value="${this.value}" type="hidden" />${this.value}</td>
                     </tr>
                   `).join('')}</tbody>
                   <tfood>
@@ -82,9 +83,14 @@ window.jQuery && (function ($) {
               }).trigger('keyup');
               break;
             case '3':
+              let dating = undefined;
+              try {
+                dating = Function('return ' + $selected.attr('data-dating'))();
+              } catch (x) {
+              }
               $this.parent().next().html('').next().html('');
               $pane.html(`
-                <table class="-input-no-border">
+                <table class="-full-input -border -input-no-border">
                   <thead>
                     <tr>
                      <td>วันที่</td>
@@ -92,20 +98,31 @@ window.jQuery && (function ($) {
                     </tr>
                   </thead>
                   <tbody>
+                    ${dating ? dating.map(e => `
+                    <tr data-rel-del>
+                      <td>
+                        <input name="${name}.dating" value="${e.dating}" type="date">
+                      </td>
+                      <td>
+                        <input name="${name}.dating.amount" value="${e.amount}" data-rel-del-key-auto>
+                      </td>
+                    </tr>
+                    `) : `
                     <tr data-rel-del>
                       <td>
                         <input name="${name}.dating" value="${started.toJSON().substr(0, 10)}" type="date">
                       </td>
                       <td>
-                        <input name="${name}.amout" data-rel-del-key-auto>
+                        <input name="${name}.dating.amount" data-rel-del-key-auto>
                       </td>
                     </tr>
+                    `}
                     <tr data-rel-add data-rel-del>
                       <td>
                         <input name="${name}.dating" type="date">
                       </td>
                       <td>
-                        <input name="${name}.amout" data-rel-del-key-auto>
+                        <input name="${name}.dating.amount" data-rel-del-key-auto>
                       </td>
                     </tr>
                   </tbody>
@@ -117,11 +134,11 @@ window.jQuery && (function ($) {
                   </tfood>
                 </table>
               `).find('table').on('change keyup', function () {
-                let sum = $(`[name="${name}.amout"]`).map(function () {
+                let sum = $(`[name="${name}.dating.amount"]`).map(function () {
                   return +this.value || 0;
                 }).reduce((p, e) => p + e);
                 $('[data-pane="sum"]', this).html(sum);
-              });
+              }).trigger('change');
               break;
           }
         }
@@ -140,7 +157,7 @@ window.jQuery && (function ($) {
         change() {
           switch (this.nodeName.toLocaleLowerCase()) {
             case 'select':
-              if(this.value === '+') {
+              if (this.value === '+') {
                 let i = document.createElement('input');
                 i.setAttribute('name', 'plan.finerate');
                 this.replaceWith(i);
@@ -148,7 +165,7 @@ window.jQuery && (function ($) {
               }
               break;
             case 'input':
-              if(!this.value || +this.value === 1.25 || +this.value === 1.5) {
+              if (!this.value || +this.value === 1.25 || +this.value === 1.5) {
                 this.replaceWith($(`
                   <select name="plan.finerate">
                     <option value=""></option>

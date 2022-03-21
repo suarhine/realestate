@@ -21,8 +21,12 @@ public class Lookup {
         return model(ContractType.class).finds(entry("active", true), order("id"));
     }
 
-    public List<ContractFeeType> getContractFeeType() {
-        return model(ContractFeeType.class).finds(entry("active", true), order("id"));
+    public List<ContractAppointmentType> getContractAppointmentType() {
+        return model(ContractAppointmentType.class).finds(entry("active", true), order("id"));
+    }
+
+    public List<ContractAppointmentFeeType> getContractAppointmentFeeType() {
+        return model(ContractAppointmentFeeType.class).finds(entry("active", true), order("id"));
     }
 
     public List<ContractRealestateType> getContractRealestateType() {

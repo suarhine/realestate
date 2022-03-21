@@ -6,15 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="p" uri="/page" %>
 <%@taglib prefix="f" uri="/functions" %>
+<%@taglib prefix="ui" uri="/contract" %>
 <jsp:useBean id="l" class="org.realestate.view.bean.Lookup" />
 <jsp:useBean id="o" class="org.realestate.view.bean.Option" />
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="module" src="index.js"></script>
     <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js"></script>
     <title>JSP Page</title>
   </head>
   <body data-page="input">
@@ -202,9 +204,18 @@
           </tr>
           <tr>
             <td>จำนวนเนื่อที่ทรัพสินที่เช่าประมาณ</td>
-            <td><input name="realestate.space_rai" value="${find.contractRealestate.space >= 400 ? f:format(find.contractRealestate.space / 400, '0') : ''}" type="text" pattern="\d+" />ไร่</td>
-            <td><input name="realestate.space_ngan" value="${find.contractRealestate.space >= 100 ? f:format(find.contractRealestate.space % 400 / 100, '0') : ''}" type="text" pattern="[0-3]" />งาน</td>
-            <td><input name="realestate.space_sqwah" value="${f:format(find.contractRealestate.space % 100, '.####')}" type="text" pattern="\d\d(\.\d+)?" />ตรว.</td>
+            <td><input name="realestate.space_rai"
+                       value="${find.contractRealestate.space >= 400 ? f:format(find.contractRealestate.space / 400, '0') : ''}"
+                       type="text"
+                       pattern="\d+" />ไร่</td>
+            <td><input name="realestate.space_ngan"
+                       value="${find.contractRealestate.space >= 100 ? f:format(find.contractRealestate.space % 400 / 100, '0') : ''}"
+                       type="text"
+                       pattern="[0-3]" />งาน</td>
+            <td><input name="realestate.space_sqwah"
+                       value="${f:format(find.contractRealestate.space % 100, '.####')}"
+                       type="text"
+                       pattern="\d\d(\.\d+)?" />ตรว.</td>
           </tr>
           <tr>
             <td>วัตถุประสงค์เพื่อ</td>
@@ -212,7 +223,8 @@
               <select name="objective">
                 <option value=""></option>
                 <c:forEach var="i" items="${l.contractObjective}">
-                    <option value="${i.id}" ${i.additional ? 'data-enable="objective_text"' : ''} ${find.objective == i ? 'selected' : ''}>${i.label}</option>
+                    <option value="${i.id}"
+                            ${i.additional ? 'data-enable="objective_text"' : ''} ${find.objective == i ? 'selected' : ''}>${i.label}</option>
                 </c:forEach>
               </select>
             </td>
@@ -239,91 +251,40 @@
             <td>ระยะเวลาการเช่า</td>
             <td data-pane="rental-period"></td>
           </tr>
-          <tr>
-            <td>ค่าเช่า</td>
-            <td>
-              <select name="rental_fee_type" data-fee-detail="rental_fee">
-                <option value=""></option>
-                <c:forEach var="i" items="${l.contractFeeType}">
-                    <option value="${i.id}" ${find.rentalFeeType == i ? 'selected' : ''}>${i.label}</option>
-                </c:forEach>
-              </select>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td>ค่าผ่อนชำระค่าเช่า</td>
-            <td>
-              <select name="installment_rental_fee_type" data-fee-detail>
-                <option value=""></option>
-                <c:forEach var="i" items="${l.contractFeeType}">
-                    <option value="${i.id}" ${find.installmentRentalFeeType == i ? 'selected' : ''}>${i.label}</option>
-                </c:forEach>
-              </select>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td>ค่าตอบแทน<input name="commission_label" value="${find.commissionLabel}" type="text" /></td>
-            <td>
-              <select name="commission_fee_type" data-fee-detail>
-                <option value=""></option>
-                <c:forEach var="i" items="${l.contractFeeType}">
-                    <option value="${i.id}" ${find.commissionFeeType == i ? 'selected' : ''}>${i.label}</option>
-                </c:forEach>
-              </select>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td>ค่าใช้ประโยชน์</td>
-            <td>
-              <select name="utilization_fee_type" data-fee-detail>
-                <option value=""></option>
-                <c:forEach var="i" items="${l.contractFeeType}">
-                    <option value="${i.id}" ${find.utilizationFeeType == i ? 'selected' : ''}>${i.label}</option>
-                </c:forEach>
-              </select>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"></td>
-          </tr>
-          <tr>
-            <td>ค่าเช่าช่วง</td>
-            <td>
-              <select name="period_rental_fee_type" data-fee-detail>
-                <option value=""></option>
-                <c:forEach var="i" items="${l.contractFeeType}">
-                    <option value="${i.id}" ${find.periodRentalFeeType == i ? 'selected' : ''}>${i.label}</option>
-                </c:forEach>
-              </select>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"></td>
-          </tr>
+          <c:forEach var="i" items="${l.contractAppointmentType}">
+              <p:declare appointment="${ui:appointment(find.contractAppointmentList, i)}"
+                         dating="${ui:dating(find.contractAppointmentDatingList, i)}">
+                  <tr>
+                    <td>
+                      ${i.label}
+                      <c:if test="${i.labelable}">
+                          <input name="${i.code}.label" value="${appointment.label}" type="text" />
+                      </c:if>
+                    </td>
+                    <td>
+                      <select name="${i.code}.fee_type" data-fee-detail="${i.code}">
+                        <option value=""></option>
+                        <c:forEach var="i" items="${l.contractAppointmentFeeType}">
+                            <option value="${i.id}"
+                                    ${appointment.feeType == i ? f:concat(
+                                      'selected data-amount="',
+                                      f:format(appointment.amount, '0.##'),
+                                      '" data-dating="',
+                                      f:parse('html', ui:dating_json(dating), ''),
+                                      '"'
+                                      ) : ''}>${i.label}</option>
+                        </c:forEach>
+                      </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td colspan="3"></td>
+                  </tr>
+              </p:declare>
+          </c:forEach>
           <tr>
             <td colspan="4">ชำระค่าเช่าล่วงหน้า ณ วันทำสัญญา</td>
           </tr>
@@ -366,7 +327,8 @@
               <select name="plan.deadline_yearly">
                 <option value="">ค่าเริ่มต้นเป็นเดือนที่ลงสัญญา</option>
                 <c:forEach var="i" items="${o.month}">
-                    <option value="${i.value}" ${find.contractPlan.deadlineYearly == i.value ? 'selected' : ''}>${i.label}</option>
+                    <option value="${i.value}"
+                            ${find.contractPlan.deadlineYearly == i.value ? 'selected' : ''}>${i.label}</option>
                 </c:forEach>
               </select>
               ของปีถัดไป</td>
@@ -379,15 +341,19 @@
           <tr>
             <td>อัตราชำระเบี้ยปรับ</td>
             <td colspan="3">
-              ร้อยละ <c:if test="${find.contractPlan.finerate == 1.25 || find.contractPlan.finerate == 1.5 || find.contractPlan.finerate == null}">
-                  <select name="plan.finerate">
-                    <option value=""></option>
-                    <option value="1.25" ${find.contractPlan.finerate == 1.25 ? 'selected' : ''}>1.25</option>
-                    <option value="1.50" ${find.contractPlan.finerate == 1.5 ? 'selected' : ''}>1.50</option>
-                    <option value="+">...</option>
-                  </select>
-              </c:if><c:if test="${!(find.contractPlan.finerate == 1.25 || find.contractPlan.finerate == 1.5 || find.contractPlan.finerate == null)}">
-                  <input name="plan.finerate" value="${find.contractPlan.finerate}" />
+              ร้อยละ <c:if test="${find.contractPlan.finerate == 1.25
+                                   || find.contractPlan.finerate == 1.5
+                                   || find.contractPlan.finerate == null}">
+                    <select name="plan.finerate">
+                      <option value=""></option>
+                      <option value="1.25" ${find.contractPlan.finerate == 1.25 ? 'selected' : ''}>1.25</option>
+                      <option value="1.50" ${find.contractPlan.finerate == 1.5 ? 'selected' : ''}>1.50</option>
+                      <option value="+">...</option>
+                    </select>
+              </c:if><c:if test="${!(find.contractPlan.finerate == 1.25
+                            || find.contractPlan.finerate == 1.5
+                            || find.contractPlan.finerate == null)}">
+                    <input name="plan.finerate" value="${find.contractPlan.finerate}" />
               </c:if>ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
             </td>
           </tr>
@@ -442,7 +408,8 @@
         <tfoot>
           <tr>
             <td colspan="4" align="right">
-              <button type="button" onclick="location.reload()">คืนค่า</button>
+              <button type="button" data-rel-back>ย้อนกลับ</button>
+              <button type="button" data-rel-reload>คืนค่า</button>
               <button>บันทึก</button>
             </td>
           </tr>
