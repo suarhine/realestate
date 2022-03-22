@@ -18,15 +18,24 @@
     @ECHO *> "%~dp0node_modules\.gitignore"
     @EXIT /b 0
 
+:x_--scss
+    @SET "INCLUDE_SCSS=true"
+    @EXIT /b 0
+
 :x_--exec-with-nodemon
 :x_-x
 :x_--exec
     @CALL :x-uglify "WEB-INF\jsp" "."
     @CALL :x-uglify "WEB-INF\js" "js"
+    @IF "%INCLUDE_SCSS%" == "true" (
+        @CALL :x-scss "WEB-INF\jsp" "."
+        @CALL :x-scss "WEB-INF\scss" "css"
+    )
     @EXIT /b 0
+
 :x_-w
 :x_--watch
-    @CALL npx nodemon -x ".nodemon.bat --exec-with-nodemon" --watch "%ROOT%\WEB-INF" --watch "%~dpnx0"
+    @CALL npx nodemon -x ".nodemon.bat --scss --exec-with-nodemon" --watch "%ROOT%\WEB-INF" --watch "%~dpnx0"
     @EXIT /b 0
 
 ::private
@@ -46,4 +55,12 @@
         @ECHO   }>> "%~1"
     )
     @ECHO }>> "%~1"
+    @EXIT /b 0
+
+:x-scss
+    @IF NOT "%NO_SOURCE_MAP%" == "true" (
+        @CALL npx sass --source-map-urls absolute "%ROOT%\%~1":"%ROOT%\%~2"
+    ) else (
+        @CALL npx sass --no-source-map --style compressed "%ROOT%\%~1":"%ROOT%\%~2"
+    )
     @EXIT /b 0
