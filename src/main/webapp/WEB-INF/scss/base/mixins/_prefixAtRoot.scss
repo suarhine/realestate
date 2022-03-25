@@ -1,0 +1,11 @@
+// Mixins Prefix at root
+// -------------------------------
+@mixin prefixAtRoot($prefix:null) {
+  @if($prefix) {
+    @at-root #{if(not & , $prefix , selector-append(&,$prefix))} {
+      @content;
+    }
+  } @else {
+      @warn '$prefix is null'
+  }
+}

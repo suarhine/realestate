@@ -1,0 +1,7 @@
+// No Select
+// -------------------------------
+@mixin noSelect() {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  user-select:none;
+}

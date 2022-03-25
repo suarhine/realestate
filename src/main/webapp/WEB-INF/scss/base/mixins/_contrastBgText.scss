@@ -1,0 +1,8 @@
+// Contrast Background Text Color
+
+@mixin contrastBgText($bgColor,$bgShow:true) {
+  color: contrastColor($bgColor);
+  @if ($bgShow){
+    background: $bgColor;
+  }
+}

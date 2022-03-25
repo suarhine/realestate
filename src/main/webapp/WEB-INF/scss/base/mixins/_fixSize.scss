@@ -1,0 +1,37 @@
+// Mixins fixSize
+// -------------------------------
+
+@mixin fixHeight($size) {
+  height: $size;
+  min-height: $size;
+  max-height: $size;
+}
+@mixin fixWidth($size) {
+  width: $size;
+  min-width: $size;
+  max-width: $size;
+}
+@mixin fixSquare($size) {
+  width: $size;
+  min-width: $size;
+  max-width: $size;
+}
+
+@mixin fixHeight-clear() {
+  height: initial;
+  min-height: initial;
+  max-height: initial;
+}
+@mixin fixWidth-clear() {
+  width: initial;
+  min-width: initial;
+  max-width: initial;
+}
+@mixin fixSquare-clear() {
+  height: initial;
+  min-height: initial;
+  max-height: initial;
+  width: initial;
+  min-width: initial;
+  max-width: initial;
+}

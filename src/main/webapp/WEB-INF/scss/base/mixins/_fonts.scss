@@ -1,0 +1,91 @@
+// Mixins Fonts
+// -------------------------------
+$fontDefault:(
+Roboto,
+RobotoDraft,
+Helvetica,
+'Helvetica Neue',
+Arial,
+sans-serif,
+system-ui,
+-apple-system,
+BlinkMacSystemFont,
+'Segoe UI',
+'Apple Color Emoji',
+'Segoe UI Emoji',
+'Segoe UI Symbol',
+'Noto Color Emoji'
+);
+
+$fontStyle-variables:(
+'defaultStyle' : (
+  'font-size'      : 16px,
+  'font-style'     : normal,
+  'font-variant'   : normal,
+  'font-weight'    : normal,
+  'text-transform' : none),
+'textStyle' : (
+  'color'       : #000,
+  'font-family' : '',
+  'fontSmoot'   : false),
+'iconStyle' : (
+  'color'       : #000,
+  'font-family' : 'fontIconName',
+  'fontSmoot'   : true)) !default;
+
+@function fontFamilyList($fontName) {
+  @if($fontName == '') {
+    @return $fontDefault
+  } @else {
+    @if(index($fontDefault, $fontName) == null){
+      @return join($fontName , $fontDefault)
+    }@else {
+      $indexHas: index($fontDefault, $fontName);
+      $newFontDefault: remove-nth($fontDefault, $indexHas);
+      @return join($fontName, $newFontDefault)
+    }
+  }
+}
+
+@mixin fontSmoot() {
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+$defaultStyle : map-get($fontStyle-variables, 'defaultStyle');
+$textStyle : map-get($fontStyle-variables, 'textStyle');
+$iconStyle : map-get($fontStyle-variables, 'iconStyle');
+
+@mixin fontDefaultStyle($property : ()) {
+  $newDefaultStyle: map-merge($defaultStyle, $property);
+  $newDefaultStyles: map-remove($newDefaultStyle, 'fontSmoot');
+
+  @each $property,
+  $value in $newDefaultStyles {
+    #{$property}: $value;
+  }
+
+  @if(map-get($newDefaultStyle, 'fontSmoot')==true) {
+    @include fontSmoot();
+  }
+}
+@mixin fontFamily($property : ()) {
+  $newTextStyle: map-merge($textStyle, $property);
+  font-family: fontFamilyList(map-get($newTextStyle, 'font-family'));
+}
+
+@mixin textStyle($property : ()) {
+  $newTextStyle: map-merge($textStyle, $property);
+  color: map-get($newTextStyle, 'color');
+  // font-family: map-get($newTextStyle, 'font-family'), $fontDefault;
+  font-family: fontFamilyList(map-get($newTextStyle, 'font-family'));
+  @include fontDefaultStyle(('fontSmoot': map-get($newTextStyle, 'fontSmoot'), 'font-size': map-get($newTextStyle, 'font-size')));
+}
+
+@mixin iconStyle($property : ()) {
+  $newIconStyle: map-merge($iconStyle, $property);
+  color: map-get($newIconStyle, 'color');
+  font-family: map-get($newIconStyle, 'font-family');
+  @include fontDefaultStyle(('fontSmoot': map-get($newIconStyle, 'fontSmoot'), 'font-size': map-get($newIconStyle, 'font-size')));
+}

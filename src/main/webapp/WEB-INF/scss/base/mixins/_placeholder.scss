@@ -1,0 +1,20 @@
+// Placeholder style
+// -------------------------------
+// HTU @include placeholder{style};
+@mixin placeholder {
+  @include prefixAtRoot(':-moz-placeholder') {
+    @content;
+  }
+
+  @include prefixAtRoot('::-moz-placeholder') {
+    @content;
+  }
+
+  @include prefixAtRoot(':-ms-input-placeholder') {
+    @content;
+  }
+
+  @include prefixAtRoot('::-webkit-input-placeholder') {
+    @content;
+  }
+}

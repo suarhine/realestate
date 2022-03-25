@@ -1,0 +1,36 @@
+// textDot
+// -------------------------------
+$textDot-variables:(
+'clear'         : false,
+'overflow'      : hidden,
+'text-overflow' : ellipsis,
+'white-space'   : nowrap,
+'width'         : 100%
+) !default;
+
+@mixin textDot($property: ()) {
+  $mapMerge : map-merge($textDot-variables, $property);
+  $getClear : map-get($mapMerge, 'clear');
+  $mapRemove: map-remove($mapMerge, 'clear');
+  @if($getClear == true) {
+    @warn $property;
+    @if(map-has-key($property, 'width')){
+      @each $property, $value in $mapRemove {
+        @if($property != 'width'){
+          $value: initial;
+        }
+        #{$property}: $value;
+      }
+    } @else {
+        @each $property, $value in $mapRemove {
+          #{$property}: initial;
+        }
+    }
+  } @else if($getClear == false) {
+      @each $property, $value in $mapRemove {
+        #{$property}: $value;
+      }
+  } @else {
+    @warn $getClear 'not match true or false value in property clear';
+  }
+}

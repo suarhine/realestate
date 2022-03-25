@@ -1,0 +1,5 @@
+@mixin colorHSL($color, $colorH, $colorS, $colorL) {
+  #{$color}-h: #{$colorH};
+  #{$color}-s: #{$colorS};
+  #{$color}-l: #{$colorL};
+}

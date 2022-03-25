@@ -1,0 +1,34 @@
+// Calculator Unit
+// -------------------------------
+@use "sass:math";
+
+$browserContext--calc:16px !default;
+// Calculator PX to EM
+// -------------------------------
+@function em($pixel, $parentContext: $browserContext--calc) {
+  $pixel: stripUnit($pixel);
+  $parentContext: stripUnit($parentContext);
+  @return math.div($pixel, $parentContext) * 1em;
+}
+
+// Calculator PX to REM
+// -------------------------------
+@function rem($pixel, $browserContext: $browserContext--calc) {
+  $pixel: em($pixel, $browserContext);
+  $pixel: stripUnit($pixel);
+  @return $pixel * 1rem;
+}
+
+// Calculator EM or REM to PX
+// -------------------------------
+@function px($em, $parentContext: $browserContext--calc, $browserContext: $browserContext--calc) {
+  $em: stripUnit($em);
+  $parentContext: stripUnit($parentContext);
+  $browserContext: stripUnit($browserContext);
+  @if $parentContext != $browserContext {
+    @return $em * $parentContext * 1px;
+  }
+  @else {
+    @return $em * $browserContext * 1px;
+  }
+}
