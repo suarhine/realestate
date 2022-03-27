@@ -1,5 +1,11 @@
+/** External Project **/
 @import "../../../../../web/src/main/webapp/css/index.css";
 
-
-@import "template/layout.scss";
-@import "template/style.scss";
+/** Base **/
+@import 'base/index';
+/** Variables **/
+@import 'variables/index';
+/** Template **/
+@import 'template/index';
+/** Compoenent **/
+@import 'components/index';

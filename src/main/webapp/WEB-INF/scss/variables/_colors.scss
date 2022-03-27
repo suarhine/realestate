@@ -1,0 +1,12 @@
+:root {
+  --color-primary: #1395ec;
+  @include colorHSL(--color-primary, 204, 85%, 50%);
+  --color-text: #303030;
+  @include colorHSL(--color-text, 0, 0%, 19%);
+  // Contrast Scale
+  --color-contrast-higher: #303030;
+  --color-contrast-high: #525252;
+  --color-contrast-medium: #878787;
+  --color-contrast-low: #c2c2c2;
+  --color-contrast-lower: #f1f1f1;
+}

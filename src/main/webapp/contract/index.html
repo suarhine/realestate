@@ -1,125 +1,101 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="index.css" />
-    <script type="module" src="index.js"></script>
-    <title>JSP Page</title>
-  </head>
-  <body>
-    <table class="list -border">
-      <thead>
-        <tr>
-          <td colspan="6">
-            <form class="full-left">
-              <input name="q"
-                     value=""
-                     type="search"
-                     placeholder="ค้าหา..."
-                     class="-search-box" />
-              <button>ค้น</button>
-              <button name="id">เพิ่มสัญญาใหม่</button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>เลขที่สัญญา</td>
-          <td>ลงวันที่</td>
-          <td>สัญญาของ</td>
-          <td>ผู้เช่า</td>
-          <td>วันที่เริ่มต้นสัญญา</td>
-          <td>วันที่สิ้นสุดสัญญา</td>
-        </tr>
-      </thead>
-      <tbody>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>1</td>
-              <td>2022-03-01</td>
-              <td>30</td>
-              <td>5</td>
-              <td>2022-03-01</td>
-              <td>2027-02-28</td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>asd</td>
-              <td></td>
-              <td></td>
-              <td>asd</td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>1234</td>
-              <td></td>
-              <td></td>
-              <td>ทดสอบ</td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>asd</td>
-              <td></td>
-              <td></td>
-              <td>qwe</td>
-              <td></td>
-              <td></td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>ปป. 1234</td>
-              <td>2021-11-07</td>
-              <td></td>
-              <td>ทดสอบ</td>
-              <td>2021-01-01</td>
-              <td>2021-12-31</td>
-            </tr>
-        
-            <tr onclick="location.href = 'input.html'">
-              <td>qwe</td>
-              <td>2022-03-09</td>
-              <td>0001</td>
-              <td>qwe</td>
-              <td>2022-01-01</td>
-              <td>2022-12-31</td>
-            </tr>
-        
-      </tbody>
-    </table>
-  </body>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="index.css" />
+  <script type="module" src="index.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>JSP Page</title>
+</head>
+
+<body class="app-content-preview">
+  <form class="search-list">
+    <div class="search-list--box">
+      <input name="q" value="" type="search" placeholder="ค้าหา..." />
+      <button class="btn">
+
+        <i class="material-icons">search</i>
+        ค้นหา</button>
+    </div>
+    <div class="search-list--control">
+
+      <button class="btn" name="id">
+        <i class="material-icons">add</i>
+        เพิ่มสัญญาใหม่
+      </button>
+    </div>
+
+  </form>
+  <table class="tb-list list -border">
+    <thead>
+      <tr>
+        <td>เลขที่สัญญา</td>
+        <td>ลงวันที่</td>
+        <td>สัญญาของ</td>
+        <td>ผู้เช่า</td>
+        <td>วันที่เริ่มต้นสัญญา</td>
+        <td>วันที่สิ้นสุดสัญญา</td>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>1</td>
+        <td>2022-03-01</td>
+        <td>30</td>
+        <td>5</td>
+        <td>2022-03-01</td>
+        <td>2027-02-28</td>
+      </tr>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>asd</td>
+        <td></td>
+        <td></td>
+        <td>asd</td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>1234</td>
+        <td></td>
+        <td></td>
+        <td>ทดสอบ</td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>asd</td>
+        <td></td>
+        <td></td>
+        <td>qwe</td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>ปป. 1234</td>
+        <td>2021-11-07</td>
+        <td></td>
+        <td>ทดสอบ</td>
+        <td>2021-01-01</td>
+        <td>2021-12-31</td>
+      </tr>
+
+      <tr onclick="location.href = 'input.html'">
+        <td>qwe</td>
+        <td>2022-03-09</td>
+        <td>0001</td>
+        <td>qwe</td>
+        <td>2022-01-01</td>
+        <td>2022-12-31</td>
+      </tr>
+
+    </tbody>
+  </table>
+</body>
+
 </html>

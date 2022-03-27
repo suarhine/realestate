@@ -1,0 +1,6 @@
+:root {
+  --thead-bg: #94d4ff;
+  @include colorHSL(--thead-bg, 204, 100%, 79%);
+  --tr-bg-1: #f7f7f7;
+  --tr-bg-2: #eef8ff;
+}

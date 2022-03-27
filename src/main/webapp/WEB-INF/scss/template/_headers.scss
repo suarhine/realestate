@@ -1,0 +1,22 @@
+.headers {
+  max-width: var(--app-content-size);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--app-space)/2) var(--app-space);
+
+  &--logo {
+    height: 60px;
+    margin-right: var(--app-space);
+
+    img {
+      height: 100%;
+    }
+  }
+
+  &--name {
+    color: var(--color-primary);
+    font-size: var(--text-xl);
+    font-weight: 500;
+  }
+}

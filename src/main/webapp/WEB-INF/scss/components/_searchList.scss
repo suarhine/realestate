@@ -1,0 +1,21 @@
+.search-list {
+  display: flex;
+  margin-bottom: calc(var(--app-space) * 2);
+
+  &--box {
+    flex: 1;
+    margin-right: var(--app-space);
+    display: flex;
+
+    input {
+      flex: 1;
+      margin-right: calc(var(--app-space) / 2);
+    }
+  }
+
+  &--control {
+    .btn {
+      margin-left: calc(var(--app-space) / 2);
+    }
+  }
+}
