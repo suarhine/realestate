@@ -12,6 +12,7 @@ import static org.web.jsp.fn.Functions.pivot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.function.Function;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,30 +52,36 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             }
             jsp(request, response, "input.jsp");
         } else {
-            Criteria criteria = null;
+            Criteria criteria;
             if (flag(request, String.class, "q")) {
+                criteria = new Criteria.Blank();
                 for (var q : param(request, "q").split("\\s+")) {
-                    Criteria subcriteria = null;
-                    for (var field : new String[]{
-                        "code",
-                        "contractLessee.name",
-                        "contractLessee.representative",
-                        "contractRealestate.name"
-                    }) {
-                        try {
-                            subcriteria = subcriteria.or(field, "LIKE", "%" + q + "%");
-                        } catch (NullPointerException x) {
-                            subcriteria = Criteria.entry(field, "LIKE", "%" + q + "%");
+                    criteria = criteria.and((Function<Object, String> arguments) -> {
+                        var var = arguments.apply("%" + q + "%");
+                        var builder = new StringBuilder();
+                        for (var field : new String[]{
+                            "code"
+                        }) {
+                            builder.append(" OR ").append(field).append(" LIKE ").append(var);
                         }
-                    }
-                    try {
-                        criteria = criteria.and(subcriteria.blocked());
-                    } catch (NullPointerException x) {
-                        criteria = subcriteria.blocked();
-                    }
+                        for (var entry : new String[][]{
+                            {"ContractLessee", "id.id", "name,representative"},
+                            {"ContractRealestate", "id.id", "name"}
+                        }) {
+                            var b = new StringBuilder();
+                            for (var field : entry[2].split("\\s*,\\s*")) {
+                                b.append(" OR s.").append(field).append(" LIKE ").append(var);
+                            }
+                            builder.append(" OR id IN (SELECT s.").append(entry[1])
+                                    .append(" FROM ").append(entry[0])
+                                    .append(" s WHERE ").append(b.delete(0, 4)).append(")");
+                        }
+                        return builder.delete(0, 4).insert(0, "(").append(")");
+                    });
                 }
+            } else {
+                criteria = null;
             }
-//            model(Contract.class).f
             request.setAttribute("finds", model(Contract.class).finds(criteria));
             jsp(request, response);
         }
