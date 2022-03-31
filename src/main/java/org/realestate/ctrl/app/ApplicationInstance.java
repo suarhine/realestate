@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
-import org.persist.model.Model;
+import org.persistence.model.Model;
 
 /**
  *
@@ -37,7 +37,6 @@ public class ApplicationInstance {
                     throw x;
                 }
             }
-
         };
     }
 

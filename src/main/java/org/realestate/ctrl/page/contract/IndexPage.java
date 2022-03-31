@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.persist.model.Model;
+import org.persistence.model.Model.Statement.Criteria;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
 import org.realestate.db.fix.UsersFix;
@@ -51,10 +51,10 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             }
             jsp(request, response, "input.jsp");
         } else {
-            Model.Statement.Criteria criteria = null;
+            Criteria criteria = null;
             if (flag(request, String.class, "q")) {
                 for (var q : param(request, "q").split("\\s+")) {
-                    Model.Statement.Criteria subcriteria = null;
+                    Criteria subcriteria = null;
                     for (var field : new String[]{
                         "code",
                         "contractLessee.name",
@@ -64,13 +64,13 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                         try {
                             subcriteria = subcriteria.or(field, "LIKE", "%" + q + "%");
                         } catch (NullPointerException x) {
-                            subcriteria = Model.Statement.Criteria.entry(field, "LIKE", "%" + q + "%");
+                            subcriteria = Criteria.entry(field, "LIKE", "%" + q + "%");
                         }
                     }
                     try {
-                        criteria = criteria.and(subcriteria);
+                        criteria = criteria.and(subcriteria.blocked());
                     } catch (NullPointerException x) {
-                        criteria = subcriteria;
+                        criteria = subcriteria.blocked();
                     }
                 }
             }
@@ -98,6 +98,30 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
+            if (entity.getContractLessor() == null) {
+                entity.setContractLessor(new ContractLessor(entity));
+            }
+            if (entity.getContractLessee() == null) {
+                entity.setContractLessee(new ContractLessee(entity));
+            }
+            if (entity.getContractLessee().getRegistry() == null) {
+                entity.getContractLessee().setRegistry(new Address());
+            }
+            if (entity.getContractLessee().getContact() == null) {
+                entity.getContractLessee().setContact(new Address());
+            }
+            if (entity.getContractRealestate() == null) {
+                entity.setContractRealestate(new ContractRealestate(entity));
+            }
+            if (entity.getContractRealestate().getAddress() == null) {
+                entity.getContractRealestate().setAddress(new Address());
+            }
+            if (entity.getContractPlan() == null) {
+                entity.setContractPlan(new ContractPlan(entity));
+            }
+            if (entity.getContractCollateral() == null) {
+                entity.setContractCollateral(new ContractCollateral(entity));
+            }
         } else {
             entity = new Contract();
             entity.setContractLessor(new ContractLessor(entity));

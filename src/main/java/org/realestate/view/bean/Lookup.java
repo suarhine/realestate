@@ -4,8 +4,8 @@
  */
 package org.realestate.view.bean;
 
-import static org.persist.model.Model.Statement.Criteria.entry;
-import static org.persist.model.Model.Statement.Expression.order;
+import static org.persistence.model.Model.Statement.Criteria.entry;
+import static org.persistence.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 
 import java.util.List;
