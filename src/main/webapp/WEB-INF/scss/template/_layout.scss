@@ -48,8 +48,10 @@ body {
     padding: calc(var(--app-space) / 2);
 }
 
-
-
+.row {
+    margin-bottom: 10px;
+    display: flex;
+}
 
 
 .list {

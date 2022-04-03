@@ -1,0 +1,63 @@
+.content-form {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  &--group{
+    margin-bottom: calc(var(--app-space) * 6);
+  }
+}
+
+.title-form {
+  font-weight: 600;
+  font-size: var(--text-md);
+  margin-bottom: calc(var(--app-space) * 2);
+}
+
+.input-box {
+  display: flex;
+  align-items: baseline;
+
+
+  &--label {
+    margin-right: 5px;
+    position: relative;
+    padding-right: 10px;
+
+    &::after {
+      content: ':';
+      position: absolute;
+      right: 0;
+      width: 5px;
+    }
+  }
+
+  &--field {
+
+    input,
+    select {
+      width: 100%;
+    }
+  }
+
+  &.--flex1 {
+    flex: 1;
+
+    .input-box {
+      &--label {}
+
+      &--field {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.row {
+  .input-box {
+
+
+    &:not(:last-child) {
+      margin-right: calc(var(--app-space) * 2);
+    }
+  }
+}

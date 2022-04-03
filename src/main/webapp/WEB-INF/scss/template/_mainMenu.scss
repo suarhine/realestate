@@ -23,9 +23,14 @@
       margin-bottom: 5px;
       color: var(--color-primary);
       width: 100%;
+      cursor: pointer;
 
       * {
         color: var(--color-primary);
+      }
+
+      &:hover {
+        background-color: lightness(var(--color-primary), 1.8);
       }
 
       &.--active {

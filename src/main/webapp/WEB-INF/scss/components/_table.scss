@@ -10,12 +10,15 @@
         font-size: var(--text-md);
         font-weight: 500;
         color: rgba(#000, .7);
-        border-bottom: 2px solid lightness(var(--thead-bg), 0.4);;
+        border-bottom: 2px solid lightness(var(--thead-bg), 0.4);
+        ;
       }
     }
   }
 
   tbody {
+    font-size: var(--text-sm);
+
     tr {
       min-height: 35px;
       cursor: pointer;
@@ -29,8 +32,8 @@
       }
 
       td {
-        min-height: 35px;
-        padding: var(--app-space);
+        min-height: 40px;
+        padding: calc(var(--app-space)*1.5) var(--app-space);
       }
     }
   }

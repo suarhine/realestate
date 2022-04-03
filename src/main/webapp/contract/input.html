@@ -1,523 +1,641 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="index.css" />
-    <script type="module" src="index.js"></script>
-    <title>JSP Page</title>
-  </head>
-  <body data-page="input">
-    <form method="post">
-      <input name="id" value="14" type="hidden" />
-      <table class="-no-border">
-        <thead>
-          <tr>
-            <td colspan="4">ข้อมูลสัญญาเช่า</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>ประเภทสัญญาเช่าทรัพย์สิน</td>
-            <td colspan="3">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="index.css" />
+  <script type="module" src="index.js"></script>
+  <title>JSP Page</title>
+</head>
+
+<body data-page="input">
+  <form method="post">
+    <input name="id" value="14" type="hidden" />
+    <div class="tab-stap">
+      <div class="tab-stap--item --active">
+        <div class="stap-number">1</div>
+        <div class="stap-detail">
+          <div class="stap-detail--title">ข้อมูลสัญญาเช่า</div>
+          <!-- <div class="stap-detail--subtitle">ข้อมูลสัญญาเช่า</div> -->
+        </div>
+      </div>
+      <div class="tab-stap--item">
+        <div class="stap-number">2</div>
+        <div class="stap-detail">
+          <div class="stap-detail--title">ข้อมูลทรัพย์สินที่เช่า</div>
+          <!-- <div class="stap-detail--subtitle">ข้อมูลทรัพย์สินที่เช่า</div> -->
+        </div>
+      </div>
+      <div class="tab-stap--item">
+        <div class="stap-number">3</div>
+        <div class="stap-detail">
+          <div class="stap-detail--title">กำหนดการนัดชำระสัญญาเช่า</div>
+          <!-- <div class="stap-detail--subtitle">กำหนดการนัดชำระสัญญาเช่า</div> -->
+        </div>
+      </div>
+      <div class="tab-stap--item">
+        <div class="stap-number">4</div>
+        <div class="stap-detail">
+          <div class="stap-detail--title">หลักประกันสัญญาเช่า</div>
+          <!-- <div class="stap-detail--subtitle">หลักประกันสัญญาเช่า</div> -->
+        </div>
+      </div>
+    </div>
+    <div class="stap-content content-form">
+      <div class="content-form--group">
+        <div class="title-form">ข้อมูลสัญญาเช่า</div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label">
+              ประเภทสัญญาเช่าทรัพย์สิน
+            </div>
+            <div class="input-box--field">
               <select name="type">
                 <option value=""></option>
-                
-                    <option value="1" selected>สัญญาเช่าที่ดิน (แบบ จ.ส.1)</option>
-                
-                    <option value="2" >สัญญาเช่าอาคารหรือสิ่งก่อสร้าง (แบบ จ.ส.1)</option>
-                
-                    <option value="3" >สัญญาก่อสร้างอาคารยกกรรมสิทธิ์ให้กงค์การบริหารส่วนจังหวัด</option>
-                
-                    <option value="4" >สัญญาเช่าพื้นที่ท่าเทียบเรื่อท่องเที่ยวอ่าวฉลอง</option>
-                
+
+                <option value="1" selected>สัญญาเช่าที่ดิน (แบบ จ.ส.1)</option>
+
+                <option value="2">สัญญาเช่าอาคารหรือสิ่งก่อสร้าง (แบบ จ.ส.1)</option>
+
+                <option value="3">สัญญาก่อสร้างอาคารยกกรรมสิทธิ์ให้กงค์การบริหารส่วนจังหวัด</option>
+
+                <option value="4">สัญญาเช่าพื้นที่ท่าเทียบเรื่อท่องเที่ยวอ่าวฉลอง</option>
+
               </select>
-            </td>
-          </tr>
-          <tr>
-            <td>เลขที่สัญญา</td>
-            <td><input name="code" value="1" type="text" /></td>
-            <td>ลงวันที่สัญญา</td>
-            <td><input name="dated" value="2022-03-01" type="date" /></td>
-          </tr>
-          <tr>
-            <td>บันทึกขัอตกลง</td>
-            <td><input name="note" value="2" type="text" /></td>
-            <td>ลงวันที่บันทึกขัอตกลง</td>
-            <td><input name="note_dated" value="2022-03-02" type="date" /></td>
-          </tr>
-          <tr>
-            <td colspan="4">คู่สัญญาระหว่าง</td>
-          </tr>
-          <tr>
-            <td>ผู้ให้เช่า</td>
-            <td colspan="3">องค์การบริหารส่วนจังหวัดภูเก็ต</td>
-          </tr>
-          <tr>
-            <td>ผู้ให้เช่าโดย</td>
-            <td><input name="lessor.name" value="3" type="text" /></td>
-            <td>ตำแหน่ง</td>
-            <td><input name="lessor.role" value="4" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ผู้เช่า</td>
-            <td colspan="3"><input name="lessee.name" value="5" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ผู้เช่าโดย</td>
-            <td><input name="lessee.representative" value="6" type="text" /></td>
-            <td>ตำแหน่ง</td>
-            <td><input name="lessee.representative_role" value="7" type="text" /></td>
-          </tr>
-          <tr>
-            <td colspan="3">หมายเลขบัตรประชาชน / เลขที่จดทะเบียนนิติบุคคล</td>
-            <td><input name="lessee.code" value="8" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ที่อยู่ผู้เช่า</td>
-            <td>ที่อยู่ตามทะเบียนบ้าน</td>
-            <td></td>
-            <td>ที่อยู่ปัจจุบัน</td>
-          </tr>
-          <tr>
-            <td>บ้านเลขที่</td>
-            <td><input name="lessee.registry.house" value="11" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.house" value="12" type="text" /></td>
-          </tr>
-          <tr>
-            <td>หมู่ที่</td>
-            <td><input name="lessee.registry.village" value="13" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.village" value="14" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ตรอก/ซอย</td>
-            <td><input name="lessee.registry.soi" value="15" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.soi" value="16" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ถนน</td>
-            <td><input name="lessee.registry.road" value="17" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.road" value="18" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ตำบล/แขวง</td>
-            <td><input name="lessee.registry.subdistrict" value="19" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.subdistrict" value="20" type="text" /></td>
-          </tr>
-          <tr>
-            <td>อำเภอ/เขต</td>
-            <td><input name="lessee.registry.district" value="21" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.district" value="22" type="text" /></td>
-          </tr>
-          <tr>
-            <td>จังหวัด</td>
-            <td><input name="lessee.registry.province" value="23" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.province" value="24" type="text" /></td>
-          </tr>
-          <tr>
-            <td>รหัสไปรษณีย์</td>
-            <td><input name="lessee.registry.zipcode" value="25" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.zipcode" value="26" type="text" /></td>
-          </tr>
-          <tr>
-            <td>หมายเลขโทรศัพท์</td>
-            <td><input name="lessee.registry.phone" value="27" type="text" /></td>
-            <td></td>
-            <td><input name="lessee.contact.phone" value="28" type="text" /></td>
-          </tr>
-        </tbody>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-box --flex1 ">
+            <div class="input-box--label col-6">
+              เลขที่สัญญา
+            </div>
+            <div class="input-box--field">
+              <input name="code" value="1" type="text" />
+            </div>
+          </div>
+          <div class="input-box col-10">
+            <div class="input-box--label col-13">
+              ลงวันที่สัญญา
+            </div>
+            <div class="input-box--field">
+              <input name="dated" value="2022-03-01" type="date" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label col-6">
+              บันทึกขัอตกลง
+            </div>
+            <div class="input-box--field">
+              <input name="note" value="2" type="text" />
+            </div>
+          </div>
+          <div class="input-box col-10">
+            <div class="input-box--label col-13">
+              ลงวันที่บันทึกขัอตกลง
+            </div>
+            <div class="input-box--field">
+              <input name="note_dated" value="2022-03-02" type="date" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-form--group">
+        <div class="title-form">คู่สัญญาระหว่าง</div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label col-3">ผู้ให้เช่า</div>
+            <div class="input-box--field">องค์การบริหารส่วนจังหวัดภูเก็ต</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label col-6">ผู้ให้เช่าโดย</div>
+            <div class="input-box--field"><input name="lessor.name" value="3" type="text" /></div>
+          </div>
+          <div class="input-box --flex1">
+            <div class="input-box--label">ตำแหน่ง</div>
+            <div class="input-box--field"><input name="lessor.role" value="4" type="text" /></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label col-3">ผู้เช่า</div>
+            <div class="input-box--field"><input name="lessee.name" value="5" type="text" /></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label col-6">ผู้เช่าโดย</div>
+            <div class="input-box--field"><input name="lessee.representative" value="6" type="text" /></div>
+          </div>
+          <div class="input-box --flex1">
+            <div class="input-box--label">ตำแหน่ง</div>
+            <div class="input-box--field"><input name="lessee.representative_role" value="7" type="text" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="content-form--group">
+        <div class="title-form">ที่อยู่ผู้เช่า</div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label">label</div>
+            <div class="input-box--field">field</div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="content-form--group">
+        <div class="title-form">title</div>
+        <div class="row">
+          <div class="input-box --flex1">
+            <div class="input-box--label">label</div>
+            <div class="input-box--field">field</div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+
+
+
+    <table class="-no-border">
+      <thead>
+        <tr>
+          <td colspan="4">ข้อมูลสัญญาเช่า</td>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <td>ประเภทสัญญาเช่าทรัพย์สิน</td>
+          <td colspan="3">
+            <select name="type">
+              <option value=""></option>
+
+              <option value="1" selected>สัญญาเช่าที่ดิน (แบบ จ.ส.1)</option>
+
+              <option value="2">สัญญาเช่าอาคารหรือสิ่งก่อสร้าง (แบบ จ.ส.1)</option>
+
+              <option value="3">สัญญาก่อสร้างอาคารยกกรรมสิทธิ์ให้กงค์การบริหารส่วนจังหวัด</option>
+
+              <option value="4">สัญญาเช่าพื้นที่ท่าเทียบเรื่อท่องเที่ยวอ่าวฉลอง</option>
+
+            </select>
+          </td>
+        </tr> -->
+        <!-- <tr>
+          <td>เลขที่สัญญา</td>
+          <td><input name="code" value="1" type="text" /></td>
+          <td>ลงวันที่สัญญา</td>
+          <td><input name="dated" value="2022-03-01" type="date" /></td>
+        </tr>
+        <tr>
+          <td>บันทึกขัอตกลง</td>
+          <td><input name="note" value="2" type="text" /></td>
+          <td>ลงวันที่บันทึกขัอตกลง</td>
+          <td><input name="note_dated" value="2022-03-02" type="date" /></td>
+        </tr>
+        <tr>
+          <td colspan="4">คู่สัญญาระหว่าง</td>
+        </tr>
+        <tr>
+          <td>ผู้ให้เช่า</td>
+          <td colspan="3">องค์การบริหารส่วนจังหวัดภูเก็ต</td>
+        </tr>
+        <tr>
+          <td>ผู้ให้เช่าโดย</td>
+          <td><input name="lessor.name" value="3" type="text" /></td>
+          <td>ตำแหน่ง</td>
+          <td><input name="lessor.role" value="4" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ผู้เช่า</td>
+          <td colspan="3"><input name="lessee.name" value="5" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ผู้เช่าโดย</td>
+          <td><input name="lessee.representative" value="6" type="text" /></td>
+          <td>ตำแหน่ง</td>
+          <td><input name="lessee.representative_role" value="7" type="text" /></td>
+        </tr>
+        <tr>
+          <td colspan="3">หมายเลขบัตรประชาชน / เลขที่จดทะเบียนนิติบุคคล</td>
+          <td><input name="lessee.code" value="8" type="text" /></td>
+        </tr> -->
+        <tr>
+          <td>ที่อยู่ผู้เช่า</td>
+          <td>ที่อยู่ตามทะเบียนบ้าน</td>
+          <td></td>
+          <td>ที่อยู่ปัจจุบัน</td>
+        </tr>
+        <tr>
+          <td>บ้านเลขที่</td>
+          <td><input name="lessee.registry.house" value="11" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.house" value="12" type="text" /></td>
+        </tr>
+        <tr>
+          <td>หมู่ที่</td>
+          <td><input name="lessee.registry.village" value="13" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.village" value="14" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ตรอก/ซอย</td>
+          <td><input name="lessee.registry.soi" value="15" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.soi" value="16" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ถนน</td>
+          <td><input name="lessee.registry.road" value="17" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.road" value="18" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ตำบล/แขวง</td>
+          <td><input name="lessee.registry.subdistrict" value="19" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.subdistrict" value="20" type="text" /></td>
+        </tr>
+        <tr>
+          <td>อำเภอ/เขต</td>
+          <td><input name="lessee.registry.district" value="21" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.district" value="22" type="text" /></td>
+        </tr>
+        <tr>
+          <td>จังหวัด</td>
+          <td><input name="lessee.registry.province" value="23" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.province" value="24" type="text" /></td>
+        </tr>
+        <tr>
+          <td>รหัสไปรษณีย์</td>
+          <td><input name="lessee.registry.zipcode" value="25" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.zipcode" value="26" type="text" /></td>
+        </tr>
+        <tr>
+          <td>หมายเลขโทรศัพท์</td>
+          <td><input name="lessee.registry.phone" value="27" type="text" /></td>
+          <td></td>
+          <td><input name="lessee.contact.phone" value="28" type="text" /></td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">ทรัพย์สินที่เช่า</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <select name="realestate.type">
+              <option value=""></option>
+
+              <option value="1" selected>ที่ดิน</option>
+
+              <option value="2">อาคารหรือสิ่งก่อสร้าง</option>
+
+              <option value="3">อื่นๆ</option>
+
+            </select>
+          </td>
+          <td colspan="2"><input name="realestate.name" value="30" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ที่ตั้งทรัพย์สินที่เช่า</td>
+          <td></td>
+          <td>บริเวณ</td>
+          <td><input name="realestate.location" value="31" type="text" /></td>
+        </tr>
+        <tr>
+          <td>เลขที่</td>
+          <td><input name="realestate.address.house" value="32" type="text" /></td>
+          <td>หมู่ที่</td>
+          <td><input name="realestate.address.village" value="33" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ตรอก/ซอย</td>
+          <td><input name="realestate.address.soi" value="34" type="text" /></td>
+          <td>ใกล้เคียงกับ</td>
+          <td><input name="realestate.nearby" value="35" type="text" /></td>
+        </tr>
+        <tr>
+          <td>ถนน</td>
+          <td><input name="realestate.address.road" value="36" type="text" /></td>
+          <td>ตำบล/แขวง</td>
+          <td><input name="realestate.address.subdistrict" value="37" type="text" /></td>
+        </tr>
+        <tr>
+          <td>อำเภอ/เขต</td>
+          <td><input name="realestate.address.district" value="38" type="text" /></td>
+          <td>จังหวัด</td>
+          <td><input name="realestate.address.province" value="39" type="text" /></td>
+        </tr>
+        <tr>
+          <td colspan="2">ตั้งอยู่บนที่ดินตรงตามประกาศกระทรวงมหาดไทยลงวันที่</td>
+          <td></td>
+          <td><input name="realestate.moi_declare" value="" type="date" /></td>
+        </tr>
+        <tr>
+          <td>หมายเลขที่ดิน</td>
+          <td><input name="realestate.deed_code" value="40" type="text" /></td>
+          <td>โฉนดที่</td>
+          <td><input name="realestate.deed_no" value="41" type="text" /></td>
+        </tr>
+        <tr>
+          <td>จำนวนเนื่อที่ทรัพสินที่เช่าประมาณ</td>
+          <td><input name="realestate.space_rai" value="2" type="text" pattern="\d+" />ไร่</td>
+          <td><input name="realestate.space_ngan" value="3" type="text" pattern="[0-3]" />งาน</td>
+          <td><input name="realestate.space_sqwah" value="15.0" type="text" pattern="\d\d(\.\d+)?" />ตรว.</td>
+        </tr>
+        <tr>
+          <td>วัตถุประสงค์เพื่อ</td>
+          <td>
+            <select name="objective">
+              <option value=""></option>
+
+              <option value="1" selected>เพื่ออยู่อาศัย</option>
+
+              <option value="2">เพื่อประกอบกิจการต่างๆ</option>
+
+              <option value="3" data-enable="objective_text">เพื่ออื่นๆ</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td><input name="objective_text" value="42" type="text" /></td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <td colspan="4">
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">นัดชำระสัญญาเช่า</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>วันที่เริ่มต้นสัญญาเช่า</td>
+          <td colspan="3"><input name="started" value="2022-03-01" type="date" /></td>
+        </tr>
+        <tr>
+          <td>วันที่สิ้นสุดสัญญาเช่า</td>
+          <td><input name="ended" value="2027-02-28" type="date" /></td>
+          <td>ระยะเวลาการเช่า</td>
+          <td data-pane="rental-period"></td>
+        </tr>
+
+
+        <tr>
+          <td>
+            ค่าเช่า
+
+          </td>
+          <td>
+            <select name="rental_fee.fee_type" data-fee-detail="rental_fee">
+              <option value=""></option>
+
+              <option value="1" selected data-amount="1000"
+                data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2027-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2027-02-01&QUOT;, amount: 1000.0}]">
+                เท่ากันทุกเดือน</option>
+
+              <option value="2">เท่ากันทุกปี</option>
+
+              <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"></td>
+        </tr>
+
+
+
+        <tr>
+          <td>
+            ค่าผ่อนชำระค่าเช่า
+
+          </td>
+          <td>
+            <select name="installment_rental_fee.fee_type" data-fee-detail="installment_rental_fee">
+              <option value=""></option>
+
+              <option value="1">เท่ากันทุกเดือน</option>
+
+              <option value="2" selected data-amount="10000"
+                data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 10000.0}]">
+                เท่ากันทุกปี</option>
+
+              <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"></td>
+        </tr>
+
+
+
+        <tr>
+          <td>
+            ค่าตอบแทน
+
+            <input name="commission_fee.label" value="51" type="text" />
+
+          </td>
+          <td>
+            <select name="commission_fee.fee_type" data-fee-detail="commission_fee">
+              <option value=""></option>
+
+              <option value="1">เท่ากันทุกเดือน</option>
+
+              <option value="2">เท่ากันทุกปี</option>
+
+              <option value="3" selected data-amount="5000"
+                data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 3000.0}]">จำนวนเงินมีการเปลี่ยนแปลง</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"></td>
+        </tr>
+
+
+
+        <tr>
+          <td>
+            ค่าใช้ประโยชน์
+
+          </td>
+          <td>
+            <select name="utilization_fee.fee_type" data-fee-detail="utilization_fee">
+              <option value=""></option>
+
+              <option value="1" selected data-amount="50"
+                data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2027-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2027-02-01&QUOT;, amount: 50.0}]">
+                เท่ากันทุกเดือน</option>
+
+              <option value="2">เท่ากันทุกปี</option>
+
+              <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"></td>
+        </tr>
+
+
+
+        <tr>
+          <td>
+            ค่าเช่าช่วง
+
+          </td>
+          <td>
+            <select name="period_rental_fee.fee_type" data-fee-detail="period_rental_fee">
+              <option value=""></option>
+
+              <option value="1">เท่ากันทุกเดือน</option>
+
+              <option value="2">เท่ากันทุกปี</option>
+
+              <option value="3">จำนวนเงินมีการเปลี่ยนแปลง</option>
+
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"></td>
+        </tr>
+
+
+        <tr>
+          <td colspan="4">ชำระค่าเช่าล่วงหน้า ณ วันทำสัญญา</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            จ่ายล่วงหน้า (ปีที่ 1)
+          </td>
+        </tr>
+        <tr>
+          <td>ระหว่างวันที่</td>
+          <td><input name="plan.prepaid_started" value="" type="date" /></td>
+          <td>จนถึงวันที่</td>
+          <td><input name="plan.prepaid_ended" value="" type="date" /></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            จ่ายปีถัดไป
+          </td>
+        </tr>
+        <tr>
+          <td>ระหว่างวันที่</td>
+          <td><input name="plan.nextpaid_started" value="" type="date" /></td>
+          <td>จนถึงวันที่</td>
+          <td><input name="plan.nextpaid_ended" value="" type="date" /></td>
+        </tr>
+        <tr>
+          <td colspan="4">เงื่อนไขการชำระค่าเช่า</td>
+        </tr>
+        <tr>
+          <td>เป็นรายเดือน</td>
+          <td colspan="3">ภายในวันที่<input name="plan.deadline_monthly" value="1" type="text"
+              placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />ของเดือนถัดไป</td>
+        </tr>
+        <tr>
+          <td>เป็นรายปี</td>
+          <td colspan="3">
+            <!--ทุกวันเริ่มต้นของสัญญาเช่าในแต่ละปี-->
+            ภายในวันที่
+            <input name="plan.deadline_yearly_date" value="1" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />
+            เดือน
+            <select name="plan.deadline_yearly">
+              <option value="">ค่าเริ่มต้นเป็นเดือนที่ลงสัญญา</option>
+
+              <option value="0">มกราคม</option>
+
+              <option value="1">กุมภาพันธ์</option>
+
+              <option value="2" selected>มีนาคม</option>
+
+              <option value="3">เมษายน</option>
+
+              <option value="4">พฤษภาคม</option>
+
+              <option value="5">มิถุนายน</option>
+
+              <option value="6">กรกฎาคม</option>
+
+              <option value="7">สิงหาคม</option>
+
+              <option value="8">กันยายน</option>
+
+              <option value="9">ตุลาคม</option>
+
+              <option value="10">พฤศจิกายน</option>
+
+              <option value="11">ธันวาคม</option>
+
+            </select>
+            ของปีถัดไป
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">เป็นรายงวด (แบ่งชำระเป็นรายงวด ๆ ละเดือน)</td>
+          <td>ภายในวันที่</td>
+          <td><input name="plan.deadline" value="2022-03-31" type="date" /></td>
+        </tr>
+        <tr>
+          <td>อัตราชำระเบี้ยปรับ</td>
+          <td colspan="3">
+            ร้อยละ
+            <select name="plan.finerate">
+              <option value=""></option>
+              <option value="1.25">1.25</option>
+              <option value="1.50" selected>1.50</option>
+              <option value="+">...</option>
+            </select>
+            ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
+          </td>
+        </tr>
         <thead>
-          <tr>
-            <td colspan="4"><hr/></td>
-          </tr>
-          <tr>
-            <td colspan="4">ทรัพย์สินที่เช่า</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td>
-              <select name="realestate.type">
-                <option value=""></option>
-                
-                    <option value="1" selected>ที่ดิน</option>
-                
-                    <option value="2" >อาคารหรือสิ่งก่อสร้าง</option>
-                
-                    <option value="3" >อื่นๆ</option>
-                
-              </select>
-            </td>
-            <td colspan="2"><input name="realestate.name" value="30" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ที่ตั้งทรัพย์สินที่เช่า</td>
-            <td></td>
-            <td>บริเวณ</td>
-            <td><input name="realestate.location" value="31" type="text" /></td>
-          </tr>
-          <tr>
-            <td>เลขที่</td>
-            <td><input name="realestate.address.house" value="32" type="text" /></td>
-            <td>หมู่ที่</td>
-            <td><input name="realestate.address.village" value="33" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ตรอก/ซอย</td>
-            <td><input name="realestate.address.soi" value="34" type="text" /></td>
-            <td>ใกล้เคียงกับ</td>
-            <td><input name="realestate.nearby" value="35" type="text" /></td>
-          </tr>
-          <tr>
-            <td>ถนน</td>
-            <td><input name="realestate.address.road" value="36" type="text" /></td>
-            <td>ตำบล/แขวง</td>
-            <td><input name="realestate.address.subdistrict" value="37" type="text" /></td>
-          </tr>
-          <tr>
-            <td>อำเภอ/เขต</td>
-            <td><input name="realestate.address.district" value="38" type="text" /></td>
-            <td>จังหวัด</td>
-            <td><input name="realestate.address.province" value="39" type="text" /></td>
-          </tr>
-          <tr>
-            <td colspan="2">ตั้งอยู่บนที่ดินตรงตามประกาศกระทรวงมหาดไทยลงวันที่</td>
-            <td></td>
-            <td><input name="realestate.moi_declare" value="" type="date" /></td>
-          </tr>
-          <tr>
-            <td>หมายเลขที่ดิน</td>
-            <td><input name="realestate.deed_code" value="40" type="text" /></td>
-            <td>โฉนดที่</td>
-            <td><input name="realestate.deed_no" value="41" type="text" /></td>
-          </tr>
-          <tr>
-            <td>จำนวนเนื่อที่ทรัพสินที่เช่าประมาณ</td>
-            <td><input name="realestate.space_rai"
-                       value="2"
-                       type="text"
-                       pattern="\d+" />ไร่</td>
-            <td><input name="realestate.space_ngan"
-                       value="3"
-                       type="text"
-                       pattern="[0-3]" />งาน</td>
-            <td><input name="realestate.space_sqwah"
-                       value="15.0"
-                       type="text"
-                       pattern="\d\d(\.\d+)?" />ตรว.</td>
-          </tr>
-          <tr>
-            <td>วัตถุประสงค์เพื่อ</td>
-            <td>
-              <select name="objective">
-                <option value=""></option>
-                
-                    <option value="1"
-                             selected>เพื่ออยู่อาศัย</option>
-                
-                    <option value="2"
-                             >เพื่อประกอบกิจการต่างๆ</option>
-                
-                    <option value="3"
-                            data-enable="objective_text" >เพื่ออื่นๆ</option>
-                
-              </select>
-            </td>
-            <td></td>
-            <td><input name="objective_text" value="42" type="text" /></td>
-          </tr>
-        </tbody>
-        <thead>
-          <tr>
-            <td colspan="4"><hr/></td>
-          </tr>
-          <tr>
-            <td colspan="4">นัดชำระสัญญาเช่า</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>วันที่เริ่มต้นสัญญาเช่า</td>
-            <td colspan="3"><input name="started" value="2022-03-01" type="date" /></td>
-          </tr>
-          <tr>
-            <td>วันที่สิ้นสุดสัญญาเช่า</td>
-            <td><input name="ended" value="2027-02-28" type="date" /></td>
-            <td>ระยะเวลาการเช่า</td>
-            <td data-pane="rental-period"></td>
-          </tr>
-          
-              
-                  <tr>
-                    <td>
-                      ค่าเช่า
-                      
-                    </td>
-                    <td>
-                      <select name="rental_fee.fee_type" data-fee-detail="rental_fee">
-                        <option value=""></option>
-                        
-                            <option value="1"
-                                    selected data-amount="1000" data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2022-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2023-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2024-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2025-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-02-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-04-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-05-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-06-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-07-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-08-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-09-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-10-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-11-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2026-12-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2027-01-01&QUOT;, amount: 1000.0}, {dating: &QUOT;2027-02-01&QUOT;, amount: 1000.0}]">เท่ากันทุกเดือน</option>
-                        
-                            <option value="2"
-                                    >เท่ากันทุกปี</option>
-                        
-                            <option value="3"
-                                    >จำนวนเงินมีการเปลี่ยนแปลง</option>
-                        
-                      </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3"></td>
-                  </tr>
-              
-          
-              
-                  <tr>
-                    <td>
-                      ค่าผ่อนชำระค่าเช่า
-                      
-                    </td>
-                    <td>
-                      <select name="installment_rental_fee.fee_type" data-fee-detail="installment_rental_fee">
-                        <option value=""></option>
-                        
-                            <option value="1"
-                                    >เท่ากันทุกเดือน</option>
-                        
-                            <option value="2"
-                                    selected data-amount="10000" data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 10000.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 10000.0}]">เท่ากันทุกปี</option>
-                        
-                            <option value="3"
-                                    >จำนวนเงินมีการเปลี่ยนแปลง</option>
-                        
-                      </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3"></td>
-                  </tr>
-              
-          
-              
-                  <tr>
-                    <td>
-                      ค่าตอบแทน
-                      
-                          <input name="commission_fee.label" value="51" type="text" />
-                      
-                    </td>
-                    <td>
-                      <select name="commission_fee.fee_type" data-fee-detail="commission_fee">
-                        <option value=""></option>
-                        
-                            <option value="1"
-                                    >เท่ากันทุกเดือน</option>
-                        
-                            <option value="2"
-                                    >เท่ากันทุกปี</option>
-                        
-                            <option value="3"
-                                    selected data-amount="5000" data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 3000.0}]">จำนวนเงินมีการเปลี่ยนแปลง</option>
-                        
-                      </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3"></td>
-                  </tr>
-              
-          
-              
-                  <tr>
-                    <td>
-                      ค่าใช้ประโยชน์
-                      
-                    </td>
-                    <td>
-                      <select name="utilization_fee.fee_type" data-fee-detail="utilization_fee">
-                        <option value=""></option>
-                        
-                            <option value="1"
-                                    selected data-amount="50" data-dating="[{dating: &QUOT;2022-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2022-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2023-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2024-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2025-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-02-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-03-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-04-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-05-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-06-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-07-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-08-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-09-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-10-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-11-01&QUOT;, amount: 50.0}, {dating: &QUOT;2026-12-01&QUOT;, amount: 50.0}, {dating: &QUOT;2027-01-01&QUOT;, amount: 50.0}, {dating: &QUOT;2027-02-01&QUOT;, amount: 50.0}]">เท่ากันทุกเดือน</option>
-                        
-                            <option value="2"
-                                    >เท่ากันทุกปี</option>
-                        
-                            <option value="3"
-                                    >จำนวนเงินมีการเปลี่ยนแปลง</option>
-                        
-                      </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3"></td>
-                  </tr>
-              
-          
-              
-                  <tr>
-                    <td>
-                      ค่าเช่าช่วง
-                      
-                    </td>
-                    <td>
-                      <select name="period_rental_fee.fee_type" data-fee-detail="period_rental_fee">
-                        <option value=""></option>
-                        
-                            <option value="1"
-                                    >เท่ากันทุกเดือน</option>
-                        
-                            <option value="2"
-                                    >เท่ากันทุกปี</option>
-                        
-                            <option value="3"
-                                    >จำนวนเงินมีการเปลี่ยนแปลง</option>
-                        
-                      </select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3"></td>
-                  </tr>
-              
-          
-          <tr>
-            <td colspan="4">ชำระค่าเช่าล่วงหน้า ณ วันทำสัญญา</td>
-          </tr>
           <tr>
             <td colspan="4">
-              จ่ายล่วงหน้า (ปีที่ 1)
+              <hr />
             </td>
-          </tr>
-          <tr>
-            <td>ระหว่างวันที่</td>
-            <td><input name="plan.prepaid_started" value="" type="date" /></td>
-            <td>จนถึงวันที่</td>
-            <td><input name="plan.prepaid_ended" value="" type="date" /></td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              จ่ายปีถัดไป
-            </td>
-          </tr>
-          <tr>
-            <td>ระหว่างวันที่</td>
-            <td><input name="plan.nextpaid_started" value="" type="date" /></td>
-            <td>จนถึงวันที่</td>
-            <td><input name="plan.nextpaid_ended" value="" type="date" /></td>
-          </tr>
-          <tr>
-            <td colspan="4">เงื่อนไขการชำระค่าเช่า</td>
-          </tr>
-          <tr>
-            <td>เป็นรายเดือน</td>
-            <td colspan="3">ภายในวันที่<input name="plan.deadline_monthly" value="1" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />ของเดือนถัดไป</td>
-          </tr>
-          <tr>
-            <td>เป็นรายปี</td>
-            <td colspan="3">
-              <!--ทุกวันเริ่มต้นของสัญญาเช่าในแต่ละปี-->
-              ภายในวันที่
-              <input name="plan.deadline_yearly_date" value="1" type="text" placeholder="ค่าเริ่มต้นเป็นวันที่ลงสัญญา" />
-              เดือน
-              <select name="plan.deadline_yearly">
-                <option value="">ค่าเริ่มต้นเป็นเดือนที่ลงสัญญา</option>
-                
-                    <option value="0"
-                            >มกราคม</option>
-                
-                    <option value="1"
-                            >กุมภาพันธ์</option>
-                
-                    <option value="2"
-                            selected>มีนาคม</option>
-                
-                    <option value="3"
-                            >เมษายน</option>
-                
-                    <option value="4"
-                            >พฤษภาคม</option>
-                
-                    <option value="5"
-                            >มิถุนายน</option>
-                
-                    <option value="6"
-                            >กรกฎาคม</option>
-                
-                    <option value="7"
-                            >สิงหาคม</option>
-                
-                    <option value="8"
-                            >กันยายน</option>
-                
-                    <option value="9"
-                            >ตุลาคม</option>
-                
-                    <option value="10"
-                            >พฤศจิกายน</option>
-                
-                    <option value="11"
-                            >ธันวาคม</option>
-                
-              </select>
-              ของปีถัดไป</td>
-          </tr>
-          <tr>
-            <td colspan="2">เป็นรายงวด (แบ่งชำระเป็นรายงวด ๆ ละเดือน)</td>
-            <td>ภายในวันที่</td>
-            <td><input name="plan.deadline" value="2022-03-31" type="date" /></td>
-          </tr>
-          <tr>
-            <td>อัตราชำระเบี้ยปรับ</td>
-            <td colspan="3">
-              ร้อยละ 
-                    <select name="plan.finerate">
-                      <option value=""></option>
-                      <option value="1.25" >1.25</option>
-                      <option value="1.50" selected>1.50</option>
-                      <option value="+">...</option>
-                    </select>
-              ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
-            </td>
-          </tr>
-        <thead>
-          <tr>
-            <td colspan="4"><hr/></td>
           </tr>
           <tr>
             <td colspan="4">หลักประกันสัญญาเช่า</td>
@@ -562,17 +680,18 @@
           <td>ลงวันที่</td>
           <td><input name="collateral.bank_collateral_dated" value="2022-03-09" type="date" /></td>
         </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="4" align="right">
-              <button type="button" data-rel-back>ย้อนกลับ</button>
-              <button type="button" data-rel-reload>คืนค่า</button>
-              <button>บันทึก</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form>
-  </body>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" align="right">
+            <button type="button" data-rel-back>ย้อนกลับ</button>
+            <button type="button" data-rel-reload>คืนค่า</button>
+            <button>บันทึก</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+</body>
+
 </html>
