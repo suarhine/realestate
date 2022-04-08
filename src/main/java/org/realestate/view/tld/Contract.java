@@ -46,11 +46,29 @@ public class Contract {
 
     public static StringBuilder toContractAppointmentDatingJson(List<ContractAppointmentDating> values) {
         var builder = new StringBuilder();
-        for (var value : values) {
-            builder.append(", {dating: \"").append(
-                    format(value.getPk().getDating(), "yyyy-MM-dd")
-            ).append("\", amount: ").append(value.getAmount()).append("}");
+        try {
+            for (var value : values) {
+                builder.append(", {dating: \"").append(
+                        format(value.getPk().getDating(), "yyyy-MM-dd")
+                ).append("\", amount: ").append(value.getAmount()).append("}");
+            }
+        } catch (NullPointerException x) {
         }
         return builder.delete(0, 2).insert(0, '[').append(']');
+    }
+
+    public static Double summaryContractAppointmentDatingAmount(List<ContractAppointmentDating> values) {
+        try {
+            double amount = 0;
+            for (var value : values) {
+                try {
+                    amount += value.getAmount();
+                } catch (NullPointerException x) {
+                }
+            }
+            return amount;
+        } catch (NullPointerException x) {
+            return null;
+        }
     }
 }

@@ -12,12 +12,13 @@ import static org.web.jsp.fn.Functions.pivot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.function.Function;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.persist.model.Model;
+import org.persistence.model.Model.Statement.Criteria;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
 import org.realestate.db.fix.UsersFix;
@@ -45,37 +46,61 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         if (flag(request, "id")) {
             if (flag(request, int.class, "id")) {
-                request.setAttribute("find", notnull(model(Contract.class).find(
+                attr(request, "find", notnull(model(Contract.class).find(
                         param(request, Integer.class, "id")
                 ), "id = " + param(request, "id")));
             }
             jsp(request, response, "input.jsp");
         } else {
-            Model.Statement.Criteria criteria = null;
+            Criteria criteria = new Criteria.Blank();
             if (flag(request, String.class, "q")) {
                 for (var q : param(request, "q").split("\\s+")) {
-                    Model.Statement.Criteria subcriteria = null;
-                    for (var field : new String[]{
-                        "code",
-                        "contractLessee.name",
-                        "contractLessee.representative",
-                        "contractRealestate.name"
-                    }) {
-                        try {
-                            subcriteria = subcriteria.or(field, "LIKE", "%" + q + "%");
-                        } catch (NullPointerException x) {
-                            subcriteria = Model.Statement.Criteria.entry(field, "LIKE", "%" + q + "%");
+                    criteria = criteria.and((Function<Object, String> arguments) -> {
+                        var var = arguments.apply("%" + q + "%");
+                        var builder = new StringBuilder();
+                        for (var field : new String[]{
+                            "code"
+                        }) {
+                            builder.append(" OR ").append(field).append(" LIKE ").append(var);
                         }
-                    }
-                    try {
-                        criteria = criteria.and(subcriteria);
-                    } catch (NullPointerException x) {
-                        criteria = subcriteria;
-                    }
+                        for (var entry : new String[][]{
+                            {"ContractLessee", "id.id", "name,representative"},
+                            {"ContractRealestate", "id.id", "name"}
+                        }) {
+                            var b = new StringBuilder();
+                            for (var field : entry[2].split("\\s*,\\s*")) {
+                                b.append(" OR s.").append(field).append(" LIKE ").append(var);
+                            }
+                            builder.append(" OR id IN (SELECT s.").append(entry[1])
+                                    .append(" FROM ").append(entry[0])
+                                    .append(" s WHERE ").append(b.delete(0, 4)).append(")");
+                        }
+                        return builder.delete(0, 4).insert(0, "(").append(")");
+                    });
                 }
             }
-//            model(Contract.class).f
-            request.setAttribute("finds", model(Contract.class).finds(criteria));
+            if (flag(request, Integer.class, "type")) {
+                criteria = criteria.and("type.id", param(request, Integer.class, "type"));
+            }
+            if (flag(request, String.class, "realestate.location")) {
+                criteria = criteria.and("contractRealestate.location", param(request, String.class, "realestate.location"));
+            }
+            if (flag(request, String.class, "realestate.address.subdistrict")) {
+                criteria = criteria.and("contractRealestate.address.subdistrict", param(request, String.class, "realestate.address.subdistrict"));
+            }
+//            if (flag(request, String.class, "period")) {
+//                criteria = criteria.and("", "");
+//            }
+            if (flag(request, Integer.class, "period.min")) {
+                criteria = criteria.and("SQL('date_part(''year'', age(?, ?))', ended, started)", ">=", param(request, Integer.class, "period.min"));
+            }
+            if (flag(request, Integer.class, "period.max")) {
+                criteria = criteria.and("SQL('date_part(''year'', age(?, ?))', ended, started)", "<=", param(request, Integer.class, "period.max"));
+            }
+            if (flag(request, Integer.class, "objective")) {
+                criteria = criteria.and("objective.id", param(request, Integer.class, "objective"));
+            }
+            attr(request, "finds", model(Contract.class).finds(criteria instanceof Criteria.Blank ? null : criteria));
             jsp(request, response);
         }
     }
@@ -95,9 +120,41 @@ public class IndexPage extends HttpServlet implements DefaultPage {
 //        var entity = flag(request, Integer.class, "id")
 //                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
 //                : new Contract();
+        if (flag(request, "del")) {
+            if (model(Contract.class, Integer.class).del(param(request, Integer.class, "id"))) {
+                redirect(response, ".");
+                return;
+            } else {
+                throw ApplicationException.Type.uncommited_transaction.dispatch();
+            }
+        }
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
+            if (entity.getContractLessor() == null) {
+                entity.setContractLessor(new ContractLessor(entity));
+            }
+            if (entity.getContractLessee() == null) {
+                entity.setContractLessee(new ContractLessee(entity));
+            }
+            if (entity.getContractLessee().getRegistry() == null) {
+                entity.getContractLessee().setRegistry(new Address());
+            }
+            if (entity.getContractLessee().getContact() == null) {
+                entity.getContractLessee().setContact(new Address());
+            }
+            if (entity.getContractRealestate() == null) {
+                entity.setContractRealestate(new ContractRealestate(entity));
+            }
+            if (entity.getContractRealestate().getAddress() == null) {
+                entity.getContractRealestate().setAddress(new Address());
+            }
+            if (entity.getContractPlan() == null) {
+                entity.setContractPlan(new ContractPlan(entity));
+            }
+            if (entity.getContractCollateral() == null) {
+                entity.setContractCollateral(new ContractCollateral(entity));
+            }
         } else {
             entity = new Contract();
             entity.setContractLessor(new ContractLessor(entity));
@@ -237,9 +294,9 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractCollateral().setBankCollateralDated(param(request, Date.class, "collateral.bank_collateral_dated", "yyyy-MM-dd"));
 
         if (model(Contract.class).put(entity)) {
-            response.sendRedirect(".");
+            redirect(response, ".");
         } else {
-            throw ApplicationException.Type.internal_server_error.dispatch("", null);
+            throw ApplicationException.Type.uncommited_transaction.dispatch("", null);
         }
     }
 

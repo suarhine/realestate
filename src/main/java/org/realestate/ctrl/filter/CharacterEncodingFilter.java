@@ -20,9 +20,6 @@ public class CharacterEncodingFilter implements Filter {
 
     private static final String PAGE_CHARSET = "UTF-8";
 
-    public CharacterEncodingFilter() {
-    }
-
     /**
      *
      * @param request The servlet request we are processing
@@ -50,21 +47,5 @@ public class CharacterEncodingFilter implements Filter {
             HttpServletResponse response
     ) throws IOException, ServletException {
         request.setCharacterEncoding(PAGE_CHARSET);
-    }
-
-    /**
-     * Destroy method for this filter
-     */
-    @Override
-    public void destroy() {
-    }
-
-    /**
-     * Init method for this filter
-     *
-     * @param config
-     */
-    @Override
-    public void init(FilterConfig config) {
     }
 }
