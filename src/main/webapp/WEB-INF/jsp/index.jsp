@@ -20,9 +20,17 @@
         <ul>
           <li>
             <a target="right-pane" href="contract">สัญญาเช่าทรัพย์สิน</a>
+            <ul>
+              <li>
+                <a target="right-pane" href="contract/summary">สรุปยอดรวมสัญญาเช่า</a>
+              </li>
+              <li>
+                <a target="right-pane" href="contract/lessee">สรุปรายชื่อผู้เช่า</a>
+              </li>
+            </ul>
           </li>
           <li>
-            <a target="right-pane" href="income">การรับเงินค่าเช่า</a>
+            <a target="right-pane" href="receipt">การรับเงินค่าเช่า</a>
           </li>
           <li>
             <a target="right-pane" href="overdue">ลูกหนี้ค้างชำระ</a>

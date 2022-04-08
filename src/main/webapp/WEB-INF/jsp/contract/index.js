@@ -1,8 +1,25 @@
 import '../js/index.js';
 import {fn} from '../js/index.js';
+const xport = {event: {}};
 window.jQuery && (function ($) {
-  $(document).listen({
-    '[data-page="input"]': {
+  const event = {
+    '[data-page="index"], [data-pane="lessee"]': {
+      '[name="option"]': xport.event.option = {
+        click() {
+          if (this.dataset.relShowed === undefined) {
+            this.dataset.relShowed = '';
+            this.innerHTML = 'ตัวเลือกน้อยลง';
+            $(this).jump('thead, tbody, tfoot', '[data-pane="option"]').removeAttr('data-rel-hide')
+                .find(':input').prop('disabled', false);
+          } else {
+            delete this.dataset.relShowed;
+            this.innerHTML = 'ตัวเลือกอื่นๆ';
+            $(this).jump('thead, tbody, tfoot', '[data-pane="option"]').attr('data-rel-hide', '')
+                .find(':input').prop('disabled', true);
+          }
+        }
+      }
+    }, '[data-page="input"]': {
       init() {
         $('[name="started"]', this).trigger('change');
       }, '[name="started"], [name="ended"]': {
@@ -179,6 +196,25 @@ window.jQuery && (function ($) {
           }
         }
       }
+    }, '[data-pane="lessee"]': {
+      '[data-rel-select-all]': {
+        change() {
+          $(this).closest('thead').next().find('[name="selected"]').prop('checked', this.checked).trigger('change');
+        }
+      }, '[name="selected"]': {
+        change() {
+          let $this = $(this);
+          $this.closest('tbody').prev().find('[data-rel-select-all]')
+              .prop('checked', $this.jump('tbody', '[name="selected"]:not(:checked)').length === 0);
+          $this.jump('tr', '[data-pane="receive"]').html(this.checked ? function () {
+            return `
+              <input name="${$this.val()}" value="${+this.dataset.amount + +this.dataset.fine}" type="text" />
+            `;
+          } : '');
+        }
+      }
     }
-  });
+  };
+  new URL(import.meta.url).searchParams.get('unbind') === null && $(document).listen(event);
 })(window.jQuery);
+export const {event} = xport;

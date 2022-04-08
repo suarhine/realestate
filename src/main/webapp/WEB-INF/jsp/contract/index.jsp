@@ -6,7 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="p" uri="/page" %>
 <%@taglib prefix="f" uri="/functions" %>
+<jsp:useBean id="l" class="org.realestate.view.bean.Lookup" />
+<jsp:useBean id="o" class="org.realestate.view.bean.Option" />
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,22 +18,12 @@
     <script type="module" src="index.js"></script>
     <title>JSP Page</title>
   </head>
-  <body>
+  <body data-page="index">
+    <h1>สัญญาเช่าทรัพย์สิน</h1>
+    <form id="search"></form>
     <table class="list -border">
       <thead>
-        <tr>
-          <td colspan="6">
-            <form class="full-left">
-              <input name="q"
-                     value="${param.q}"
-                     type="search"
-                     placeholder="ค้าหา..."
-                     class="-search-box" />
-              <button>ค้น</button>
-              <button name="id">เพิ่มสัญญาใหม่</button>
-            </form>
-          </td>
-        </tr>
+        <jsp:include page="index.filter.jsp" />
         <tr>
           <td>เลขที่สัญญา</td>
           <td>ลงวันที่</td>
@@ -44,11 +37,11 @@
         <c:forEach var="i" items="${finds}">
             <tr data-ref="?id=${i.id}">
               <td>${i.code}</td>
-              <td>${f:format(i.dated, 'yyyy-MM-dd')}</td>
+              <td>${f:format(i.dated, 'dd/MM/yyyy', 'th-TH')}</td>
               <td>${i.contractRealestate.name}</td>
               <td>${i.contractLessee.name}</td>
-              <td>${f:format(i.started, 'yyyy-MM-dd')}</td>
-              <td>${f:format(i.ended, 'yyyy-MM-dd')}</td>
+              <td>${f:format(i.started, 'dd/MM/yyyy', 'th-TH')}</td>
+              <td>${f:format(i.ended, 'dd/MM/yyyy', 'th-TH')}</td>
             </tr>
         </c:forEach>
       </tbody>

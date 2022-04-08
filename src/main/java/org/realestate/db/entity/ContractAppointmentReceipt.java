@@ -13,14 +13,14 @@ import javax.persistence.*;
  * @author Pathompong
  */
 @Entity
-@Table(name = "contract_appointment_dating")
+@Table(name = "contract_appointment_receipt")
 @NamedQueries({
-    @NamedQuery(name = "ContractAppointmentDating.findAll", query = "SELECT c FROM ContractAppointmentDating c")})
-public class ContractAppointmentDating implements Serializable {
+    @NamedQuery(name = "ContractAppointmentReceipt.findAll", query = "SELECT c FROM ContractAppointmentReceipt c")})
+public class ContractAppointmentReceipt implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ContractAppointmentDatingPK pk;
+    protected ContractAppointmentReceiptPK pk;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
@@ -29,47 +29,38 @@ public class ContractAppointmentDating implements Serializable {
     private Contract id;
     @JoinColumns({
         @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false),
-        @JoinColumn(name = "type", referencedColumnName = "type", insertable = false, updatable = false)})
+        @JoinColumn(name = "type", referencedColumnName = "type", insertable = false, updatable = false),
+        @JoinColumn(name = "dating", referencedColumnName = "dating", insertable = false, updatable = false)})
     @OneToOne(optional = false)
-    private ContractAppointment ref;
+    private ContractAppointmentDating dating;
     @JoinColumn(name = "type", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ContractAppointmentType type;
+    @JoinColumn(name = "receipt", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Receipt receipt;
 
-    public ContractAppointmentDating() {
+    public ContractAppointmentReceipt() {
     }
 
-    public ContractAppointmentDating(ContractAppointmentDatingPK pk) {
+    public ContractAppointmentReceipt(ContractAppointmentReceiptPK pk) {
         this.pk = pk;
     }
 
-    public ContractAppointmentDating(int id, int type, Date dating) {
-        this.pk = new ContractAppointmentDatingPK(id, type, dating);
+    public ContractAppointmentReceipt(ContractAppointmentReceiptPK pk, Receipt receipt) {
+        this.pk = pk;
+        this.receipt = receipt;
     }
 
-    public ContractAppointmentDating(Contract id, ContractAppointmentType type, Date dating) {
-        try {
-            this.pk = new ContractAppointmentDatingPK(id.getId(), type.getId(), dating);
-        } catch (NullPointerException x) {
-            if (id == null || id.getId() != null) {
-                throw x;
-            }
-            this.pk = new ContractAppointmentDatingPK(0, type.getId(), dating);
-        }
-        this.id = id;
-        this.type = type;
+    public ContractAppointmentReceipt(int id, int type, Date dating) {
+        this.pk = new ContractAppointmentReceiptPK(id, type, dating);
     }
 
-    public ContractAppointmentDating(Contract id, ContractAppointmentType type, Date dating, Double amount) {
-        this(id, type, dating);
-        this.amount = amount;
-    }
-
-    public ContractAppointmentDatingPK getPk() {
+    public ContractAppointmentReceiptPK getPk() {
         return pk;
     }
 
-    public void setPk(ContractAppointmentDatingPK pk) {
+    public void setPk(ContractAppointmentReceiptPK pk) {
         this.pk = pk;
     }
 
@@ -89,12 +80,12 @@ public class ContractAppointmentDating implements Serializable {
         this.id = id;
     }
 
-    public ContractAppointment getRef() {
-        return ref;
+    public ContractAppointmentDating getDating() {
+        return dating;
     }
 
-    public void setRef(ContractAppointment ref) {
-        this.ref = ref;
+    public void setDating(ContractAppointmentDating dating) {
+        this.dating = dating;
     }
 
     public ContractAppointmentType getType() {
@@ -103,6 +94,14 @@ public class ContractAppointmentDating implements Serializable {
 
     public void setType(ContractAppointmentType type) {
         this.type = type;
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
     }
 
     @Override
@@ -115,10 +114,10 @@ public class ContractAppointmentDating implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContractAppointmentDating)) {
+        if (!(object instanceof ContractAppointmentReceipt)) {
             return false;
         }
-        ContractAppointmentDating other = (ContractAppointmentDating) object;
+        ContractAppointmentReceipt other = (ContractAppointmentReceipt) object;
         if ((this.pk == null && other.pk != null) || (this.pk != null && !this.pk.equals(other.pk))) {
             return false;
         }
@@ -127,7 +126,7 @@ public class ContractAppointmentDating implements Serializable {
 
     @Override
     public String toString() {
-        return "ContractAppointmentDating[ " + pk + " ]";
+        return "ContractAppointmentReceipt[ " + pk + " ]";
     }
 
 }

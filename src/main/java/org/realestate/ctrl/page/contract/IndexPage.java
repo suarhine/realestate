@@ -46,15 +46,14 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         if (flag(request, "id")) {
             if (flag(request, int.class, "id")) {
-                request.setAttribute("find", notnull(model(Contract.class).find(
+                attr(request, "find", notnull(model(Contract.class).find(
                         param(request, Integer.class, "id")
                 ), "id = " + param(request, "id")));
             }
             jsp(request, response, "input.jsp");
         } else {
-            Criteria criteria;
+            Criteria criteria = new Criteria.Blank();
             if (flag(request, String.class, "q")) {
-                criteria = new Criteria.Blank();
                 for (var q : param(request, "q").split("\\s+")) {
                     criteria = criteria.and((Function<Object, String> arguments) -> {
                         var var = arguments.apply("%" + q + "%");
@@ -79,10 +78,29 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                         return builder.delete(0, 4).insert(0, "(").append(")");
                     });
                 }
-            } else {
-                criteria = null;
             }
-            request.setAttribute("finds", model(Contract.class).finds(criteria));
+            if (flag(request, Integer.class, "type")) {
+                criteria = criteria.and("type.id", param(request, Integer.class, "type"));
+            }
+            if (flag(request, String.class, "realestate.location")) {
+                criteria = criteria.and("contractRealestate.location", param(request, String.class, "realestate.location"));
+            }
+            if (flag(request, String.class, "realestate.address.subdistrict")) {
+                criteria = criteria.and("contractRealestate.address.subdistrict", param(request, String.class, "realestate.address.subdistrict"));
+            }
+//            if (flag(request, String.class, "period")) {
+//                criteria = criteria.and("", "");
+//            }
+            if (flag(request, Integer.class, "period.min")) {
+                criteria = criteria.and("SQL('date_part(''year'', age(?, ?))', ended, started)", ">=", param(request, Integer.class, "period.min"));
+            }
+            if (flag(request, Integer.class, "period.max")) {
+                criteria = criteria.and("SQL('date_part(''year'', age(?, ?))', ended, started)", "<=", param(request, Integer.class, "period.max"));
+            }
+            if (flag(request, Integer.class, "objective")) {
+                criteria = criteria.and("objective.id", param(request, Integer.class, "objective"));
+            }
+            attr(request, "finds", model(Contract.class).finds(criteria instanceof Criteria.Blank ? null : criteria));
             jsp(request, response);
         }
     }
@@ -102,6 +120,14 @@ public class IndexPage extends HttpServlet implements DefaultPage {
 //        var entity = flag(request, Integer.class, "id")
 //                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
 //                : new Contract();
+        if (flag(request, "del")) {
+            if (model(Contract.class, Integer.class).del(param(request, Integer.class, "id"))) {
+                redirect(response, ".");
+                return;
+            } else {
+                throw ApplicationException.Type.uncommited_transaction.dispatch();
+            }
+        }
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
@@ -268,9 +294,9 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractCollateral().setBankCollateralDated(param(request, Date.class, "collateral.bank_collateral_dated", "yyyy-MM-dd"));
 
         if (model(Contract.class).put(entity)) {
-            response.sendRedirect(".");
+            redirect(response, ".");
         } else {
-            throw ApplicationException.Type.internal_server_error.dispatch("", null);
+            throw ApplicationException.Type.uncommited_transaction.dispatch("", null);
         }
     }
 

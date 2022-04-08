@@ -5,6 +5,7 @@
  */
 package org.realestate.ctrl.app;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
@@ -31,12 +32,39 @@ public class ApplicationInstance {
             @Override
             public <R> R persistence(Function<EntityManagerFactory, R> fn) {
                 try {
-                    return super.persistence(fn); //To change body of generated methods, choose Tools | Templates.
+                    return super.persistence(factory -> {
+                        factory.getCache().evictAll();
+                        return fn.apply(factory);
+                    });
                 } catch (RuntimeException x) {
                     x.printStackTrace();
                     throw x;
                 }
             }
+
+            @Override
+            public <E, R> R jpql(Model.Result<E, R> fn, Class<E> clazz, CharSequence statement, Object... params) {
+                System.out.println(statement);
+                System.out.println(Arrays.toString(params));
+                return super.jpql(fn, clazz, statement, params); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public <R> R jpql(Model.Result.Raw<R> fn, CharSequence statement, Object... params) {
+                System.out.println(statement);
+                System.out.println(params);
+                return super.jpql(fn, statement, params); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public <E, R> R sql(Model.Result.Raw<R> fn, Class<E> clazz, CharSequence statement, Object... params) {
+                return manager(manager -> fn.apply(inject(clazz == Object.class
+                        ? manager.createNativeQuery(statement.toString())
+                        : manager.createNativeQuery(statement.toString(), clazz),
+                        params
+                )));
+            }
+
         };
     }
 

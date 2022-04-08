@@ -11,8 +11,11 @@ iframe {
         }
     }
 }
-.list {
-    width: 100%
+table.list {
+    width: 100%;
+    > * > tr > td {
+        vertical-align: text-top;
+    }
 }
 .full-left {
     display: flex;

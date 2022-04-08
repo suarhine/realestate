@@ -4,7 +4,7 @@
  */
 package org.realestate.view.bean;
 
-import static org.realestate.ctrl.app.ApplicationInstance.locale;
+import static org.realestate.ctrl.app.ApplicationInstance.*;
 
 import java.text.DateFormatSymbols;
 import java.util.List;
@@ -40,5 +40,21 @@ public class Option {
                 .filter(e -> e != null && !e.isBlank())
                 .map((e, i) -> new $(i.toString(), e))
                 .list();
+    }
+
+    public List<String> getContractRealestateLocation() {
+        return model().jpql(
+                query -> query.getResultList(),
+                String.class,
+                "SELECT DISTINCT e.location FROM ContractRealestate e WHERE e.location IS NOT NULL AND TRIM(e.location) != '' ORDER BY e.location"
+        );
+    }
+
+    public List<String> getContractRealestateAddressSubdistrict() {
+        return model().jpql(
+                query -> query.getResultList(),
+                String.class,
+                "SELECT DISTINCT e.address.subdistrict FROM ContractRealestate e WHERE e.address.subdistrict IS NOT NULL AND TRIM(e.address.subdistrict) != '' ORDER BY e.address.subdistrict"
+        );
     }
 }

@@ -20,6 +20,7 @@
     <title>JSP Page</title>
   </head>
   <body data-page="input">
+    <h1>บันทึกสัญญาเช่าทรัพย์สิน</h1>
     <form method="post">
       <input name="id" value="${param.id}" type="hidden" />
       <table class="-no-border">
@@ -213,9 +214,9 @@
                        type="text"
                        pattern="[0-3]" />งาน</td>
             <td><input name="realestate.space_sqwah"
-                       value="${f:format(find.contractRealestate.space % 100, '.####')}"
+                       value="${f:format(find.contractRealestate.space % 100, '0.####')}"
                        type="text"
-                       pattern="\d\d(\.\d+)?" />ตรว.</td>
+                       pattern="[1-9]?\d(\.\d+)?" />ตรว.</td>
           </tr>
           <tr>
             <td>วัตถุประสงค์เพื่อ</td>
@@ -351,9 +352,9 @@
                       <option value="+">...</option>
                     </select>
               </c:if><c:if test="${!(find.contractPlan.finerate == 1.25
-                            || find.contractPlan.finerate == 1.5
-                            || find.contractPlan.finerate == null)}">
-                    <input name="plan.finerate" value="${find.contractPlan.finerate}" />
+                                   || find.contractPlan.finerate == 1.5
+                                   || find.contractPlan.finerate == null)}">
+                           <input name="plan.finerate" value="${find.contractPlan.finerate}" />
               </c:if>ต่อเดือน ของเงินค่าเช่าที่ค้างชำระ เศษของเดือนให้นับเป็น 1 เดือน
             </td>
           </tr>
@@ -407,10 +408,15 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" align="right">
+            <td colspan="4">
               <button type="button" data-rel-back>ย้อนกลับ</button>
-              <button type="button" data-rel-reload>คืนค่า</button>
-              <button>บันทึก</button>
+              <div class="right-f">
+                <c:if test="${find != null}">
+                    <button name="del" onclick="return confirm('ยืนยันการลบข้อมูล')">ลบ</button>
+                </c:if>
+                <button type="button" data-rel-reload>คืนค่า</button>
+                <button>บันทึก</button>
+              </div>
             </td>
           </tr>
         </tfoot>

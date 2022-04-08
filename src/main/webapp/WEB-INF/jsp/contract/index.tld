@@ -35,4 +35,9 @@
         <function-class>org.realestate.view.tld.Contract</function-class>
         <function-signature>java.lang.StringBuilder toContractAppointmentDatingJson(java.util.List)</function-signature>
     </function>
+    <function>
+        <name>dating_amount</name>
+        <function-class>org.realestate.view.tld.Contract</function-class>
+        <function-signature>java.lang.Double summaryContractAppointmentDatingAmount(java.util.List)</function-signature>
+    </function>
 </taglib>
