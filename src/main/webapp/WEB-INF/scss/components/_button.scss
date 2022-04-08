@@ -18,7 +18,7 @@
 .button-control {
   display: flex;
   justify-content: center;
-
+  margin-top: calc(var(--app-space) * 6);
   .btn {
     margin-left: var(--app-space);
     margin-right: var(--app-space);

@@ -39,10 +39,26 @@
   }
 
   &--field {
+    display: flex;
+    align-items: baseline;
 
     input,
     select {
       width: 100%;
+    }
+
+    &:not(:first-of-type) {
+      margin-left: calc(var(--app-space) * 2);
+    }
+
+    .input-suffix {
+      margin-left: 5px;
+      white-space: nowrap;
+    }
+
+    .input-prefix {
+      margin-right: 5px;
+      white-space: nowrap;
     }
   }
 
@@ -108,7 +124,7 @@
     &.subdistrict-col,
     &.district-col,
     &.province-col,
-    &.zipcode-col{
+    &.zipcode-col {
       .input-box--label {
         width: 100px;
       }
@@ -125,5 +141,155 @@
     &.zipcode-col {}
 
     &.phone-col {}
+  }
+}
+
+.leased-property-form {
+  .input-box {
+
+    &.type-col,
+    &.objective-col {
+      .input-box--field {
+        width: 348px;
+
+        >* {
+          width: 100%;
+        }
+      }
+    }
+
+    // &.objective-col {
+    //   .input-box--field{
+    //     width: 348px;
+    //   }
+    // }
+    // &.objective-col {
+    //   .input-box--field{
+    //     width: 348px;
+    //   }
+    // }
+    &.type-col,
+    &.location-property-col,
+    &.deed-code-col,
+    &.objective-col {
+      .input-box--label {
+        width: 130px;
+      }
+    }
+
+    &.space-col {
+      .input-box--field {
+        max-width: 114px;
+
+        // flex: 1;
+        input {
+          text-align: right;
+        }
+      }
+    }
+
+    &.deed_no-col {}
+
+    &.moi-declare-col {
+      .input-box--label {
+        width: 498px;
+      }
+    }
+
+    &.district-col,
+    &.road-col,
+    &.nearby-col,
+    &.house-col {
+      .input-box--label {
+        width: 86px;
+      }
+    }
+
+    &.house-col,
+    &.village-col {
+      .input-box--field {
+        width: 117px;
+      }
+    }
+
+    &.district-col {}
+
+    &.province-col,
+    &.subdistrict-col,
+    &.soi-col,
+    &.location-col,
+    &.deed-no-col {
+      .input-box--label {
+        width: 88px;
+      }
+    }
+
+    &.province-col {}
+
+    &.subdistrict-col {}
+  }
+
+}
+
+.appointment-pay-form {
+  .input-box {
+
+    &.rental-fee-col,
+    &.installment-rental-fee-col,
+    &.commission-fee-col,
+    &.utilization-fee-col,
+    &.period-rental-fee-col {
+      .input-box--label {
+        width: 148px;
+      }
+    }
+  }
+}
+
+.pay-rent-advance-form {
+  .input-box {
+
+    &.deadline-monthly-col,
+    &.deadline-yearly-date-col {
+      .input-box--label {
+        width: 95px;
+      }
+    }
+  }
+}
+
+.lease-collateral {
+
+  .input-box {
+    input {
+      width: 140px;
+    }
+
+    .input-prefix {
+      margin-left: 20px;
+    }
+
+    .cash-text-field {
+      margin-left: 73px;
+    }
+
+    &.cash-col,
+    &.cashier-cheque-col,
+    &.bank-collateral-col,&.bank-collateral-no-col {
+      .input-box--label {
+        width: 224px;
+      }
+    }
+    &.bank-collateral-no-col{
+      text-align: right;
+    }
+
+    &.cash-rcpt-dated-col,
+    &.cashier-cheque-rcpt-date-col,
+    &.bank-collateral-dated-col {
+      .input-box--label {
+        margin-left: 50px;
+      }
+    }
   }
 }
