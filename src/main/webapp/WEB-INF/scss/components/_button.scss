@@ -14,3 +14,13 @@
     margin-right: calc(var(--app-space)/2);
   }
 }
+
+.button-control {
+  display: flex;
+  justify-content: center;
+
+  .btn {
+    margin-left: var(--app-space);
+    margin-right: var(--app-space);
+  }
+}
