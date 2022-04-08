@@ -6,3 +6,4 @@
 !/src/main/webapp/WEB-INF/**/*.js
 .vscode
 .vscode/settings.json
+.DS_Store
