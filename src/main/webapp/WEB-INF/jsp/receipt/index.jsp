@@ -9,18 +9,22 @@
 <%@taglib prefix="f" uri="/functions" %>
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>การรับเงินค่าเช่า</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script type="module" src="index.js"></script>
-    <title>JSP Page</title>
   </head>
-  <body data-page="index">
-    <h1>การรับเงินค่าเช่า</h1>
-    <form id="search"></form>
-    <table class="list -border">
+
+  <body data-page="index" class="app-content-preview">
+    <div class="headers--name">
+      <a data-ref="">การรับเงินค่าเช่า</a>
+    </div>
+    <jsp:include page="../contract/index.filter.jsp?readonly" />
+    <table class="tb-list list -border">
       <thead>
-        <jsp:include page="../contract/index.filter.jsp?colsize=9&readonly" />
         <tr>
           <td>วันที่รับเงิน</td>
           <td>ผู้รับเงิน</td>

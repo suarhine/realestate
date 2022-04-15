@@ -1,0 +1,1 @@
+@git.exe -C "%~dp0..\." fetch
