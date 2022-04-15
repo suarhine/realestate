@@ -1,0 +1,23 @@
+// Mixins Background Image
+// -------------------------------
+@use "sass:math";
+
+$totalColumns:12 !default;
+$prefix:false !default;
+@mixin columnsGrid($totalColumns:$totalColumns, $prefix:false) {
+  $columnsLoop: $totalColumns + 1;
+  @for $i from 1 to $columnsLoop {
+    $oneCol: math.div(100%, $totalColumns);
+    $loopCol: $oneCol* $i;
+    @if($prefix==true) {
+      &.--col-#{$i} {
+        width: $loopCol;
+      }
+    }
+    @else {
+      .--col-#{$i} {
+        width: $loopCol;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.search-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: calc(var(--app-space) * 2);
+
+  &--box {
+    flex: 1;
+    margin-right: var(--app-space);
+    display: flex;
+
+    input {
+      flex: 1;
+      margin-right: calc(var(--app-space) / 2);
+    }
+  }
+
+  &--control {
+    .btn {
+      margin-left: calc(var(--app-space) / 2);
+    }
+  }
+  > .-linebreak {
+    flex-basis: 100%;
+    height: 10px;
+  }
+}

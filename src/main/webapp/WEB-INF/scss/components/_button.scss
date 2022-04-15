@@ -1,0 +1,26 @@
+.btn {
+  border: 1px solid var(--color-contrast-low);
+  border-radius: var(--input-radius);
+  padding: calc(var(--app-space)/2) var(--app-space);
+  height: var(--input-height);
+  background: var(--color-contrast-lower);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    background: none;
+    color: var(--color-primary);
+    margin-right: calc(var(--app-space)/2);
+  }
+}
+
+.button-control {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(var(--app-space) * 6);
+  .btn {
+    margin-left: var(--app-space);
+    margin-right: var(--app-space);
+  }
+}

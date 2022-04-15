@@ -14,19 +14,23 @@
 <jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title>
+    <title>สรุปรายชื่อผู้เช่า</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script type="module" src="index.js"></script>
   </head>
-  <body data-pane="lessee">
-    <h1>สรุปรายชื่อผู้เช่าก่อนจะถึงกำหนดชำระค่าเช่าล่วงหน้าก่อน 20 วัน</h1>
-    <form id="search"></form>
-    <form method="post">
-      <table class="list -border">
+
+  <body data-pane="lessee" class="app-content-preview">
+    <div class="headers--name">
+      <a data-ref="">สรุปรายชื่อผู้เช่าก่อนจะถึงกำหนดชำระค่าเช่าล่วงหน้าก่อน 20 วัน</a>
+    </div>
+    <jsp:include page="index.filter.jsp?readonly" />
+    <form>
+      <table class="tb-list list -border">
         <thead>
-          <jsp:include page="index.filter.jsp?colsize=9&readonly" />
           <tr>
             <td colspan="2">เลขที่สัญญา</td>
             <td>ลงวันที่</td>
@@ -39,13 +43,15 @@
           </tr>
         </thead>
         <c:forEach var="e" items="${group}">
-            <thead>
+            <tbody>
               <tr>
                 <td width="1"><input data-rel-select-all type="checkbox" /></td>
                 <td colspan="5">${e.key.name}${empty e.key.representative ? '' : ' โดย '.concat(e.key.representative)}</td>
-                <td>${f:format(ui:dating_amount(e.value), ',###.##')}</td>
+                <td class="right">${f:format(ui:dating_amount(e.value), ',##0.00')}</td>
+                <td></td>
+                <td></td>
               </tr>
-            </thead>
+            </tbody>
             <tbody>
               <c:forEach var="i" items="${e.value}">
                   <tr ${i.pk.dating < now ? 'style="color:red"' : ''}>
@@ -55,10 +61,10 @@
                     <td>${i.id.contractRealestate.name}</td>
                     <td>${i.type.label}${i.ref.label}</td>
                     <td>${f:format(i.pk.dating, 'dd/MM/yyyy', 'th-TH')}</td>
-                    <td>${f:format(i.amount, ',###.##')}</td>
-                    <td>
+                    <td class="right">${f:format(i.amount, ',##0.00')}</td>
+                    <td class="right">
                       <c:if test="${i.pk.dating < now}">
-                          ${f:format(i.amount * i.id.contractPlan.finerate / 100, ',###.##')}
+                          ${f:format(i.amount * i.id.contractPlan.finerate / 100, ',##0.00')}
                       </c:if>
                     </td>
                     <td data-pane="receive" data-amount="${i.amount}" ${i.pk.dating < now ? 'data-fine="'.concat(i.amount * i.id.contractPlan.finerate / 100).concat('"') : ''}></td>
@@ -76,4 +82,6 @@
       </table>
     </form>
   </body>
+</form>
+
 </html>

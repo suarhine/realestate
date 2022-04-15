@@ -1,0 +1,33 @@
+// Mixins Clear all layout
+// -------------------------------
+@mixin clearPosition() {
+  margin: 0;
+  padding: 0;
+  border: none;
+  position: initial;
+  min-width: initial;
+  min-height: initial;
+  box-sizing: border-box;
+}
+
+@mixin clearFloat() {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+// Clear float
+// -------------------------------
+@mixin clearFloatBlock() {
+  &::before,
+  &::after {
+    @include clearFloat();
+  }
+}
+
+// Clear fix width
+// -------------------------------
+@mixin clearWhiteSpace {
+  width: initial;
+  white-space: initial;
+}

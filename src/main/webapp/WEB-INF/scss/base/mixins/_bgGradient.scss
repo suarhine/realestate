@@ -1,0 +1,38 @@
+// Gradient
+// -------------------------------
+@function isDirection($value) {
+  $is-keyword: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+  $is-angle: type-of($value)=='number' and index('deg' 'grad' 'turn' 'rad', unit($value));
+  @return $is-keyword or $is-angle;
+}
+
+// HTU @include linearGradient((colorStap...), $direction, $mainColor);
+$defaultDirection: 180deg;
+@mixin linearGradient($colorStap:(), $direction: $defaultDirection, $mainColor:nth($colorStap, 1)) {
+  @if isDirection($direction)==false {
+    $mainColor: $direction;
+    $direction: $defaultDirection;
+  }
+  background: $mainColor;
+  background: -webkit-linear-gradient(legacy-direction($direction), $colorStap);
+  background: linear-gradient($direction, $colorStap);
+}
+
+
+@function isStyleRadial($value) {
+  $is-keyword: map-has-key((circle:true, closest-side:true, farthest-side:true, closest-corner:true, farthest-corner:true), $value);
+  @return $is-keyword;
+}
+// HTU @include radialGradient((colorStap...), $mainColo, $style, $position);
+@mixin radialGradient($colorStap:(), $mainColor:nth($colorStap, 1), $style: circle, $position: 50% 50%) {
+  @if isStyleRadial($mainColor)==true {
+    $style: $mainColor;
+    $mainColor: nth($colorStap, 1);
+  }@else if length($mainColor)==2 {
+    $position: $mainColor;
+    $mainColor: nth($colorStap, 1);
+  }
+  background: $mainColor;
+  background: -webkit-radial-gradient($style at $position, $colorStap);
+  background: radial-gradient($style at $position, $colorStap);
+}

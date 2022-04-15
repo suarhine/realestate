@@ -1,0 +1,17 @@
+$yiqContrastedThreshold: 150 !default;
+$textDark: #000 !default;
+$textLight: #fff !default;
+
+@function contrastColor($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) * 0.001;
+
+  @if ($yiq >= $yiqContrastedThreshold) {
+    @return $textDark;
+  } @else {
+    @return $textLight;
+  }
+}

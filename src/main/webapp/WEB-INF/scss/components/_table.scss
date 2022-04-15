@@ -1,0 +1,40 @@
+.tb-list {
+  border-radius: var(--app-radius);
+  overflow: hidden;
+
+  thead {
+    tr {
+      td {
+        background-color: var(--thead-bg);
+        padding: calc(var(--app-space) * 1.5) var(--app-space);
+        font-size: var(--text-md);
+        font-weight: 500;
+        color: rgba(#000, .7);
+        border-bottom: 2px solid lightness(var(--thead-bg), 0.4);
+        ;
+      }
+    }
+  }
+
+  tbody {
+    font-size: var(--text-sm);
+
+    tr {
+      min-height: 35px;
+      cursor: pointer;
+
+      &:nth-child(odd) {
+        background-color: lightness(var(--thead-bg), 1.23);
+      }
+
+      &:nth-child(even) {
+        background-color: lightness(var(--thead-bg), 1.26);
+      }
+
+      td {
+        min-height: 40px;
+        padding: calc(var(--app-space)*1.5) var(--app-space);
+      }
+    }
+  }
+}

@@ -12,18 +12,22 @@
 <jsp:useBean id="o" class="org.realestate.view.bean.Option" />
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>สัญญาเช่าทรัพย์สิน</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script type="module" src="index.js"></script>
-    <title>JSP Page</title>
   </head>
-  <body data-page="index">
-    <h1>สัญญาเช่าทรัพย์สิน</h1>
-    <form id="search"></form>
-    <table class="list -border">
+
+  <body data-page="index" class="app-content-preview">
+    <div class="headers--name">
+      <a data-ref="">สัญญาเช่าทรัพย์สิน</a>
+    </div>
+    <jsp:include page="index.filter.jsp" />
+    <table class="tb-list list -border">
       <thead>
-        <jsp:include page="index.filter.jsp" />
         <tr>
           <td>เลขที่สัญญา</td>
           <td>ลงวันที่</td>
@@ -47,4 +51,5 @@
       </tbody>
     </table>
   </body>
+
 </html>

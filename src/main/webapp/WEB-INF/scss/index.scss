@@ -1,3 +1,11 @@
+/** External Project **/
 @import "/web/css/index.css";
-@import "layout.css";
-@import "style.css";
+
+/** Base **/
+@import 'base/index';
+/** Variables **/
+@import 'variables/index';
+/** Template **/
+@import 'template/index';
+/** Compoenent **/
+@import 'components/index';

@@ -1,0 +1,38 @@
+// Text style
+// -------------------------------
+
+$transitionMulti-variables:(
+  'delay'    : null,
+  'duration' : .3s,
+  'timing'   : linear
+)!default;
+
+@mixin transitionMulti(
+  $property : (), 
+  $duration : map-get($transitionMulti-variables, 'duration'), 
+  $timing   : map-get($transitionMulti-variables, 'timing'),
+  $delay    : map-get($transitionMulti-variables, 'delay')
+  ) {
+    $propertyAll: ();
+    @if(length($property) == 0 or length($property) == null) {
+      transition : all $duration $timing $delay;
+    } @else if(type-of(nth($property, 1)) == list) {
+      $propertyNth1: (nth($property, 1));
+      @for $i from 2 through length($property) {
+        $propertyAll: append($propertyAll, append(nth($property, $i), $duration $timing $delay), comma);
+      }
+      transition: $propertyNth1, $propertyAll;
+    } @else {
+        @for $i from 1 through length($property) {
+          $propertyAll: append($propertyAll, nth($property, $i), comma);
+        }
+        transition: {
+          property : $propertyAll;
+          duration : $duration;
+          timing   : $timing;
+        }
+        @if($delay != null) {
+          transition-delay  : $delay;
+        }
+    }
+  }

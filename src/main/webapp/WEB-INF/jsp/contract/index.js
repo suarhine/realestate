@@ -8,13 +8,13 @@ window.jQuery && (function ($) {
         click() {
           if (this.dataset.relShowed === undefined) {
             this.dataset.relShowed = '';
-            this.innerHTML = 'ตัวเลือกน้อยลง';
-            $(this).jump('thead, tbody, tfoot', '[data-pane="option"]').removeAttr('data-rel-hide')
+            $('span', this).html('ตัวเลือกน้อยลง');
+            $(this).jump('form', '[data-pane="option"]').removeAttr('data-rel-hide')
                 .find(':input').prop('disabled', false);
           } else {
             delete this.dataset.relShowed;
-            this.innerHTML = 'ตัวเลือกอื่นๆ';
-            $(this).jump('thead, tbody, tfoot', '[data-pane="option"]').attr('data-rel-hide', '')
+            $('span', this).html('ตัวเลือกอื่นๆ');
+            $(this).jump('form', '[data-pane="option"]').attr('data-rel-hide', '')
                 .find(':input').prop('disabled', true);
           }
         }
@@ -199,7 +199,7 @@ window.jQuery && (function ($) {
     }, '[data-pane="lessee"]': {
       '[data-rel-select-all]': {
         change() {
-          $(this).closest('thead').next().find('[name="selected"]').prop('checked', this.checked).trigger('change');
+          $(this).closest('tbody').next().find('[name="selected"]').prop('checked', this.checked).trigger('change');
         }
       }, '[name="selected"]': {
         change() {
@@ -215,6 +215,7 @@ window.jQuery && (function ($) {
       }
     }
   };
-  new URL(import.meta.url).searchParams.get('unbind') === null && $(document).listen(event);
+  new URL(import.meta.url).searchParams.get('unbind') === null
+      && $(document).listen(event);
 })(window.jQuery);
 export const {event} = xport;

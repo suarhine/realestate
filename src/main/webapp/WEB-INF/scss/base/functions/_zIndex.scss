@@ -1,0 +1,23 @@
+$zIndexList: (
+  ( 1, 'container', 'navbar'),
+  ( 10, 'modal', 'modal-button')
+);
+
+@function zIndex($key) {
+  $new: initial;
+  $map: '';
+
+  @each $keyIndex in $zIndexList {
+    $map: $keyIndex;
+
+    @each $keyClass in $map {
+      @if ($key == $keyClass) {
+        $new: nth($map, 1);
+      }
+    }
+  }
+  @if ($new == initial) {
+    @warn 'There is no item "#{$key}" in this list; choose one of: #{$zIndexList}';
+  }
+  @return $new;
+}

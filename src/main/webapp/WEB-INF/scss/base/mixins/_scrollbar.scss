@@ -1,0 +1,52 @@
+// scrollbar style
+// -------------------------------
+
+$scrollbar-size:12px!default;
+$track-variables:(
+  'background-color'   : #f7f7f7,
+  'border-radius'      : 0px,
+  'hover':(
+    'background-color' : #f4f4f4
+  )
+)!default;
+$thumb-variables:(
+  'background-color'   : #e7e7e7,
+  'border-radius'      : 0px,
+  'hover':(
+    'background-color' : #e0e0e0
+  )
+)!default;
+
+@mixin scrollbar($size:$scrollbar-size, $track:(), $thumb:()) {
+  $trackMap : map-merge($track-variables, $track);
+  $thumbMap : map-merge($thumb-variables, $thumb);
+
+  @include prefixAtRoot('::-webkit-scrollbar') {
+    height: $size; 
+    width: $size;
+  }
+  @include prefixAtRoot('::-webkit-scrollbar-track') {
+    $trackMapOnly : map-remove($trackMap, 'hover');
+    @each $property, $value in $trackMapOnly {
+      #{$property}: $value;
+    }
+  }
+  @include prefixAtRoot('::-webkit-scrollbar-track:hover') {
+    $trackMapHover: map-get($trackMap, 'hover');
+    @each $property, $value in $trackMapHover {
+      #{$property}: $value;
+    }
+  }
+  @include prefixAtRoot('::-webkit-scrollbar-thumb') {
+    $thumbMapOnly : map-remove($thumbMap, 'hover');
+    @each $property, $value in $thumbMapOnly {
+      #{$property}: $value;
+    }
+  }
+  @include prefixAtRoot('::-webkit-scrollbar-thumb:hover') {
+    $thumbMapHover: map-get($thumbMap, 'hover');
+    @each $property, $value in $thumbMapHover {
+      #{$property}: $value;
+    }
+  }
+}

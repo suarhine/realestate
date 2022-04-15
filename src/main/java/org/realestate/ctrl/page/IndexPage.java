@@ -17,7 +17,7 @@ import org.web.ctrl.DefaultPage;
  *
  * @author Pathompong
  */
-@WebServlet(name = "IndexPage", urlPatterns = {"/index.html"})
+@WebServlet(name = "IndexPage", urlPatterns = {"/index.jsp"})
 public class IndexPage extends HttpServlet implements DefaultPage {
 
     /**
