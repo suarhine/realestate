@@ -30,6 +30,9 @@
     position: relative;
     padding-right: 10px;
 
+    &.-blank {
+      visibility: hidden;
+    }
     &::after {
       content: ':';
       position: absolute;
@@ -66,7 +69,8 @@
     flex: 1;
 
     .input-box {
-      &--label {}
+      &--label {
+      }
 
       &--field {
         flex: 1;
@@ -93,9 +97,11 @@
       }
     }
 
-    &.house-col {}
+    &.house-col {
+    }
 
-    &.village-col {}
+    &.village-col {
+    }
 
     &.soi-col {
       flex: 1;
@@ -130,17 +136,23 @@
       }
     }
 
-    &.road-col {}
+    &.road-col {
+    }
 
-    &.subdistrict-col {}
+    &.subdistrict-col {
+    }
 
-    &.district-col {}
+    &.district-col {
+    }
 
-    &.province-col {}
+    &.province-col {
+    }
 
-    &.zipcode-col {}
+    &.zipcode-col {
+    }
 
-    &.phone-col {}
+    &.phone-col {
+    }
   }
 }
 
@@ -188,7 +200,8 @@
       }
     }
 
-    &.deed_no-col {}
+    &.deed_no-col {
+    }
 
     &.moi-declare-col {
       .input-box--label {
@@ -212,7 +225,8 @@
       }
     }
 
-    &.district-col {}
+    &.district-col {
+    }
 
     &.province-col,
     &.subdistrict-col,
@@ -224,9 +238,11 @@
       }
     }
 
-    &.province-col {}
+    &.province-col {
+    }
 
-    &.subdistrict-col {}
+    &.subdistrict-col {
+    }
   }
 
 }

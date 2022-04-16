@@ -22,6 +22,23 @@ window.jQuery && (function ($) {
     }, '[data-page="input"]': {
       init() {
         $('[name="started"]', this).trigger('change');
+      }, '[name="active-tap"]': {
+        change() {
+          $('[data-rel-active-tab-header] > label').removeClass('--active')
+              .filter('[for="' + this.id + '"]').prevAll('label').addBack().addClass('--active');
+
+        }
+      }, '[data-rel-ctrl-tab]': {
+        click() {
+          try {
+            ({
+              next: $ui => $ui.nextAll('input:first'),
+              prev: $ui => $ui.prevAll('input:eq(1)')
+            })[this.dataset.relCtrlTab]($(this).closest('form > div'))
+                .prop('checked', true).trigger('change');
+          } catch (x) {
+          }
+        }
       }, '[name="started"], [name="ended"]': {
         change() {
           let $form = $(this).closest('form');
@@ -42,7 +59,7 @@ window.jQuery && (function ($) {
       }, '[data-fee-detail]': {
         change() {
           let $this = $(this);
-          let $pane = $this.closest('tr').next().find('>:last').html('');
+          let $pane = $this.parents().next().find('[data-pane="payment-plan"]').html('');
           let $form = $this.closest('form');
           let started = new Date($form.name('started').val());
           let ended = new Date($form.name('ended').val());
@@ -55,8 +72,8 @@ window.jQuery && (function ($) {
           switch (value) {
             case '1':
             case '2':
-              $this.parent().next().html('จำนวนเงิน').next().html(`
-                <input name="${name}.amount" value="${$selected.attr('data-amount') || ''}" />
+              $this.parent().next().html(`<span class="text-in-input">จำนวนเงิน : </span>
+                <input name="${name}.amount" value="${$selected.attr('data-amount') || ''}" style="padding-left: 90px; width: 180px;" />
               `).find('input').on('change keyup', function () {
                 $selected.attr('data-amount', this.value);
                 if (!+this.value) {
@@ -75,8 +92,8 @@ window.jQuery && (function ($) {
                 <table class="-border">
                   <thead>
                     <tr>
-                     <td>วันที่</td>
-                     <td>จำนวนเงิน</td>
+                     <td class="input-box--label">วันที่</td>
+                     <td class="input-box--label">จำนวนเงิน</td>
                     </tr>
                   </thead>
                   <tbody>${date.map(e => `
@@ -215,7 +232,6 @@ window.jQuery && (function ($) {
       }
     }
   };
-  new URL(import.meta.url).searchParams.get('unbind') === null
-      && $(document).listen(event);
+  new URL(import.meta.url).searchParams.get('unbind') === null && $(document).listen(event);
 })(window.jQuery);
 export const {event} = xport;

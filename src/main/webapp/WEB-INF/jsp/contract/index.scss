@@ -1,12 +1,18 @@
 @import "../css/index.css";
 .search-pane {
-    display: flex;
-    > input {
-        flex: 1;
-    }
+  display: flex;
+  > input {
+    flex: 1;
+  }
 }
 [data-page="input"] {
-    [name="plan.finerate"] {
-        width: 50px;
+  [name="plan.finerate"] {
+    width: 50px;
+  }
+  [name="active-tap"] {
+    display: none;
+    &:not(:checked) + * {
+      display: none;
     }
+  }
 }
