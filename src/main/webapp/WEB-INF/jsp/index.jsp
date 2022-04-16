@@ -38,7 +38,6 @@
       </div>
       <div class="app-content">
         <div class="main-menu">
-          <div class="main-menu--title">Menu</div>
           <ul class="main-menu--content">
             <li class="--active">
               <a target="content-preview" href="contract/">สัญญาเช่าทรัพย์สิน</a>
