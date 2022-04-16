@@ -1,12 +1,11 @@
 input,select {
   border: 1px solid var(--color-contrast-low);
   border-radius: var(--input-radius);
-  padding: calc(var(--app-space)/2) var(--app-space);
+  padding: calc(var(--app-space) / 2) var(--app-space);
   height: var(--input-height);
   box-sizing: border-box !important;
 
-  &:hover,
-  &:focus {
+  &:hover, &:focus {
     border: 1px solid var(--color-primary);
   }
 
