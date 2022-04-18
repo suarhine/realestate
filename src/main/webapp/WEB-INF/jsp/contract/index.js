@@ -225,7 +225,7 @@ window.jQuery && (function ($) {
               .prop('checked', $this.jump('tbody', '[name="selected"]:not(:checked)').length === 0);
           $this.jump('tr', '[data-pane="receive"]').html(this.checked ? function () {
             return `
-              <input name="${$this.val()}" value="${+this.dataset.amount + +this.dataset.fine}" type="text" />
+              <input name="${$this.val()}" value="${(+this.dataset.amount || 0) + (+this.dataset.fine || 0)}" type="text" />
             `;
           } : '');
         }

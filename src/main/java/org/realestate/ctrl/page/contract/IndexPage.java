@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.persistence.model.Model;
 import org.persistence.model.Model.Statement.Criteria;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
@@ -100,6 +101,12 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             if (flag(request, Integer.class, "objective")) {
                 criteria = criteria.and("objective.id", param(request, Integer.class, "objective"));
             }
+            System.out.println("flag -> " + flag(request, Boolean.class, "collateral.revoke"));
+            System.out.println("parse -> " + param(request, Boolean.class, "collateral.revoke"));
+            System.out.println("raw -> " + param(request, "collateral.revoke"));
+            if (flag(request, Boolean.class, "collateral.revoke")) {
+                criteria = criteria.and("id", param(request, Boolean.class, "collateral.revoke") ? "IN" : "NOT IN", Model.Statement.of("SELECT sub.id.id FROM ContractCollateralRevoke sub").blocked());
+            }
             attr(request, "finds", model(Contract.class).finds(criteria instanceof Criteria.Blank ? null : criteria));
             jsp(request, response);
         }
@@ -131,6 +138,18 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
+
+            if (flag(request, "revoke")) {
+                var revokeEntity = new ContractCollateralRevoke(entity);
+                revokeEntity.setUpdated(new Date());
+                revokeEntity.setUpdater(UsersFix.system.id);
+                if (model(ContractCollateralRevoke.class).add(revokeEntity)) {
+                    redirect(response, "?id=" + entity.getId());
+                    return;
+                } else {
+                    throw ApplicationException.Type.uncommited_transaction.dispatch();
+                }
+            }
             if (entity.getContractLessor() == null) {
                 entity.setContractLessor(new ContractLessor(entity));
             }

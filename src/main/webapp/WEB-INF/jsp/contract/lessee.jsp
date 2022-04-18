@@ -27,7 +27,7 @@
     <div class="headers--name">
       <a data-ref="">สรุปรายชื่อผู้เช่าก่อนจะถึงกำหนดชำระค่าเช่าล่วงหน้าก่อน 20 วัน</a>
     </div>
-    <jsp:include page="index.filter.jsp?readonly" />
+    <jsp:include page="index.filter.jsp?readonly&optional" />
     <table class="tb-list list -border">
       <thead>
         <tr>

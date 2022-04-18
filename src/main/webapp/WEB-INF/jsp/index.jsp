@@ -38,8 +38,8 @@
       </div>
       <div class="app-content">
         <div class="main-menu">
-          <ul class="main-menu--content">
-            <li class="--active">
+          <ul class="main-menu--content" data-pane="main-menu">
+            <li>
               <a target="content-preview" href="contract/">สัญญาเช่าทรัพย์สิน</a>
             </li>
             <li>
@@ -48,11 +48,16 @@
             <li>
               <a target="content-preview" href="receipt">การรับเงินค่าเช่า</a>
             </li>
+            <!--
             <li>
               <a target="content-preview" href="overdue">ลูกหนี้ค้างชำระ</a>
             </li>
             <li>
               <a target="content-preview" href="collateral">หลักประกันสัญญา</a>
+            </li>
+            -->
+            <li>
+              <a target="content-preview" href="report">รายงาน</a>
             </li>
             <li>
               <a target="content-preview" href="setting">ตั้งค่า</a>

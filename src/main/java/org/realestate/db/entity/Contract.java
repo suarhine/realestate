@@ -58,6 +58,8 @@ public class Contract implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date ended;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    private ContractCollateralRevoke contractCollateralRevoke;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractPlan contractPlan;
     @JoinColumn(name = "objective", referencedColumnName = "id")
     @ManyToOne
@@ -170,6 +172,14 @@ public class Contract implements Serializable {
 
     public void setEnded(Date ended) {
         this.ended = ended;
+    }
+
+    public ContractCollateralRevoke getContractCollateralRevoke() {
+        return contractCollateralRevoke;
+    }
+
+    public void setContractCollateralRevoke(ContractCollateralRevoke contractCollateralRevoke) {
+        this.contractCollateralRevoke = contractCollateralRevoke;
     }
 
     public ContractPlan getContractPlan() {
