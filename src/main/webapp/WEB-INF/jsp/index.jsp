@@ -38,8 +38,8 @@
       </div>
       <div class="app-content">
         <div class="main-menu">
-          <ul class="main-menu--content">
-            <li class="--active">
+          <ul class="main-menu--content" data-pane="main-menu">
+            <li>
               <a target="content-preview" href="contract/">สัญญาเช่าทรัพย์สิน</a>
             </li>
             <li>
