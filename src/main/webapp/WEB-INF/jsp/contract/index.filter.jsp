@@ -11,9 +11,10 @@
              || not empty param['period.min']
              || not empty param['period.max']
              || not empty param.objective
+             || not empty param['collateral.revoke']
            }"
-           calsize="${param.colsize == null || empty param.colsize ? 6 : param.colsize}"
-           readonly="${param.readonly != null}">
+           readonly="${param.readonly != null}"
+           optional="${param.optional != null}">
   <form class="search-list">
     <div class="search-list--box">
       <input name="q"
@@ -93,6 +94,16 @@
         <option value="5-10"${param.period == '5-10' ? 'selected' : ''}>5 - 10 ปี</option>
         <option value="10+" ${param.period == '10+' ? 'selected' : ''}>10 ปีขึ้นไป</option>
       </select--%>
+    </div>
+    <div data-pane="option" ${option ? '' : 'data-rel-hide'}>
+      <c:if test="${!optional}">
+        หลักประกันสัญญา
+        <select name="collateral.revoke">
+          <option value="">-- ไม่ระบุ --</option>
+          <option value="true" ${param['collateral.revoke'] == 'true' ? 'selected' : ''}>ถอนคืนหลักประกันสัญญา</option>
+          <option value="false" ${param['collateral.revoke'] == 'false' ? 'selected' : ''}>ยังไม่ได้ถอนคืนหลักประกันสัญญา </option>
+        </select>
+      </c:if>
     </div>
   </form>
 </p:declare>

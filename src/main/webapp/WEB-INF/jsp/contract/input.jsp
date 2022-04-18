@@ -723,9 +723,17 @@
               </div>
             </div>
           </div>
+          <c:if test="${not empty find.contractCollateralRevoke }">
+            <div class="input-box bank-collateral-dated-col">
+              <label class="input-box--label" style="color:red;">ถอนคืนหลักประกันสัญญา</label>
+            </div>
+          </c:if>
         </div>
 
         <div class="button-control">
+          <c:if test="${not empty find && empty find.contractCollateralRevoke }">
+            <button name="revoke">ถอนคืนหลักประกันสัญญาแล้ว</button>
+          </c:if>
           <button type="button" class="btn" data-rel-ctrl-tab="prev">ย้อนกลับ</button>
           <c:if test="${find != null}">
             <button name="del" class="btn">ลบ</button>

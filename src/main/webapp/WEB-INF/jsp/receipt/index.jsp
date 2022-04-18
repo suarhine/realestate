@@ -22,7 +22,7 @@
     <div class="headers--name">
       <a data-ref="">การรับเงินค่าเช่า</a>
     </div>
-    <jsp:include page="../contract/index.filter.jsp?readonly" />
+    <jsp:include page="../contract/index.filter.jsp?readonly&optional" />
     <table class="tb-list list -border">
       <thead>
         <tr>
