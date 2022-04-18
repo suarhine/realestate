@@ -1,101 +1,167 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="index.css" />
-  <script type="module" src="index.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <title>JSP Page</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>JSP Page</title>
+  </head>
 
-<body class="app-content-preview">
-  <form class="search-list">
-    <div class="search-list--box">
-      <input name="q" value="" type="search" placeholder="ค้าหา..." />
-      <button class="btn">
+  <body class="app-content-preview">
+    <form class="search-list">
+      <div class="search-list--box">
+        <input name="q" value="" type="search" class="-search-box" placeholder="ค้าหา...">
+        <button class="btn">
 
-        <i class="material-icons">search</i>
-        ค้นหา</button>
-    </div>
-    <div class="search-list--control">
+          <i class="material-icons">search</i>
+          ค้นหา</button>
+      </div>
+      <div class="search-list--control">
+        <button class="btn" type="button" name="option">
+          <i class="material-icons">add</i>
+          <span>ตัวเลือกอื่นๆ</span>
+        </button>
 
-      <button class="btn" name="id">
-        <i class="material-icons">add</i>
-        เพิ่มสัญญาใหม่
-      </button>
-    </div>
 
-  </form>
-  <table class="tb-list list -border">
-    <thead>
-      <tr>
-        <td>เลขที่สัญญา</td>
-        <td>ลงวันที่</td>
-        <td>สัญญาของ</td>
-        <td>ผู้เช่า</td>
-        <td>วันที่เริ่มต้นสัญญา</td>
-        <td>วันที่สิ้นสุดสัญญา</td>
-      </tr>
-    </thead>
-    <tbody>
+        <button class="btn" name="id">
 
-      <tr onclick="location.href = 'input.html'">
-        <td>1</td>
-        <td>2022-03-01</td>
-        <td>30</td>
-        <td>5</td>
-        <td>2022-03-01</td>
-        <td>2027-02-28</td>
-      </tr>
+          <i class="material-icons">add</i>
+          เพิ่มสัญญาใหม่
+        </button>
 
-      <tr onclick="location.href = 'input.html'">
-        <td>asd</td>
-        <td></td>
-        <td></td>
-        <td>asd</td>
-        <td></td>
-        <td></td>
-      </tr>
+      </div>
+      <div class="-linebreak"></div>
+      <div data-pane="option" data-rel-hide="">
+        ประเภทสัญญาเช่า
+        <select name="type" form="search" disabled="">
+          <option value="">-- ไม่ระบุ --</option>
 
-      <tr onclick="location.href = 'input.html'">
-        <td>1234</td>
-        <td></td>
-        <td></td>
-        <td>ทดสอบ</td>
-        <td></td>
-        <td></td>
-      </tr>
+          <option value="1">สัญญาเช่าที่ดิน (แบบ จ.ส.1)</option>
 
-      <tr onclick="location.href = 'input.html'">
-        <td>asd</td>
-        <td></td>
-        <td></td>
-        <td>qwe</td>
-        <td></td>
-        <td></td>
-      </tr>
+          <option value="2">สัญญาเช่าอาคารหรือสิ่งก่อสร้าง (แบบ จ.ส.1)</option>
 
-      <tr onclick="location.href = 'input.html'">
-        <td>ปป. 1234</td>
-        <td>2021-11-07</td>
-        <td></td>
-        <td>ทดสอบ</td>
-        <td>2021-01-01</td>
-        <td>2021-12-31</td>
-      </tr>
+          <option value="3">สัญญาก่อสร้างอาคารยกกรรมสิทธิ์ให้กงค์การบริหารส่วนจังหวัด</option>
 
-      <tr onclick="location.href = 'input.html'">
-        <td>qwe</td>
-        <td>2022-03-09</td>
-        <td>0001</td>
-        <td>qwe</td>
-        <td>2022-01-01</td>
-        <td>2022-12-31</td>
-      </tr>
+          <option value="4">สัญญาเช่าพื้นที่ท่าเทียบเรื่อท่องเที่ยวอ่าวฉลอง</option>
 
-    </tbody>
-  </table>
-</body>
+        </select>
+        บริเวณที่เช่า
+        <select name="realestate.location" form="search" disabled="">
+          <option value="">-- ไม่ระบุ --</option>
+
+          <option value="31">31</option>
+
+          <option value="xxxx">xxxx</option>
+
+        </select>
+        ตำบลที่เช่า
+        <select name="realestate.address.subdistrict" form="search" disabled="">
+          <option value="">-- ไม่ระบุ --</option>
+
+          <option value="006">006</option>
+
+          <option value="37">37</option>
+
+        </select>
+        <br>
+        จุดประสงค์ของการเช่า
+        <select name="objective" form="search" disabled="">
+          <option value="">-- ไม่ระบุ --</option>
+
+          <option value="1">เพื่ออยู่อาศัย</option>
+
+          <option value="2">เพื่อประกอบกิจการต่างๆ</option>
+
+          <option value="3">เพื่ออื่นๆ</option>
+
+        </select>
+        อายุสัญญาที่เช่า 
+        มากกว่า <input name="period.min" value="" type="number" form="search" disabled=""> ปี
+        และน้อยกว่า <input name="period.max" value="" type="number" form="search" disabled=""> ปี
+
+      </div>
+      <div data-pane="option" data-rel-hide="">
+
+        หลักประกันสัญญา
+        <select name="collateral.revoke">
+          <option value="">-- ไม่ระบุ --</option>
+          <option value="true">ถอนคืนหลักประกันสัญญา</option>
+          <option value="false">ยังไม่ได้ถอนคืนหลักประกันสัญญา </option>
+        </select>
+
+      </div>
+    </form>
+    <table class="tb-list list -border">
+      <thead>
+        <tr>
+          <td>เลขที่สัญญา</td>
+          <td>ลงวันที่</td>
+          <td>สัญญาของ</td>
+          <td>ผู้เช่า</td>
+          <td>วันที่เริ่มต้นสัญญา</td>
+          <td>วันที่สิ้นสุดสัญญา</td>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>1</td>
+          <td>2022-03-01</td>
+          <td>30</td>
+          <td>5</td>
+          <td>2022-03-01</td>
+          <td>2027-02-28</td>
+        </tr>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>asd</td>
+          <td></td>
+          <td></td>
+          <td>asd</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>1234</td>
+          <td></td>
+          <td></td>
+          <td>ทดสอบ</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>asd</td>
+          <td></td>
+          <td></td>
+          <td>qwe</td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>ปป. 1234</td>
+          <td>2021-11-07</td>
+          <td></td>
+          <td>ทดสอบ</td>
+          <td>2021-01-01</td>
+          <td>2021-12-31</td>
+        </tr>
+
+        <tr onclick="location.href = 'input.html'">
+          <td>qwe</td>
+          <td>2022-03-09</td>
+          <td>0001</td>
+          <td>qwe</td>
+          <td>2022-01-01</td>
+          <td>2022-12-31</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </body>
 
 </html>
