@@ -50,6 +50,10 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                 attr(request, "find", notnull(model(Contract.class).find(
                         param(request, Integer.class, "id")
                 ), "id = " + param(request, "id")));
+            } else if (flag(request, int.class, "ref")) {
+                attr(request, "ref", notnull(model(Contract.class).find(
+                        param(request, Integer.class, "ref")
+                ), "ref = " + param(request, "ref")));
             }
             jsp(request, response, "input.jsp");
         } else {
@@ -138,7 +142,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
-
             if (flag(request, "revoke")) {
                 var revokeEntity = new ContractCollateralRevoke(entity);
                 revokeEntity.setUpdated(new Date());
@@ -150,39 +153,46 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                     throw ApplicationException.Type.uncommited_transaction.dispatch();
                 }
             }
-            if (entity.getContractLessor() == null) {
-                entity.setContractLessor(new ContractLessor(entity));
-            }
-            if (entity.getContractLessee() == null) {
-                entity.setContractLessee(new ContractLessee(entity));
-            }
-            if (entity.getContractLessee().getRegistry() == null) {
-                entity.getContractLessee().setRegistry(new Address());
-            }
-            if (entity.getContractLessee().getContact() == null) {
-                entity.getContractLessee().setContact(new Address());
-            }
-            if (entity.getContractRealestate() == null) {
-                entity.setContractRealestate(new ContractRealestate(entity));
-            }
-            if (entity.getContractRealestate().getAddress() == null) {
-                entity.getContractRealestate().setAddress(new Address());
-            }
-            if (entity.getContractPlan() == null) {
-                entity.setContractPlan(new ContractPlan(entity));
-            }
-            if (entity.getContractCollateral() == null) {
-                entity.setContractCollateral(new ContractCollateral(entity));
+            if (flag(request, "cancel-revoke")) {
+                if (entity.getContractCollateralRevoke() == null) {
+                    throw ApplicationException.Type.incomplete_parameter.dispatch("ยังไม่มีการถอนคืนหลักประกันสัญญา");
+                }
+                entity.setContractCollateralRevoke(null);
+                entity.setUpdated(new Date());
+                entity.setUpdater(UsersFix.system.id);
+                if (model(Contract.class).put(entity)) {
+                    redirect(response, "?id=" + entity.getId());
+                    return;
+                } else {
+                    throw ApplicationException.Type.uncommited_transaction.dispatch();
+                }
             }
         } else {
             entity = new Contract();
+            entity.setRef(flag(request, Integer.class, "ref") ? notnull(model(Contract.class, Integer.class).find(param(request, Integer.class, "ref")), "ref = " + param(request, "ref")) : null);
+        }
+        if (entity.getContractLessor() == null) {
             entity.setContractLessor(new ContractLessor(entity));
+        }
+        if (entity.getContractLessee() == null) {
             entity.setContractLessee(new ContractLessee(entity));
+        }
+        if (entity.getContractLessee().getRegistry() == null) {
             entity.getContractLessee().setRegistry(new Address());
+        }
+        if (entity.getContractLessee().getContact() == null) {
             entity.getContractLessee().setContact(new Address());
+        }
+        if (entity.getContractRealestate() == null) {
             entity.setContractRealestate(new ContractRealestate(entity));
+        }
+        if (entity.getContractRealestate().getAddress() == null) {
             entity.getContractRealestate().setAddress(new Address());
+        }
+        if (entity.getContractPlan() == null) {
             entity.setContractPlan(new ContractPlan(entity));
+        }
+        if (entity.getContractCollateral() == null) {
             entity.setContractCollateral(new ContractCollateral(entity));
         }
         entity.setUpdated(new Date());

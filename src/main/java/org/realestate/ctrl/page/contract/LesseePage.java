@@ -66,7 +66,12 @@ public class LesseePage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         var group = new LinkedHashMap<ContractLesseeKey, List<ContractAppointmentDating>>();
         var criteria = of(
-                "SQL('age(?, now()) < ''20 day'' AND (?, ?, ?) NOT IN (SELECT s.id, s.type, s.dating FROM contract_appointment_receipt s)', pk.dating, pk.id, pk.type, pk.dating)"
+                """
+                SQL(
+                'age(?, now()) < ''20 day'' AND (?, ?, ?) NOT IN (SELECT s.id, s.type, s.dating FROM contract_appointment_receipt s)',
+                pk.dating, pk.id, pk.type, pk.dating
+                ) AND id.id NOT IN (SELECT s.ref.id FROM Contract s)
+                """
         );
         if (flag(request, String.class, "q")) {
             for (var q : param(request, "q").split("\\s+")) {

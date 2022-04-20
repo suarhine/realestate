@@ -57,7 +57,7 @@ public class Contract implements Serializable {
     @Column(name = "ended")
     @Temporal(TemporalType.DATE)
     private Date ended;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
     private ContractCollateralRevoke contractCollateralRevoke;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractPlan contractPlan;
@@ -72,6 +72,11 @@ public class Contract implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
     @OrderBy("pk.dating")
     private List<ContractAppointmentDating> contractAppointmentDatingList;
+    @OneToMany(mappedBy = "ref")
+    private List<Contract> contractList;
+    @JoinColumn(name = "ref", referencedColumnName = "id")
+    @ManyToOne
+    private Contract ref;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractCollateral contractCollateral;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
@@ -220,6 +225,22 @@ public class Contract implements Serializable {
 
     public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
         this.contractAppointmentDatingList = contractAppointmentDatingList;
+    }
+
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
+    }
+
+    public Contract getRef() {
+        return ref;
+    }
+
+    public void setRef(Contract ref) {
+        this.ref = ref;
     }
 
     public ContractCollateral getContractCollateral() {
