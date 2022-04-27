@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   border-right: 1px solid rgba(#000, .1);
-
+  padding-right: var(--app-space);
   &--title {
     font-size: var(--text-lg);
     font-weight: 500;
@@ -15,18 +15,23 @@
   &--content {
     flex: 1;
     margin: 0;
-
-    li {
+    &--link {
+      width: 100%;
+    }
+    li, &--link > li.-menu--button {
       border: 1px solid var(--color-primary);
-      padding: var(--app-space) calc(var(--app-space) * 2);
+      padding: 0;
       border-radius: 100px;
       margin-bottom: 5px;
       color: var(--color-primary);
       width: 100%;
       cursor: pointer;
 
-      * {
+      a {
         color: var(--color-primary);
+        width: 100%;
+        display: block;
+        padding: var(--app-space) calc(var(--app-space) * 2);
       }
 
       &:hover {
@@ -37,7 +42,7 @@
         background-color: var(--color-primary);
         color: #fff;
 
-        * {
+        a {
           color: #fff;
         }
       }

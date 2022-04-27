@@ -4,9 +4,11 @@
  */
 package org.realestate.ctrl.page.contract;
 
-import static org.persistence.model.Model.Statement.Criteria.of;
-import static org.persistence.model.Model.Statement.Expression.order;
+import static org.persist.model.Model.Statement.Criteria.of;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
+import static org.realestate.ctrl.app.Commons.*;
+import static org.realestate.db.fix.UsersFuncFix.*;
 import static org.web.jsp.fn.Functions.parse;
 
 import java.io.IOException;
@@ -19,16 +21,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
-import org.realestate.db.fix.UsersFix;
 import org.reflex.invoke.functional.Functional;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
 @WebServlet(name = "contract.LesseePage", urlPatterns = {"/contract/lessee"})
-public class LesseePage extends HttpServlet implements DefaultPage {
+public class LesseePage extends HttpServlet implements PageServlet {
 
     public record ContractLesseeKey(
             String code,
@@ -73,6 +74,9 @@ public class LesseePage extends HttpServlet implements DefaultPage {
                 ) AND id.id NOT IN (SELECT s.ref.id FROM Contract s)
                 """
         );
+        if (!allow(request, contract_receipt_create, contract_read)) {
+            criteria = criteria.and("id.updater", access(request, contract));
+        }
         if (flag(request, String.class, "q")) {
             for (var q : param(request, "q").split("\\s+")) {
                 criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -149,7 +153,7 @@ public class LesseePage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         var entity = new Receipt();
         entity.setUpdated(new Date());
-        entity.setUpdater(UsersFix.system.id);
+        entity.setUpdater(access(request, contract_receipt_create));
         entity.setContractAppointmentReceiptList(new Functional<>(request.getParameterValues("selected")).map(e -> {
             var entry = e.split(":");
             var carEntity = new ContractAppointmentReceipt(

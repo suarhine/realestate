@@ -47,10 +47,10 @@ public class ContractAppointmentFeeType implements Serializable {
         this.id = id;
     }
 
-    public ContractAppointmentFeeType(int id, String code) {
+    public ContractAppointmentFeeType(int id, String code, String label) {
         this.id = id;
         this.code = code;
-        this.label = code;
+        this.label = label;
     }
 
     public Integer getId() {

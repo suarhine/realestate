@@ -5,7 +5,7 @@
  */
 package org.realestate.ctrl.app;
 
-import javax.servlet.http.HttpServletResponse;
+import static javax.servlet.http.HttpServletResponse.*;
 
 /**
  *
@@ -14,9 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ApplicationException extends RuntimeException {
 
     public enum Type {
-        incomplete_parameter(HttpServletResponse.SC_BAD_REQUEST),
-        uncommited_transaction(HttpServletResponse.SC_NOT_ACCEPTABLE),
-        internal_server_error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        incomplete_parameter(SC_BAD_REQUEST),
+        invalid_parameter_format(SC_BAD_REQUEST),
+        verifier_mismatch(SC_CONFLICT),
+        authentication_required(SC_UNAUTHORIZED),
+        permission_denied(SC_FORBIDDEN),
+        access_denied(SC_FORBIDDEN),
+        uncommited_transaction(SC_NOT_ACCEPTABLE),
+        internal_server_error(SC_INTERNAL_SERVER_ERROR);
         public final int status;
 
         private Type(int status) {

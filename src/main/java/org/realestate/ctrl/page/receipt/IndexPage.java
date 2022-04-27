@@ -4,8 +4,11 @@
  */
 package org.realestate.ctrl.page.receipt;
 
-import static org.persistence.model.Model.Statement.Expression.order;
+import static org.persist.model.Model.Statement.Criteria.*;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
+import static org.realestate.ctrl.app.Commons.*;
+import static org.realestate.db.fix.UsersFuncFix.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,17 +19,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.persistence.model.Model;
 import org.realestate.db.entity.ContractAppointmentReceipt;
 import org.realestate.db.entity.Receipt;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
 @WebServlet(name = "receipt.IndexPage", urlPatterns = {"/receipt/"})
-public class IndexPage extends HttpServlet implements DefaultPage {
+public class IndexPage extends HttpServlet implements PageServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -40,7 +42,8 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        Model.Statement.Criteria criteria = new Model.Statement.Criteria.Blank();
+        var criteria = allow(request, contract_receipt_read)
+                ? blank() : entry("receipt.updater", access(request, contract_receipt));
         if (flag(request, String.class, "q")) {
             for (var q : param(request, "q").split("\\s+")) {
                 criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -101,7 +104,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             finds.add(entry.getKey());
             entry.getKey().setContractAppointmentReceiptList(entry.getValue());
         }
-        System.out.println(finds);
         attr(request, "finds", finds);
         jsp(request, response);
     }
@@ -121,7 +123,7 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     }
 
     /**
-     * Returns a short description of the servlet.
+     * Returns a short description blank the servlet.
      *
      * @return a String containing servlet description
      */

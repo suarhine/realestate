@@ -5,8 +5,10 @@
  */
 package org.realestate.ctrl.page.contract;
 
+import static org.persist.model.Model.Statement.Criteria.*;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
-import static org.realestate.ctrl.app.Commons.notnull;
+import static org.realestate.ctrl.app.Commons.*;
+import static org.realestate.db.fix.UsersFuncFix.*;
 import static org.web.jsp.fn.Functions.pivot;
 
 import java.io.IOException;
@@ -18,19 +20,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.persistence.model.Model;
-import org.persistence.model.Model.Statement.Criteria;
+import org.persist.model.Model;
+import org.persist.model.Model.Statement.Criteria;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
-import org.realestate.db.fix.UsersFix;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
 @WebServlet(name = "contract.IndexPage", urlPatterns = {"/contract/"})
-public class IndexPage extends HttpServlet implements DefaultPage {
+public class IndexPage extends HttpServlet implements PageServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,17 +48,25 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         if (flag(request, "id")) {
             if (flag(request, int.class, "id")) {
-                attr(request, "find", notnull(model(Contract.class).find(
+                var find = notnull(model(Contract.class).find(
                         param(request, Integer.class, "id")
-                ), "id = " + param(request, "id")));
-            } else if (flag(request, int.class, "ref")) {
-                attr(request, "ref", notnull(model(Contract.class).find(
-                        param(request, Integer.class, "ref")
-                ), "ref = " + param(request, "ref")));
+                ), "id = " + param(request, "id"));
+                if (!find.getUpdater().equals(access(request, contract_create))) {
+                    access(request, contract_update);
+                }
+                attr(request, "find", find);
+            } else {
+                access(request, contract_create);
+                if (flag(request, int.class, "ref")) {
+                    attr(request, "ref", notnull(model(Contract.class).find(
+                            param(request, Integer.class, "ref")
+                    ), "ref = " + param(request, "ref")));
+                }
             }
             jsp(request, response, "input.jsp");
         } else {
-            Criteria criteria = new Criteria.Blank();
+            var criteria = allow(request, contract_read)
+                    ? blank() : entry("updater", access(request, contract));
             if (flag(request, String.class, "q")) {
                 for (var q : param(request, "q").split("\\s+")) {
                     criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -105,9 +114,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             if (flag(request, Integer.class, "objective")) {
                 criteria = criteria.and("objective.id", param(request, Integer.class, "objective"));
             }
-            System.out.println("flag -> " + flag(request, Boolean.class, "collateral.revoke"));
-            System.out.println("parse -> " + param(request, Boolean.class, "collateral.revoke"));
-            System.out.println("raw -> " + param(request, "collateral.revoke"));
             if (flag(request, Boolean.class, "collateral.revoke")) {
                 criteria = criteria.and("id", param(request, Boolean.class, "collateral.revoke") ? "IN" : "NOT IN", Model.Statement.of("SELECT sub.id.id FROM ContractCollateralRevoke sub").blocked());
             }
@@ -128,11 +134,13 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-//        var entity = flag(request, Integer.class, "id")
-//                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
-//                : new Contract();
         if (flag(request, "del")) {
-            if (model(Contract.class, Integer.class).del(param(request, Integer.class, "id"))) {
+            var find = model(Contract.class, Integer.class).find(param(request, Integer.class, "id"));
+            if (!find.getUpdater().equals(access(request, contract_delete))) {
+                find.setUpdater(access(request, contract_update));
+            }
+            find.setUpdated(new Date());
+            if (model(Contract.class, Integer.class).del(true, find)) {
                 redirect(response, ".");
                 return;
             } else {
@@ -145,7 +153,7 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             if (flag(request, "revoke")) {
                 var revokeEntity = new ContractCollateralRevoke(entity);
                 revokeEntity.setUpdated(new Date());
-                revokeEntity.setUpdater(UsersFix.system.id);
+                revokeEntity.setUpdater(access(request, contract_revoke));
                 if (model(ContractCollateralRevoke.class).add(revokeEntity)) {
                     redirect(response, "?id=" + entity.getId());
                     return;
@@ -157,19 +165,31 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                 if (entity.getContractCollateralRevoke() == null) {
                     throw ApplicationException.Type.incomplete_parameter.dispatch("ยังไม่มีการถอนคืนหลักประกันสัญญา");
                 }
-                entity.setContractCollateralRevoke(null);
-                entity.setUpdated(new Date());
-                entity.setUpdater(UsersFix.system.id);
-                if (model(Contract.class).put(entity)) {
+                entity.getContractCollateralRevoke().setUpdated(new Date());
+                entity.getContractCollateralRevoke().setUpdater(access(request, contract_revoke_cancel));
+                if (model(ContractCollateralRevoke.class, Contract.class).del(true, entity.getContractCollateralRevoke())) {
                     redirect(response, "?id=" + entity.getId());
                     return;
                 } else {
                     throw ApplicationException.Type.uncommited_transaction.dispatch();
                 }
+//                entity.setContractCollateralRevoke(null);
+//                entity.setUpdated(new Date());
+//                entity.setUpdater(access(request, contract_revoke_cancel));
+//                if (model(Contract.class).put(entity)) {
+//                    redirect(response, "?id=" + entity.getId());
+//                    return;
+//                } else {
+//                    throw ApplicationException.Type.uncommited_transaction.dispatch();
+//                }
+            }
+            if (!entity.getUpdater().equals(access(request, contract_create))) {
+                entity.setUpdater(access(request, contract_update));
             }
         } else {
             entity = new Contract();
             entity.setRef(flag(request, Integer.class, "ref") ? notnull(model(Contract.class, Integer.class).find(param(request, Integer.class, "ref")), "ref = " + param(request, "ref")) : null);
+            entity.setUpdater(access(request, contract_create));
         }
         if (entity.getContractLessor() == null) {
             entity.setContractLessor(new ContractLessor(entity));
@@ -196,7 +216,6 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             entity.setContractCollateral(new ContractCollateral(entity));
         }
         entity.setUpdated(new Date());
-        entity.setUpdater(UsersFix.system.id);
         entity.setType(flag(request, Integer.class, "type") ? notnull(model(ContractType.class).find(param(request, Integer.class, "type")), "type = " + param(request, "type")) : null);
         entity.setCode(param(request, "code"));
         entity.setDated(param(request, Date.class, "dated", "yyyy-MM-dd"));
@@ -330,7 +349,7 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     }
 
     /**
-     * Returns a short description of the servlet.
+     * Returns a short description blank the servlet.
      *
      * @return a String containing servlet description
      */

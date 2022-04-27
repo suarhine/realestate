@@ -30,12 +30,12 @@ public class ContractAppointment implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Contract id;
-    @JoinColumn(name = "type", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private ContractAppointmentType type;
     @JoinColumn(name = "fee_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ContractAppointmentFeeType feeType;
+    @JoinColumn(name = "type", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private ContractAppointmentType type;
 
     public ContractAppointment() {
     }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package org.realestate.ctrl.page.contract;
+package org.realestate.ctrl.page.setup;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -16,8 +16,8 @@ import org.web.ctrl.PageServlet;
  *
  * @author Pathompong
  */
-@WebServlet(name = "contract.SummaryPage", urlPatterns = {"/contract/summary"})
-public class SummaryPage extends HttpServlet implements PageServlet {
+@WebServlet(name = "setting.ContractPage", urlPatterns = {"/setup/contract/"})
+public class ContractPage extends HttpServlet implements PageServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.

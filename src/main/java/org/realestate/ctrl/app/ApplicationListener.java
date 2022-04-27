@@ -11,6 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import org.realestate.db.fix.ContractFeeTypeFix;
+import org.realestate.db.fix.UsersFuncFix;
 
 /**
  * Web application lifecycle listener.
@@ -29,6 +30,9 @@ public class ApplicationListener implements ServletContextListener {
         new Thread(() -> {
             try {
                 for (var value : ContractFeeTypeFix.values()) {
+                    value.find();
+                }
+                for (var value : UsersFuncFix.values()) {
                     value.find();
                 }
             } catch (Throwable x) {

@@ -1,4 +1,3 @@
-import '../js/index.js';
 import {fn} from '../js/index.js';
 const xport = {event: {}};
 window.jQuery && (function ($) {

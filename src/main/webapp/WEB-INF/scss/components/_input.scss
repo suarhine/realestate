@@ -1,4 +1,4 @@
-input,select {
+input:not([type=checkbox]):not([type=radio]), select, textarea {
   border: 1px solid var(--color-contrast-low);
   border-radius: var(--input-radius);
   padding: calc(var(--app-space)/2) var(--app-space);
@@ -6,7 +6,7 @@ input,select {
   box-sizing: border-box !important;
 
   &:hover,
-  &:focus {
+    &:focus {
     border: 1px solid var(--color-primary);
   }
 
@@ -23,9 +23,9 @@ input,select {
   box-sizing: border-box !important;
 }
 
-select{
+select {
 
 }
-input[type="date"]{
+input[type="date"] {
   max-width: 140px;
 }

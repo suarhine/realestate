@@ -31,12 +31,11 @@ public class Receipt implements Serializable {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receipt")
     private List<ContractAppointmentReceipt> contractAppointmentReceiptList;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
 
     public Receipt() {
     }
@@ -45,10 +44,9 @@ public class Receipt implements Serializable {
         this.id = id;
     }
 
-    public Receipt(Integer id, Date updated, int updater) {
+    public Receipt(Integer id, Date updated) {
         this.id = id;
         this.updated = updated;
-        this.updater = updater;
     }
 
     public Integer getId() {
@@ -67,20 +65,20 @@ public class Receipt implements Serializable {
         this.updated = updated;
     }
 
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
-    }
-
     public List<ContractAppointmentReceipt> getContractAppointmentReceiptList() {
         return contractAppointmentReceiptList;
     }
 
     public void setContractAppointmentReceiptList(List<ContractAppointmentReceipt> contractAppointmentReceiptList) {
         this.contractAppointmentReceiptList = contractAppointmentReceiptList;
+    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
     @Override

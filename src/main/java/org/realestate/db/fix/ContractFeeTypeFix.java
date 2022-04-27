@@ -25,7 +25,7 @@ public enum ContractFeeTypeFix {
     public ContractAppointmentFeeType find() {
         var find = model(ContractAppointmentFeeType.class).find(id);
         if (find == null) {
-            model(ContractAppointmentFeeType.class).add(find = new ContractAppointmentFeeType(id, name()));
+            model(ContractAppointmentFeeType.class).add(find = new ContractAppointmentFeeType(id, name(), name()));
         }
         return find;
     }

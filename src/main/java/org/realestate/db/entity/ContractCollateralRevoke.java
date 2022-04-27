@@ -33,13 +33,12 @@ public class ContractCollateralRevoke implements Serializable {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
 //    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
 //    @OneToOne(optional = false)
 //    private Contract contract;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
 
     public ContractCollateralRevoke() {
     }
@@ -52,16 +51,14 @@ public class ContractCollateralRevoke implements Serializable {
         this.id = id;
     }
 //
-//    public ContractCollateralRevoke(Integer id, Date updated, int updater) {
+//    public ContractCollateralRevoke(Integer id, Date updated) {
 //        this.id = id;
 //        this.updated = updated;
-//        this.updater = updater;
 //    }
 
-    public ContractCollateralRevoke(Contract id, Date updated, int updater) {
+    public ContractCollateralRevoke(Contract id, Date updated) {
         this.id = id;
         this.updated = updated;
-        this.updater = updater;
     }
 //
 //    public Integer getId() {
@@ -87,14 +84,6 @@ public class ContractCollateralRevoke implements Serializable {
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
-
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
-    }
 //
 //    public Contract getContract() {
 //        return contract;
@@ -103,6 +92,14 @@ public class ContractCollateralRevoke implements Serializable {
 //    public void setContract(Contract contract) {
 //        this.contract = contract;
 //    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
+    }
 
     @Override
     public int hashCode() {

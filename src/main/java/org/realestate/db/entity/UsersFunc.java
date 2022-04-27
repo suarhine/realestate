@@ -5,7 +5,6 @@
 package org.realestate.db.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,23 +15,17 @@ import javax.validation.constraints.Size;
  * @author Pathompong
  */
 @Entity
-@Table(name = "contract_appointment_type")
+@Table(name = "users_func")
 @NamedQueries({
-    @NamedQuery(name = "ContractAppointmentType.findAll", query = "SELECT c FROM ContractAppointmentType c")})
-public class ContractAppointmentType implements Serializable {
+    @NamedQuery(name = "UsersFunc.findAll", query = "SELECT u FROM UsersFunc u")})
+public class UsersFunc implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -42,26 +35,26 @@ public class ContractAppointmentType implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "\"desc\"")
     private String desc;
-    @Column(name = "labelable")
-    private Boolean labelable;
     @Column(name = "active")
     private Boolean active;
-    @JoinColumn(name = "updater", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Users updater;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-    private List<ContractAppointmentDating> contractAppointmentDatingList;
+    @JoinTable(name = "users_roles_func_list", joinColumns = {
+        @JoinColumn(name = "func", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "roles", referencedColumnName = "id")})
+    @ManyToMany
+    private List<UsersRoles> usersRolesList;
 
-    public ContractAppointmentType() {
+    public UsersFunc() {
     }
 
-    public ContractAppointmentType(Integer id) {
+    public UsersFunc(Integer id) {
         this.id = id;
     }
 
-    public ContractAppointmentType(Integer id, Date updated) {
+    public UsersFunc(Integer id, String code, String label) {
         this.id = id;
-        this.updated = updated;
+        this.code = code;
+        this.label = label;
+        this.active = true; //for dev
     }
 
     public Integer getId() {
@@ -70,14 +63,6 @@ public class ContractAppointmentType implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public String getCode() {
@@ -104,14 +89,6 @@ public class ContractAppointmentType implements Serializable {
         this.desc = desc;
     }
 
-    public Boolean getLabelable() {
-        return labelable;
-    }
-
-    public void setLabelable(Boolean labelable) {
-        this.labelable = labelable;
-    }
-
     public Boolean getActive() {
         return active;
     }
@@ -120,20 +97,12 @@ public class ContractAppointmentType implements Serializable {
         this.active = active;
     }
 
-    public Users getUpdater() {
-        return updater;
+    public List<UsersRoles> getUsersRolesList() {
+        return usersRolesList;
     }
 
-    public void setUpdater(Users updater) {
-        this.updater = updater;
-    }
-
-    public List<ContractAppointmentDating> getContractAppointmentDatingList() {
-        return contractAppointmentDatingList;
-    }
-
-    public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
-        this.contractAppointmentDatingList = contractAppointmentDatingList;
+    public void setUsersRolesList(List<UsersRoles> usersRolesList) {
+        this.usersRolesList = usersRolesList;
     }
 
     @Override
@@ -146,10 +115,10 @@ public class ContractAppointmentType implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContractAppointmentType)) {
+        if (!(object instanceof UsersFunc)) {
             return false;
         }
-        ContractAppointmentType other = (ContractAppointmentType) object;
+        UsersFunc other = (UsersFunc) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -158,7 +127,7 @@ public class ContractAppointmentType implements Serializable {
 
     @Override
     public String toString() {
-        return "ContractAppointmentType[ id=" + id + " ]";
+        return "UsersFunc[ id=" + id + " ]";
     }
 
 }
