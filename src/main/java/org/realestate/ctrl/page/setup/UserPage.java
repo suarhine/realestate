@@ -27,7 +27,7 @@ import org.web.ctrl.PageServlet;
  *
  * @author Pathompong
  */
-@WebServlet(name = "setting.UserPage", urlPatterns = {"/setup/users/"})
+@WebServlet(name = "setup.UserPage", urlPatterns = {"/setup/users/"})
 public class UserPage extends HttpServlet implements PageServlet {
 
     /**

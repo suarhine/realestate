@@ -5,15 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</title>
-    <link rel="stylesheet" href="index.css" />
-    <script type="module" src="../index.js"></script>
+    <link rel="stylesheet" href="../index.css" />
     <script type="module" src="index.js"></script>
+    <script type="module" src="../../index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -27,27 +28,29 @@
 
   <body>
     <div class="app-container">
-      <div class="app-content">
+      <div class="app-content -sub">
         <div class="main-menu">
           <div class="headers">
             <div class="headers--name headers--center">
-              ตั้งค่าระบบ
+              ประเภทงวดชำระ
             </div>
           </div>
           <br />
           <ul class="main-menu--content" data-pane="main-menu">
+            <c:forEach var="i" items="${finds}">
+              <li>
+                <a target="setting-item-preview" href="?id=${i.id}">${i.label}</a>
+              </li>
+            </c:forEach>
+            <%--
             <li>
-              <a target="setting-preview" href="users">ข้อมูลผู้ใช้งาน</a>
+              <a target="setting-item-preview" href="?id=">เพิ่มประเภทงวดชำระ</a>
             </li>
-            <li>
-              <a target="setting-preview" href="users/roles">สิทธิ์การเข้าถึงระบบ</a>
-            </li>
-            <li>
-              <a target="setting-preview" href="contract/">ตัวเลือกสัญญาเช่าทรัพย์สิน</a>
-            </li>
+            --%>
           </ul>
         </div>
-        <iframe class="main-content -sub" name="setting-preview"></iframe>
+
+        <iframe class="main-content" name="setting-item-preview"></iframe>
       </div>
     </div>
   </body>

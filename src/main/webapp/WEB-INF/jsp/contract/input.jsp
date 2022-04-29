@@ -161,19 +161,19 @@
                 <div class="input-box house-col">
                   <label class="input-box--label">บ้านเลขที่</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.house" value=" ${ref.contractLessee.registry.house}" type="text" />
+                    <input name="lessee.registry.house" value="${ref.contractLessee.registry.house}" type="text" />
                   </div>
                 </div>
                 <div class="input-box village-col">
                   <label class="input-box--label">หมู่ที่</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.village" value=" ${ref.contractLessee.registry.village}" type="text" />
+                    <input name="lessee.registry.village" value="${ref.contractLessee.registry.village}" type="text" />
                   </div>
                 </div>
                 <div class="input-box soi-col">
                   <label class="input-box--label">ตรอก/ซอย</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.soi" value=" ${ref.contractLessee.registry.soi}" type="text" />
+                    <input name="lessee.registry.soi" value="${ref.contractLessee.registry.soi}" type="text" />
                   </div>
                 </div>
               </div>
@@ -181,13 +181,13 @@
                 <div class="input-box road-col">
                   <label class="input-box--label">ถนน</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.road" value=" ${ref.contractLessee.registry.road}" type="text" />
+                    <input name="lessee.registry.road" value="${ref.contractLessee.registry.road}" type="text" />
                   </div>
                 </div>
                 <div class="input-box subdistrict-col">
                   <label class="input-box--label">ตำบล/แขวง</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.subdistrict" value=" ${ref.contractLessee.registry.subdistrict}" type="text" />
+                    <input name="lessee.registry.subdistrict" value="${ref.contractLessee.registry.subdistrict}" type="text" />
                   </div>
                 </div>
               </div>
@@ -195,13 +195,13 @@
                 <div class="input-box district-col">
                   <label class="input-box--label">อำเภอ/เขต</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.district" value=" ${ref.contractLessee.registry.district}" type="text" />
+                    <input name="lessee.registry.district" value="${ref.contractLessee.registry.district}" type="text" />
                   </div>
                 </div>
                 <div class="input-box province-col">
                   <label class="input-box--label">จังหวัด</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.province" value=" ${ref.contractLessee.registry.province}" type="text" />
+                    <input name="lessee.registry.province" value="${ref.contractLessee.registry.province}" type="text" />
                   </div>
                 </div>
               </div>
@@ -209,16 +209,16 @@
                 <div class="input-box zipcode-col">
                   <label class="input-box--label">รหัสไปรษณีย์</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.zipcode" value=" ${ref.contractLessee.registry.zipcode}" type="text" />
+                    <input name="lessee.registry.zipcode" value="${ref.contractLessee.registry.zipcode}" type="text" />
                     <!--
-                    <td><input name="lessee.registry.zipcode" value=" ${ref.contractLessee.registry.zipcode}" type="text" /></td>
+                    <td><input name="lessee.registry.zipcode" value="${ref.contractLessee.registry.zipcode}" type="text" /></td>
                     -->
                   </div>
                 </div>
                 <div class="input-box phone-col">
                   <label class="input-box--label">หมายเลขโทรศัพท์</label>
                   <div class="input-box--field">
-                    <input name="lessee.registry.phone" value=" ${ref.contractLessee.registry.phone}" type="text" />
+                    <input name="lessee.registry.phone" value="${ref.contractLessee.registry.phone}" type="text" />
                   </div>
                 </div>
               </div>
@@ -229,19 +229,19 @@
                 <div class="input-box house-col">
                   <label class="input-box--label">บ้านเลขที่</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.house" value=" ${ref.contractLessee.contact.house}" type="text" />
+                    <input name="lessee.contact.house" value="${ref.contractLessee.contact.house}" type="text" />
                   </div>
                 </div>
                 <div class="input-box village-col">
                   <label class="input-box--label">หมู่ที่</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.village" value=" ${ref.contractLessee.contact.village}" type="text" />
+                    <input name="lessee.contact.village" value="${ref.contractLessee.contact.village}" type="text" />
                   </div>
                 </div>
                 <div class="input-box soi-col">
                   <label class="input-box--label">ตรอก/ซอย</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.soi" value=" ${ref.contractLessee.contact.soi}" type="text" />
+                    <input name="lessee.contact.soi" value="${ref.contractLessee.contact.soi}" type="text" />
                   </div>
                 </div>
               </div>
@@ -249,13 +249,13 @@
                 <div class="input-box road-col">
                   <label class="input-box--label">ถนน</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.road" value=" ${ref.contractLessee.contact.road}" type="text" />
+                    <input name="lessee.contact.road" value="${ref.contractLessee.contact.road}" type="text" />
                   </div>
                 </div>
                 <div class="input-box subdistrict-col">
                   <label class="input-box--label">ตำบล/แขวง</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.subdistrict" value=" ${ref.contractLessee.contact.subdistrict}" type="text" />
+                    <input name="lessee.contact.subdistrict" value="${ref.contractLessee.contact.subdistrict}" type="text" />
                   </div>
                 </div>
               </div>
@@ -263,13 +263,13 @@
                 <div class="input-box district-col">
                   <label class="input-box--label">อำเภอ/เขต</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.district" value=" ${ref.contractLessee.contact.district}" type="text" />
+                    <input name="lessee.contact.district" value="${ref.contractLessee.contact.district}" type="text" />
                   </div>
                 </div>
                 <div class="input-box province-col">
                   <label class="input-box--label">จังหวัด</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.province" value=" ${ref.contractLessee.contact.province}" type="text" />
+                    <input name="lessee.contact.province" value="${ref.contractLessee.contact.province}" type="text" />
                   </div>
                 </div>
               </div>
@@ -277,13 +277,13 @@
                 <div class="input-box zipcode-col">
                   <label class="input-box--label">รหัสไปรษณีย์</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.zipcode" value=" ${ref.contractLessee.contact.zipcode}" type="text" />
+                    <input name="lessee.contact.zipcode" value="${ref.contractLessee.contact.zipcode}" type="text" />
                   </div>
                 </div>
                 <div class="input-box phone-col">
                   <label class="input-box--label">หมายเลขโทรศัพท์</label>
                   <div class="input-box--field">
-                    <input name="lessee.contact.phone" value=" ${ref.contractLessee.contact.phone}" type="text" />
+                    <input name="lessee.contact.phone" value="${ref.contractLessee.contact.phone}" type="text" />
                   </div>
                 </div>
               </div>
@@ -318,7 +318,7 @@
               <div class="input-box --flex1 name-col">
                 <!-- <label class="input-box--label"></label> -->
                 <div class="input-box--field">
-                  <input name="realestate.name" value=" ${ref.contractRealestate.name}" type="text" />
+                  <input name="realestate.name" value="${ref.contractRealestate.name}" type="text" />
                 </div>
               </div>
             </div>
@@ -331,7 +331,7 @@
               <div class="input-box --flex1 location-col">
                 <label class="input-box--label">บริเวณ</label>
                 <div class="input-box--field">
-                  <input name="realestate.location" value=" ${ref.contractRealestate.location}" type="text" />
+                  <input name="realestate.location" value="${ref.contractRealestate.location}" type="text" />
                 </div>
               </div>
             </div>
@@ -339,19 +339,19 @@
               <div class="input-box house-col">
                 <label class="input-box--label">เลขที่</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.house" value=" ${ref.contractRealestate.address.house}" type="text" />
+                  <input name="realestate.address.house" value="${ref.contractRealestate.address.house}" type="text" />
                 </div>
               </div>
               <div class="input-box village-col">
                 <label class="input-box--label">หมู่ที่</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.village" value=" ${ref.contractRealestate.address.village}" type="text" />
+                  <input name="realestate.address.village" value="${ref.contractRealestate.address.village}" type="text" />
                 </div>
               </div>
               <div class="input-box --flex1 soi-col">
                 <label class="input-box--label">ตรอก/ซอย</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.soi" value=" ${ref.contractRealestate.address.soi}" type="text" />
+                  <input name="realestate.address.soi" value="${ref.contractRealestate.address.soi}" type="text" />
                 </div>
               </div>
             </div>
@@ -359,7 +359,7 @@
               <div class="input-box --flex1 nearby-col">
                 <label class="input-box--label">ใกล้เคียงกับ</label>
                 <div class="input-box--field">
-                  <input name="realestate.nearby" value=" ${ref.contractRealestate.nearby}" type="text" />
+                  <input name="realestate.nearby" value="${ref.contractRealestate.nearby}" type="text" />
                 </div>
               </div>
             </div>
@@ -367,13 +367,13 @@
               <div class="input-box --flex1 road-col">
                 <label class="input-box--label">ถนน</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.road" value=" ${ref.contractRealestate.address.road}" type="text" />
+                  <input name="realestate.address.road" value="${ref.contractRealestate.address.road}" type="text" />
                 </div>
               </div>
               <div class="input-box --flex1 subdistrict-col">
                 <label class="input-box--label">ตำบล/แขวง</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.subdistrict" value=" ${ref.contractRealestate.address.subdistrict}" type="text" />
+                  <input name="realestate.address.subdistrict" value="${ref.contractRealestate.address.subdistrict}" type="text" />
                 </div>
               </div>
             </div>
@@ -381,13 +381,13 @@
               <div class="input-box --flex1 district-col">
                 <label class="input-box--label">อำเภอ/เขต</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.district" value=" ${ref.contractRealestate.address.district}" type="text" />
+                  <input name="realestate.address.district" value="${ref.contractRealestate.address.district}" type="text" />
                 </div>
               </div>
               <div class="input-box --flex1 province-col">
                 <label class="input-box--label">จังหวัด</label>
                 <div class="input-box--field">
-                  <input name="realestate.address.province" value=" ${ref.contractRealestate.address.province}" type="text" />
+                  <input name="realestate.address.province" value="${ref.contractRealestate.address.province}" type="text" />
                 </div>
               </div>
             </div>
@@ -403,13 +403,13 @@
               <div class="input-box --flex1 deed-code-col">
                 <label class="input-box--label">หมายเลขที่ดิน</label>
                 <div class="input-box--field">
-                  <input name="realestate.deed_code" value=" ${ref.contractRealestate.deedCode}" type="text" />
+                  <input name="realestate.deed_code" value="${ref.contractRealestate.deedCode}" type="text" />
                 </div>
               </div>
               <div class="input-box --flex1 deed-no-col">
                 <label class="input-box--label">โฉนดที่</label>
                 <div class="input-box--field">
-                  <input name="realestate.deed_no" value=" ${ref.contractRealestate.deedNo}" type="text" />
+                  <input name="realestate.deed_no" value="${ref.contractRealestate.deedNo}" type="text" />
                 </div>
               </div>
             </div>
@@ -434,11 +434,11 @@
               <div class="input-box objective-col">
                 <label class="input-box--label">วัตถุประสงค์เพื่อ</label>
                 <div class="input-box--field">
-                  <select name="objective">
+                  <select name="objective" data-rel-enable="[name=objective_text]">
                     <option value=""></option>
                     <c:forEach var="i" items="${l.contractObjective}">
                       <option value="${i.id}"
-                              ${i.additional ? 'data-enable="objective_text"' : ''}  ${ref.objective == i ? 'selected' : ''}>${i.label}</option>
+                              ${i.additional ? 'data-enable' : ''}  ${ref.objective == i ? 'selected' : ''}>${i.label}</option>
                     </c:forEach>
                   </select>
                 </div>
@@ -446,7 +446,7 @@
               <div class="input-box --flex1">
                 <!-- <label class="input-box--label"></div> -->
                 <div class="input-box--field">
-                  <input name="objective_text" value=" ${ref.objectiveText}" type="text" />
+                  <input name="objective_text" value="${ref.objectiveText}" type="text" style="display: none;"/>
                 </div>
               </div>
             </div>
@@ -489,16 +489,17 @@
               <p:declare appointment="${ui:appointment(find.contractAppointmentList, i)}"
                          dating="${ui:dating(find.contractAppointmentDatingList, i)}">
                 <div class="row">
-                  <div class="input-box ${i.labelable ? '' : '--flex1'} rental-fee-col">
+                  <div class="input-box --flex1 rental-fee-col">
                     <label class="input-box--label">
-                      ${i.label}
+                      <c:if test="${i.additional}">
+                        <span class="text-in-input">${i.label} : </span>
+                        <input name="${i.code}.label" value="${appointment.label}" style="padding-left: 100px; width: 100%;">
+                      </c:if>
+                      <c:if test="${!i.additional}">
+                        ${i.label}
+                      </c:if>
                     </label>
                     <div class="input-box--field">
-                      <c:if test="${i.labelable}">
-                        <div class="input-box--field">
-                          <input name="${i.code}.label" value="${appointment.label}" type="text" />
-                        </div>
-                      </c:if>
                       <select name="${i.code}.fee_type" data-fee-detail="${i.code}">
                         <option value=""></option>
                         <c:forEach var="i" items="${l.contractAppointmentFeeType}">
@@ -517,7 +518,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-box ${i.labelable ? '' : '--flex1'} rental-fee-col">
+                  <div class="input-box rental-fee-col">
                     <label class="input-box--label -blank">
                       --BLANK--
                     </label>

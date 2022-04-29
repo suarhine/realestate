@@ -46,7 +46,8 @@
                         ${f:format(i.updated, 'dd/MM/yyyy', 'th-TH')}
                       </td>
                       <td rowspan="${i.contractAppointmentReceiptList.size()}">
-                        ${i.updater}
+                        ${i.updater.fname}
+                        ${i.updater.lname}
                       </td>
                   </c:if>
                   <td>${ii.id.code}</td>

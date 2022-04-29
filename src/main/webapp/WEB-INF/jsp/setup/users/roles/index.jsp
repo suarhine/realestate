@@ -20,6 +20,12 @@
     <div class="app-container">
       <div class="app-content -sub">
         <div class="main-menu">
+          <div class="headers">
+            <div class="headers--name headers--center">
+              สิทธิ์การเข้าถึงระบบ
+            </div>
+          </div>
+          <br />
           <ul class="main-menu--content--link" data-pane="main-menu">
             <c:forEach var="i" items="${finds}">
               <li class="-menu--button">
@@ -30,7 +36,7 @@
               </li>
             </c:forEach>
             <li class="-menu--button">
-              <a target="setting-users-preview" href="?id">เพิ่มสิทธิ์การใช้งาน</a>
+              <a target="setting-users-preview" href="?id">เพิ่มสิทธิ์การเข้าถึงระบบ</a>
             </li>
           </ul>
         </div>

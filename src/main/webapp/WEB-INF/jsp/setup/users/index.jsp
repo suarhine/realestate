@@ -20,6 +20,12 @@
     <div class="app-container">
       <div class="app-content -sub">
         <div class="main-menu">
+          <div class="headers">
+            <div class="headers--name headers--center">
+              ข้อมูลผู้ใช้งาน
+            </div>
+          </div>
+          <br />
           <ul class="main-menu--content--link" data-pane="main-menu">
             <c:forEach var="i" items="${finds}">
               <li class="-menu--button">

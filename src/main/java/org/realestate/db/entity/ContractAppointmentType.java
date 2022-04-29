@@ -42,8 +42,8 @@ public class ContractAppointmentType implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "\"desc\"")
     private String desc;
-    @Column(name = "labelable")
-    private Boolean labelable;
+    @Column(name = "additional")
+    private Boolean additional;
     @Column(name = "active")
     private Boolean active;
     @JoinColumn(name = "updater", referencedColumnName = "id")
@@ -104,12 +104,12 @@ public class ContractAppointmentType implements Serializable {
         this.desc = desc;
     }
 
-    public Boolean getLabelable() {
-        return labelable;
+    public Boolean getAdditional() {
+        return additional;
     }
 
-    public void setLabelable(Boolean labelable) {
-        this.labelable = labelable;
+    public void setAdditional(Boolean additional) {
+        this.additional = additional;
     }
 
     public Boolean getActive() {

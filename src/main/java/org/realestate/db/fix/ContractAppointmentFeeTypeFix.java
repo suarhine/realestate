@@ -12,13 +12,13 @@ import org.realestate.db.entity.ContractAppointmentFeeType;
  *
  * @author Pathompong
  */
-public enum ContractFeeTypeFix {
+public enum ContractAppointmentFeeTypeFix {
     monthly(1),
     yearly(2),
     custom(3);
     public final int id;
 
-    private ContractFeeTypeFix(int id) {
+    private ContractAppointmentFeeTypeFix(int id) {
         this.id = id;
     }
 

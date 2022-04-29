@@ -2,7 +2,9 @@ input:not([type=checkbox]):not([type=radio]), select, textarea {
   border: 1px solid var(--color-contrast-low);
   border-radius: var(--input-radius);
   padding: calc(var(--app-space)/2) var(--app-space);
-  height: var(--input-height);
+  &:not(textarea){
+    height: var(--input-height);
+  }
   box-sizing: border-box !important;
 
   &:hover,
