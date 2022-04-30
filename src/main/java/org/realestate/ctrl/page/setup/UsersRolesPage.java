@@ -4,7 +4,6 @@
  */
 package org.realestate.ctrl.page.setup;
 
-import static org.persist.model.Model.Statement.Criteria.blank;
 import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
@@ -22,6 +21,8 @@ import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.UsersFunc;
 import org.realestate.db.entity.UsersRoles;
 import org.web.ctrl.PageServlet;
+
+import static org.persist.model.Model.Statement.Criteria.of;
 
 /**
  *
@@ -49,7 +50,7 @@ public class UsersRolesPage extends HttpServlet implements PageServlet {
             }
             jsp(request, response, "input.jsp");
         } else {
-            attr(request, "finds", model(UsersRoles.class).finds(blank(), order("label, code")));
+            attr(request, "finds", model(UsersRoles.class).finds(of(), order("label, code")));
             jsp(request, response);
         }
 
@@ -107,7 +108,7 @@ public class UsersRolesPage extends HttpServlet implements PageServlet {
     }
 
     /**
-     * Returns a short description blank the servlet.
+     * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */

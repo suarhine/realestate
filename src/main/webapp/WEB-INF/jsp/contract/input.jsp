@@ -56,8 +56,8 @@
           <label class="tab-stap--item" for="active-tap-appointment">
             <div class="stap-number">3</div>
             <div class="stap-detail">
-              <div class="stap-detail--title">กำหนดการนัดชำระสัญญาเช่า</div>
-              <!-- <div class="stap-detail--subtitle">กำหนดการนัดชำระสัญญาเช่า</div> -->
+              <div class="stap-detail--title">กำหนดการนัดชำระ</div>
+              <!-- <div class="stap-detail--subtitle">กำหนดการนัดชำระ</div> -->
             </div>
           </label>
           <label class="tab-stap--item" for="active-tap-collateral">

@@ -43,7 +43,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         var criteria = allow(request, contract_receipt_read)
-                ? blank() : entry("receipt.updater", access(request, contract_receipt));
+                ? of() : entry("receipt.updater", access(request, contract_receipt));
         if (flag(request, String.class, "q")) {
             for (var q : param(request, "q").split("\\s+")) {
                 criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -92,7 +92,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
             criteria = criteria.and("id.objective.id", param(request, Integer.class, "objective"));
         }
         var group = new LinkedHashMap<Receipt, ArrayList<ContractAppointmentReceipt>>();
-        for (var carFind : model(ContractAppointmentReceipt.class).finds(criteria, order("receipt.updated DESC"))) {
+        for (var carFind : model(ContractAppointmentReceipt.class).finds(criteria, order("receipt.updated DESC NULLS LAST"))) {
             var get = group.get(carFind.getReceipt());
             if (get == null) {
                 group.put(carFind.getReceipt(), get = new ArrayList<>());
@@ -123,7 +123,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
     }
 
     /**
-     * Returns a short description blank the servlet.
+     * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */

@@ -65,7 +65,6 @@ public class LesseePage extends HttpServlet implements PageServlet {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        var group = new LinkedHashMap<ContractLesseeKey, List<ContractAppointmentDating>>();
         var criteria = of(
                 """
                 SQL(
@@ -124,7 +123,8 @@ public class LesseePage extends HttpServlet implements PageServlet {
         if (flag(request, Integer.class, "objective")) {
             criteria = criteria.and("id.objective.id", param(request, Integer.class, "objective"));
         }
-        for (var find : model(ContractAppointmentDating.class).finds(criteria, order("pk.dating", "pk.type"))) {
+        var group = new LinkedHashMap<ContractLesseeKey, List<ContractAppointmentDating>>();
+        for (var find : model(ContractAppointmentDating.class).finds(criteria, order("pk.dating NULLS LAST", "pk.type NULLS LAST"))) {
             try {
                 var key = new ContractLesseeKey(find.getId().getContractLessee());
                 var list = group.get(key);

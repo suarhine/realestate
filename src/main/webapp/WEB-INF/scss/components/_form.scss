@@ -250,13 +250,12 @@
 .appointment-pay-form {
   .input-box {
 
-    &.rental-fee-col,
-    &.installment-rental-fee-col,
-    &.commission-fee-col,
-    &.utilization-fee-col,
-    &.period-rental-fee-col {
+    &.rental-fee-col {
       .input-box--label {
-        width: 148px;
+        width: 250px;
+        &::after {
+          content: '';
+        }
       }
     }
   }

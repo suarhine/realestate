@@ -1,12 +1,13 @@
-input:not([type=checkbox]):not([type=radio]), select, textarea {
+input:not([type=checkbox]):not([type=radio]), select, textarea, .input-box--value {
   border: 1px solid var(--color-contrast-low);
   border-radius: var(--input-radius);
   padding: calc(var(--app-space)/2) var(--app-space);
-  &:not(textarea){
-    height: var(--input-height);
-  }
   box-sizing: border-box !important;
-
+}
+input:not([type=checkbox]):not([type=radio]), select, .input-box--value {
+  height: var(--input-height);
+}
+input:not([type=checkbox]):not([type=radio]), select, textarea {
   &:hover,
     &:focus {
     border: 1px solid var(--color-primary);

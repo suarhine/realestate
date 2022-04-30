@@ -4,7 +4,6 @@
  */
 package org.realestate.ctrl.page.setup.contract;
 
-import static org.persist.model.Model.Statement.Criteria.blank;
 import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
@@ -20,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.ContractObjective;
 import org.web.ctrl.PageServlet;
+
+import static org.persist.model.Model.Statement.Criteria.of;
 
 /**
  *
@@ -47,7 +48,7 @@ public class ContractObjectivePage extends HttpServlet implements PageServlet {
             }
             jsp(request, response, ".input.jsp");
         } else {
-            attr(request, "finds", model(ContractObjective.class).finds(blank(), order("id")));
+            attr(request, "finds", model(ContractObjective.class).finds(of(), order("id")));
             jsp(request, response);
         }
     }

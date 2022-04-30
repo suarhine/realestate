@@ -6,6 +6,7 @@
 package org.realestate.ctrl.page.contract;
 
 import static org.persist.model.Model.Statement.Criteria.*;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
 import static org.realestate.db.fix.UsersFuncFix.*;
@@ -23,7 +24,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.persist.model.Model;
-import org.persist.model.Model.Statement.Criteria;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
 import org.web.ctrl.PageServlet;
@@ -68,7 +68,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
             jsp(request, response, "input.jsp");
         } else {
             var criteria = allow(request, contract_read)
-                    ? blank() : entry("updater", access(request, contract));
+                    ? of() : entry("updater", access(request, contract));
             if (flag(request, String.class, "q")) {
                 for (var q : param(request, "q").split("\\s+")) {
                     criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -119,7 +119,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
             if (flag(request, Boolean.class, "collateral.revoke")) {
                 criteria = criteria.and("id", param(request, Boolean.class, "collateral.revoke") ? "IN" : "NOT IN", Model.Statement.of("SELECT sub.id.id FROM ContractCollateralRevoke sub").blocked());
             }
-            attr(request, "finds", model(Contract.class).finds(criteria instanceof Criteria.Blank ? null : criteria));
+            attr(request, "finds", model(Contract.class).finds(criteria, order("dated DESC NULLS LAST")));
             jsp(request, response);
         }
     }
@@ -368,7 +368,7 @@ public class IndexPage extends HttpServlet implements PageServlet {
     }
 
     /**
-     * Returns a short description blank the servlet.
+     * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */

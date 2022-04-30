@@ -88,27 +88,27 @@ window.jQuery && (function ($) {
                   date.push(new Date(i));
                 }
                 $pane.html(`
-                <table class="-border">
+                <table>
                   <thead>
                     <tr>
-                     <td class="input-box--label">วันที่</td>
-                     <td class="input-box--label">จำนวนเงิน</td>
+                     <td class="input-box--value">วันที่</td>
+                     <td class="input-box--value">จำนวนเงิน</td>
                     </tr>
                   </thead>
                   <tbody>${date.map(e => `
                     <tr>
-                      <td><input name="${name}.dating" value="${e.toISOString().substring(0, 10)}" type="hidden" />${e.toLocaleDateString('th', {
+                      <td class="input-box--value"><input name="${name}.dating" value="${e.toISOString().substring(0, 10)}" type="hidden" />${e.toLocaleDateString('th', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit'
                   })}</td>
-                      <td><input name="${name}.dating.amount" value="${this.value}" type="hidden" />${this.value}</td>
+                      <td class="input-box--value"><input name="${name}.dating.amount" value="${this.value}" type="hidden" />${this.value}</td>
                     </tr>
                   `).join('')}</tbody>
                   <tfood>
                     <tr>
-                      <td>รวม</td>
-                      <td>${this.value * date.length}</td>
+                      <td class="input-box--value">รวม</td>
+                      <td class="input-box--value">${this.value * date.length}</td>
                     </tr>
                   </tfood>
                 </table>
@@ -116,53 +116,44 @@ window.jQuery && (function ($) {
               }).trigger('keyup');
               break;
             case '3':
-              let dating = undefined;
+              let dating = [{dating: started.toJSON().substr(0, 10), amount: ''}];
               try {
-                dating = Function('return ' + $selected.attr('data-dating'))();
+                dating = Function('return ' + $selected.attr('data-dating'))() || dating;
               } catch (x) {
               }
               $this.parent().next().html('').next().html('');
               $pane.html(`
-                <table class="-full-input -border -input-no-border">
+                <table class="-full-input -input-no-border">
                   <thead>
                     <tr>
-                     <td>วันที่</td>
-                     <td>จำนวนเงิน</td>
+                     <td class="input-box--value">วันที่</td>
+                     <td class="input-box--value">จำนวนเงิน</td>
                     </tr>
                   </thead>
                   <tbody>
-                    ${dating ? dating.map(e => `
+                    ${dating.map(e => `
                     <tr data-rel-del>
-                      <td>
+                      <td class="input-box--value">
                         <input name="${name}.dating" value="${e.dating}" type="date">
                       </td>
-                      <td>
+                      <td class="input-box--value">
                         <input name="${name}.dating.amount" value="${e.amount}" data-rel-del-key-auto>
                       </td>
                     </tr>
-                    `) : `
-                    <tr data-rel-del>
-                      <td>
-                        <input name="${name}.dating" value="${started.toJSON().substr(0, 10)}" type="date">
-                      </td>
-                      <td>
-                        <input name="${name}.dating.amount" data-rel-del-key-auto>
-                      </td>
-                    </tr>
-                    `}
+                    `)}
                     <tr data-rel-add data-rel-del>
-                      <td>
+                      <td class="input-box--value">
                         <input name="${name}.dating" type="date">
                       </td>
-                      <td>
+                      <td class="input-box--value">
                         <input name="${name}.dating.amount" data-rel-del-key-auto>
                       </td>
                     </tr>
                   </tbody>
                   <tfood>
                     <tr>
-                      <td>รวม</td>
-                      <td data-pane="sum"></td>
+                      <td class="input-box--value">รวม</td>
+                      <td data-pane="sum" class="input-box--value"></td>
                     </tr>
                   </tfood>
                 </table>

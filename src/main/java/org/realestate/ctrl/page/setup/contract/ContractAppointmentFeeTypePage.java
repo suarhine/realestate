@@ -4,7 +4,6 @@
  */
 package org.realestate.ctrl.page.setup.contract;
 
-import static org.persist.model.Model.Statement.Criteria.blank;
 import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
@@ -20,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.ContractAppointmentFeeType;
 import org.web.ctrl.PageServlet;
+
+import static org.persist.model.Model.Statement.Criteria.of;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ContractAppointmentFeeTypePage extends HttpServlet implements PageS
             attr(request, "find", notnull(model(ContractAppointmentFeeType.class, Integer.class).find(param(request, Integer.class, "id")), "id = " + param(request, "id")));
             jsp(request, response, ".input.jsp");
         } else {
-            attr(request, "finds", model(ContractAppointmentFeeType.class).finds(blank(), order("id")));
+            attr(request, "finds", model(ContractAppointmentFeeType.class).finds(of(), order("id")));
             jsp(request, response);
         }
     }
