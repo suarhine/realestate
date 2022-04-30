@@ -9,10 +9,12 @@ import static org.persist.model.Model.Statement.Criteria.*;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
 import static org.realestate.db.fix.UsersFuncFix.*;
+import static org.reflex.invoke.functional.Functional.*;
 import static org.web.jsp.fn.Functions.pivot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.function.Function;
 import javax.servlet.ServletException;
@@ -239,6 +241,8 @@ public class IndexPage extends HttpServlet implements PageServlet {
         entity.getContractLessee().setCode(param(request, "lessee.code"));
         entity.getContractLessee().setRepresentative(param(request, "lessee.representative"));
         entity.getContractLessee().setRepresentativeRole(param(request, "lessee.representative_role"));
+        entity.getContractLessee().getRegistry().setUpdated(entity.getUpdated());
+        entity.getContractLessee().getRegistry().setUpdater(entity.getUpdater());
         entity.getContractLessee().getRegistry().setHouse(param(request, "lessee.registry.house"));
         entity.getContractLessee().getRegistry().setVillage(param(request, "lessee.registry.village"));
         entity.getContractLessee().getRegistry().setSoi(param(request, "lessee.registry.soi"));
@@ -248,6 +252,8 @@ public class IndexPage extends HttpServlet implements PageServlet {
         entity.getContractLessee().getRegistry().setProvince(param(request, "lessee.registry.province"));
         entity.getContractLessee().getRegistry().setZipcode(param(request, "lessee.registry.zipcode"));
         entity.getContractLessee().getRegistry().setPhone(param(request, "lessee.registry.phone"));
+        entity.getContractLessee().getContact().setUpdated(entity.getUpdated());
+        entity.getContractLessee().getContact().setUpdater(entity.getUpdater());
         entity.getContractLessee().getContact().setHouse(param(request, "lessee.contact.house"));
         entity.getContractLessee().getContact().setVillage(param(request, "lessee.contact.village"));
         entity.getContractLessee().getContact().setSoi(param(request, "lessee.contact.soi"));
@@ -264,6 +270,8 @@ public class IndexPage extends HttpServlet implements PageServlet {
         entity.getContractRealestate().setNearby(param(request, "realestate.nearby"));
         entity.getContractRealestate().setDeedCode(param(request, "realestate.deed_code"));
         entity.getContractRealestate().setDeedNo(param(request, "realestate.deed_no"));
+        entity.getContractRealestate().getAddress().setUpdated(entity.getUpdated());
+        entity.getContractRealestate().getAddress().setUpdater(entity.getUpdater());
         entity.getContractRealestate().getAddress().setHouse(param(request, "realestate.address.house"));
         entity.getContractRealestate().getAddress().setVillage(param(request, "realestate.address.village"));
         entity.getContractRealestate().getAddress().setSoi(param(request, "realestate.address.soi"));
@@ -340,7 +348,18 @@ public class IndexPage extends HttpServlet implements PageServlet {
         entity.getContractCollateral().setBankCollateralText(param(request, "collateral.bank_collateral_text"));
         entity.getContractCollateral().setBankCollateralNo(param(request, "collateral.bank_collateral_no"));
         entity.getContractCollateral().setBankCollateralDated(param(request, Date.class, "collateral.bank_collateral_dated", "yyyy-MM-dd"));
-
+        entity.setContractAttachList(list(map(pivot(new Object[][]{
+            param(request, Integer[].class, "attach.id"),
+            param(request, String[].class, "attach.name"),
+            param(request, String[].class, "attach.type"),
+            param(request, String[].class, "attach.value")
+        }), e -> {
+            if (e[0] == null) {
+                return new ContractAttach(entity, (String) e[1], (String) e[2], Base64.getDecoder().decode(((String) e[3]).getBytes()));
+            } else {
+                return model(ContractAttach.class).find(e[0]);
+            }
+        }, ContractAttach.class)));
         if (model(Contract.class).put(entity)) {
             redirect(response, ".");
         } else {

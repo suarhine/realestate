@@ -211,6 +211,33 @@ window.jQuery && (function ($) {
               break;
           }
         }
+      }, '[data-rel-attach]': {
+        'rel-attach'(e, ui) {
+          let $f = $(this).closest('form');
+          for (let o of ui.files) {
+            let r = new FileReader();
+            r.onload = e => {
+              let r = e.target.result;
+              let poe = r.indexOf(',');
+              $f.find('[data-pane="attach-link"]').append(`
+                <div class="row" data-rel-del>
+                  <div class="input-box">
+                    <label class="input-box--field">
+                      <a data-ref="${e.target.result}" data-ref-dialog="{modal: true, width: '85vw'}">${o.name}</a>
+                      <input name="attach.id" type="hidden" />
+                      <input name="attach.name" type="hidden" value="${o.name}" />
+                      <input name="attach.type" type="hidden" value="${r.substring(5, poe - 7)}" />
+                      <input name="attach.value" type="hidden" value="${r.substring(poe + 1)}" />
+                    </label>
+                    <span data-rel-del-act>❌</span>
+                  </div>
+                </div>
+              `);
+            };
+            r.readAsDataURL(o);
+          }
+          $(ui).remove();
+        }
       }
     }, '[data-pane="lessee"]': {
       '[data-rel-select-all]': {

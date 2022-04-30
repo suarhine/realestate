@@ -17,6 +17,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/web/js/jquery-ui-1.12.1/jquery-ui.plugin.css" />
     <script type="module" src="index.js"></script>
     <title>JSP Page</title>
   </head>
@@ -27,9 +28,13 @@
       <c:if test="${not empty ref}">
         บันทึกแนบท้ายของสัญญาเช่า <a href="?id=${ref.id}">${ref.code}</a>
       </c:if>
+      <c:if test="${not empty find.ref}">
+        บันทึกแนบท้ายของสัญญาเช่า <a href="?id=${find.ref.id}">${find.ref.code}</a>
+      </c:if>
     </div>
     <br />
     <form method="post">
+      <button onclick="return false;" style="display: none;"></button>
       <p:declare ref="${empty ref ? find : ref}" is_ref="${not empty ref}">
         <input name="id" value="${find.id}" type="hidden" />
         <input name="ref" value="${param.ref}" type="hidden" />
@@ -60,6 +65,13 @@
             <div class="stap-detail">
               <div class="stap-detail--title">หลักประกันสัญญาเช่า</div>
               <!-- <div class="stap-detail--subtitle">หลักประกันสัญญาเช่า</div> -->
+            </div>
+          </label>
+          <label class="tab-stap--item" for="active-tap-attach">
+            <div class="stap-number">5</div>
+            <div class="stap-detail">
+              <div class="stap-detail--title">เอกสารแนบ</div>
+              <!-- <div class="stap-detail--subtitle">เอกสารแนบ</div> -->
             </div>
           </label>
         </div>
@@ -293,7 +305,7 @@
           <div class="button-control">
             <button type="button" class="btn" data-rel-back>ย้อนกลับ</button>
             <c:if test="${find != null}">
-              <button name="del" class="btn">ลบ</button>
+              <button name="delx" class="btn">ลบ</button>
             </c:if>
             <button class="btn" type="button" data-rel-reload>คืนค่า</button>
             <button type="button" class="btn" data-rel-ctrl-tab="next">ถัดไป</button>
@@ -425,7 +437,7 @@
                     class="input-suffix">งาน</span>
                 </div>
                 <div class="input-box--field">
-                  <input name="realestate.space_sqwah" value="${f:format(find.contractRealestate.space % 100, '0.####')}" type="text" pattern="\d\d(\.\d+)?" /><span
+                  <input name="realestate.space_sqwah" value="${f:format(find.contractRealestate.space % 100, '0.####')}" type="text" pattern="\d{1,2}(\.\d+)?" /><span
                     class="input-suffix">ตรว.</span>
                 </div>
               </div>
@@ -743,6 +755,60 @@
             <c:if test="${not empty find && not empty find.contractCollateralRevoke }">
               <button name="cancel-revoke">ยกเลิกการถอนคืนหลักประกันสัญญา</button>
             </c:if>
+            <button type="button" class="btn" data-rel-ctrl-tab="prev">ย้อนกลับ</button>
+            <c:if test="${find != null}">
+              <button name="del" class="btn">ลบ</button>
+            </c:if>
+            <button class="btn" type="button" data-rel-reload>คืนค่า</button>
+            <!--<button class="btn">บันทึก</button>-->
+            <button type="button" class="btn" data-rel-ctrl-tab="next">ถัดไป</button>
+          </div>
+        </div>
+
+        <input id="active-tap-attach" name="active-tap" value="attach" type="radio" >
+        <div class="stap-content content-form">
+          <div class="content-form--group" data-pane="attach-link">
+            <div class="row">
+              <div class="input-box">
+                <label class="input-box--field">
+                  รายการเอกสารแนบ
+                </label>
+              </div>
+            </div>
+            <c:forEach var="i" items="${find.contractAttachList}">
+              <div class="row" data-rel-del>
+                <div class="input-box">
+                  <label class="input-box--field">
+                    <a data-ref="data:${i.type};base64,${f:parse('base64', i.value, '')}" data-ref-dialog="{modal: true, width: '85vw'}">${i.name}</a>
+                    <input name="attach.id" type="hidden" value="${i.id}" />
+                    <input name="attach.name" type="hidden" />
+                    <input name="attach.type" type="hidden" />
+                    <input name="attach.value" type="hidden" />
+                  </label>
+                  <span data-rel-del-act>❌</span>
+                </div>
+              </div>
+            </c:forEach>
+          </div>
+          <c:if test="${not empty find.contractList}">
+            <div class="row">
+              <div class="input-box">
+                <label class="input-box--field">
+                  รายการบันทึกแนบท้าย
+                </label>
+              </div>
+            </div>
+            <c:forEach var="i" items="${ui:list_ref(find)}">
+              <div class="row">
+                <div class="input-box">
+                  <label class="input-box--field">
+                    <a data-ref="?id=${i.id}">${i.code}</a>
+                  </label>
+                </div>
+              </div>
+            </c:forEach>
+          </c:if>
+          <div class="button-control">
             <c:if test="${not empty find}">
               <button type="button" data-ref="?id&ref=${find.id}">ทำบันทึกแนบท้าย</button>
             </c:if>
@@ -750,6 +816,7 @@
             <c:if test="${find != null}">
               <button name="del" class="btn">ลบ</button>
             </c:if>
+            <button class="btn" type="button" data-rel-attach>แนบไฟล์</button>
             <button class="btn" type="button" data-rel-reload>คืนค่า</button>
             <button class="btn">บันทึก</button>
           </div>

@@ -6,17 +6,16 @@ package org.realestate.view.tld;
 
 import static org.web.jsp.fn.Functions.format;
 
+import java.util.ArrayList;
 import java.util.List;
-import org.realestate.db.entity.ContractAppointment;
-import org.realestate.db.entity.ContractAppointmentDating;
-import org.realestate.db.entity.ContractAppointmentType;
+import org.realestate.db.entity.*;
 import org.reflex.invoke.functional.Functional;
 
 /**
  *
  * @author Pathompong
  */
-public class Contract {
+public class ContractTld {
 
     public static ContractAppointment getContractAppointmentByContractAppointmentType(
             List<ContractAppointment> values,
@@ -70,5 +69,13 @@ public class Contract {
         } catch (NullPointerException x) {
             return null;
         }
+    }
+
+    public static List<Contract> listRef(Contract find) {
+        var list = new ArrayList<Contract>(find.getContractList());
+        for (var f : find.getContractList()) {
+            list.addAll(listRef(f));
+        }
+        return list;
     }
 }

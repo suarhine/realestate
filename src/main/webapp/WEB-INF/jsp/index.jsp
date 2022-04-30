@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/web/js/jquery-ui-1.12.1/jquery-ui.plugin.css" />
     <script type="module" src="index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

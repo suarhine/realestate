@@ -84,6 +84,8 @@ public class Contract implements Serializable {
     private ContractLessor contractLessor;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractRealestate contractRealestate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract", orphanRemoval = true)
+    private List<ContractAttach> contractAttachList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractLessee contractLessee;
 
@@ -273,6 +275,14 @@ public class Contract implements Serializable {
 
     public void setContractRealestate(ContractRealestate contractRealestate) {
         this.contractRealestate = contractRealestate;
+    }
+
+    public List<ContractAttach> getContractAttachList() {
+        return contractAttachList;
+    }
+
+    public void setContractAttachList(List<ContractAttach> contractAttachList) {
+        this.contractAttachList = contractAttachList;
     }
 
     public ContractLessee getContractLessee() {
