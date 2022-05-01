@@ -56,21 +56,6 @@ public class ContractTld {
         return builder.delete(0, 2).insert(0, '[').append(']');
     }
 
-    public static Double summaryContractAppointmentDatingAmount(List<ContractAppointmentDating> values) {
-        try {
-            double amount = 0;
-            for (var value : values) {
-                try {
-                    amount += value.getAmount();
-                } catch (NullPointerException x) {
-                }
-            }
-            return amount;
-        } catch (NullPointerException x) {
-            return null;
-        }
-    }
-
     public static List<Contract> listRef(Contract find) {
         var list = new ArrayList<Contract>(find.getContractList());
         for (var f : find.getContractList()) {

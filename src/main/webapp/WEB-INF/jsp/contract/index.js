@@ -230,23 +230,6 @@ window.jQuery && (function ($) {
           $(ui).remove();
         }
       }
-    }, '[data-pane="lessee"]': {
-      '[data-rel-select-all]': {
-        change() {
-          $(this).closest('tbody').next().find('[name="selected"]').prop('checked', this.checked).trigger('change');
-        }
-      }, '[name="selected"]': {
-        change() {
-          let $this = $(this);
-          $this.closest('tbody').prev().find('[data-rel-select-all]')
-              .prop('checked', $this.jump('tbody', '[name="selected"]:not(:checked)').length === 0);
-          $this.jump('tr', '[data-pane="receive"]').html(this.checked ? function () {
-            return `
-              <input name="${$this.val()}" value="${(+this.dataset.amount || 0) + (+this.dataset.fine || 0)}" type="text" />
-            `;
-          } : '');
-        }
-      }
     }
   };
   new URL(import.meta.url).searchParams.get('unbind') === null && $(document).listen(event);

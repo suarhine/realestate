@@ -36,11 +36,6 @@
         <function-signature>java.lang.StringBuilder toContractAppointmentDatingJson(java.util.List)</function-signature>
     </function>
     <function>
-        <name>dating_amount</name>
-        <function-class>org.realestate.view.tld.ContractTld</function-class>
-        <function-signature>java.lang.Double summaryContractAppointmentDatingAmount(java.util.List)</function-signature>
-    </function>
-    <function>
         <name>list_ref</name>
         <function-class>org.realestate.view.tld.ContractTld</function-class>
         <function-signature>java.lang.Double listRef(org.realestate.db.entity.Contract)</function-signature>

@@ -8,13 +8,15 @@ input:not([type=checkbox]):not([type=radio]), select, .input-box--value {
   height: var(--input-height);
 }
 input:not([type=checkbox]):not([type=radio]), select, textarea {
-  &:hover,
-    &:focus {
-    border: 1px solid var(--color-primary);
-  }
+  &:not(:read-only) {
+    &:hover,
+      &:focus {
+      border: 1px solid var(--color-primary);
+    }
 
-  &:focus {
-    box-shadow: 0px 0px 0px 2px alpha(var(--color-primary), .4);
+    &:focus {
+      box-shadow: 0px 0px 0px 2px alpha(var(--color-primary), .4);
+    }
   }
 }
 .text-in-input {

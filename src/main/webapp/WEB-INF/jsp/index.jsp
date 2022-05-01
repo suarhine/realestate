@@ -43,11 +43,13 @@
             <li>
               <a target="content-preview" href="contract/">สัญญาเช่าทรัพย์สิน</a>
             </li>
+            <!--
             <li>
               <a target="content-preview" href="contract/lessee">สรุปรายชื่อผู้เช่า</a>
             </li>
+            -->
             <li>
-              <a target="content-preview" href="receipt">การรับเงินค่าเช่า</a>
+              <a target="content-preview" href="receipt">การรับชำระ</a>
             </li>
             <!--
             <li>
