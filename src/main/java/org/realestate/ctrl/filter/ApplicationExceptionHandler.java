@@ -45,7 +45,7 @@ public class ApplicationExceptionHandler implements Filter {
                     case "basic" -> {
                         var entry = new String(Base64.getDecoder().decode(tokenizer.nextToken()), "UTF-8").split(":");
                         var find = model(Users.class).find("code", entry[0]);
-                        if (entry[1].hashCode() * find.getSalt() == find.getPassword()) {
+                        if (entry[1].hashCode() * find.getSalt() + find.getSalt() == find.getPassword()) {
                             yield find;
                         } else {
                             yield null;

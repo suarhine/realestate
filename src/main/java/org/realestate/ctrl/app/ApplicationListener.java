@@ -10,6 +10,8 @@ import static org.realestate.ctrl.app.ApplicationInstance.*;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import org.realestate.db.entity.ContractAppointmentFeeType;
+import org.realestate.db.entity.UsersFunc;
 import org.realestate.db.fix.ContractAppointmentFeeTypeFix;
 import org.realestate.db.fix.UsersFuncFix;
 
@@ -30,10 +32,14 @@ public class ApplicationListener implements ServletContextListener {
         new Thread(() -> {
             try {
                 for (var value : ContractAppointmentFeeTypeFix.values()) {
-                    value.find();
+                    var find = value.find();
+                    find.setCode(value.name());
+                    model(ContractAppointmentFeeType.class).put(find);
                 }
                 for (var value : UsersFuncFix.values()) {
-                    value.find();
+                    var find = value.find();
+                    find.setCode(value.name());
+                    model(UsersFunc.class).put(find);
                 }
             } catch (Throwable x) {
             }

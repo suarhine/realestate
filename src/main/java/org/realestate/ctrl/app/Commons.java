@@ -137,29 +137,30 @@ public class Commons {
         return notnull(value, size, () -> upper(new IllegalArgumentException(message), 3));
     }
 
-    public static <X extends Throwable> void conflict(
-            Object v1, Object v2, Supplier<X> throwing
+    public static <T, X extends Throwable> T conflict(
+            T v1, T v2, Supplier<X> throwing
     ) throws X {
         if (v1 == null ? v2 != null : !v1.equals(v2)) {
             throw throwing.get();
         }
+        return v1;
     }
 
-    public static <X extends Throwable> void conflict(
-            Supplier<Object> v1,
-            Supplier<Object> v2,
+    public static <T, X extends Throwable> T conflict(
+            Supplier<T> v1,
+            Supplier<T> v2,
             Function<Throwable, X> throwing
     ) throws X {
-        conflict(trie(() -> v1.get(), x -> {
+        return conflict(trie(() -> v1.get(), x -> {
             throw throwing.apply(x);
         }), trie(() -> v2.get(), x -> {
             throw throwing.apply(x);
         }), () -> throwing.apply(null));
     }
 
-    public static void conflict(Object v1, Object v2, String message)
+    public static <T> T conflict(T v1, T v2, String message)
             throws IllegalArgumentException {
-        conflict(v1, v2, () -> upper(new UnsupportedOperationException(message), 3));
+        return conflict(v1, v2, () -> upper(new UnsupportedOperationException(message), 3));
     }
 
     public static void clear() {
@@ -168,6 +169,9 @@ public class Commons {
     }
 
     private static boolean allow(Users user, UsersFuncFix... require) {
+        if (!Boolean.TRUE.equals(user.getActive())) {
+            return false;
+        }
         try {
             for (var role : user.getUsersRolesList()) {
                 for (var func : role.getUsersFuncList()) {
@@ -179,9 +183,6 @@ public class Commons {
                 }
             }
         } catch (NullPointerException x) {
-            if (user == null) {
-                throw x;
-            }
         }
         return require == null || require.length == 0;
     }
@@ -192,7 +193,11 @@ public class Commons {
             if (allow(user, require)) {
                 return user;
             }
-            throw ApplicationException.Type.permission_denied.dispatch();
+            if (Boolean.TRUE.equals(user.getActive())) {
+                throw ApplicationException.Type.permission_denied.dispatch();
+            } else {
+                throw ApplicationException.Type.access_denied.dispatch();
+            }
         } catch (NullPointerException | ClassCastException x) {
             throw ApplicationException.Type.authentication_required.dispatch(x);
         }

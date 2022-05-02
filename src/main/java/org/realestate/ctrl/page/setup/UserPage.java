@@ -4,6 +4,7 @@
  */
 package org.realestate.ctrl.page.setup;
 
+import static org.persist.model.Model.Statement.Criteria.of;
 import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 import static org.realestate.ctrl.app.Commons.*;
@@ -21,8 +22,6 @@ import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.Users;
 import org.realestate.db.entity.UsersRoles;
 import org.web.ctrl.PageServlet;
-
-import static org.persist.model.Model.Statement.Criteria.of;
 
 /**
  *
@@ -84,40 +83,36 @@ public class UserPage extends HttpServlet implements PageServlet {
                 }
                 return;
             }
-            if (flag(request, "changepass")) {
-                var password = require(param(request, String[].class, "password"), 2, "password");
-                conflict(password[0], password[1], () -> ApplicationException.Type.verifier_mismatch.dispatch());
-                var salt = (int) (Math.random() * Integer.MAX_VALUE);
-                entity.setUpdated(new Date());
-                entity.setUpdater(access(request, setup_users_changepass));
-                entity.setPassword(password[0].hashCode() * salt);
-                entity.setSalt(salt);
-                return;
-            }
         } else {
-            var password = require(param(request, String[].class, "password"), 2, "password");
-            conflict(password[0], password[1], () -> ApplicationException.Type.verifier_mismatch.dispatch());
-            var salt = (int) (Math.random() * Integer.MAX_VALUE);
             entity = new Users();
             entity.setCode(param(request, "code"));
-            entity.setPassword(password[0].hashCode() * salt);
+        }
+        if (entity.getId() == null || flag(request, "changepass")) {
+            var password = require(param(request, String[].class, "password"), 2, "password");
+            var salt = (int) (Math.random() * Integer.MAX_VALUE);
+            entity.setPassword(conflict(password[0], password[1], () -> ApplicationException.Type.verifier_mismatch.dispatch()).hashCode() * salt + salt);
             entity.setSalt(salt);
         }
-        entity.setUpdated(new Date());
-        entity.setUpdater(access(request, setup_users_update));
-        entity.setPname(param(request, String.class, "pname"));
-        entity.setFname(param(request, String.class, "fname"));
-        entity.setLname(param(request, String.class, "lname"));
-        entity.setPosit(param(request, String.class, "posit"));
-        entity.setActive(flag(request, "active"));
-        if (flag(request, "roles")) {
-            try {
-                entity.setUsersRolesList(list(model(UsersRoles.class, Integer.class).finds(param(request, Integer[].class, "roles"))));
-            } catch (NullPointerException x) {
-                throw ApplicationException.Type.incomplete_parameter.dispatch(x);
-            }
+        if (flag(request, "changepass")) {
+            entity.setUpdated(new Date());
+            entity.setUpdater(access(request, setup_users_changepass));
         } else {
-            entity.setUsersRolesList(null);
+            entity.setUpdated(new Date());
+            entity.setUpdater(access(request, setup_users_update));
+            entity.setPname(param(request, String.class, "pname"));
+            entity.setFname(param(request, String.class, "fname"));
+            entity.setLname(param(request, String.class, "lname"));
+            entity.setPosit(param(request, String.class, "posit"));
+            entity.setActive(flag(request, "active"));
+            if (flag(request, "roles")) {
+                try {
+                    entity.setUsersRolesList(list(model(UsersRoles.class, Integer.class).finds(param(request, Integer[].class, "roles"))));
+                } catch (NullPointerException x) {
+                    throw ApplicationException.Type.incomplete_parameter.dispatch(x);
+                }
+            } else {
+                entity.setUsersRolesList(null);
+            }
         }
         if (model(Users.class).put(entity)) {
             redirect(response, ".");
