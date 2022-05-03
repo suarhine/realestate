@@ -70,7 +70,7 @@ public class InputPage extends HttpServlet implements PageServlet {
                 SQL(
                 'age(?, now()) < (? || '' day'')::interval AND (?, ?, ?) NOT IN (SELECT s.id, s.type, s.dating FROM contract_appointment_receipt s)',
                 pk.dating, ?1, pk.id, pk.type, pk.dating
-                ) AND id.id NOT IN (SELECT s.ref.id FROM Contract s)
+                )
                 """,
                 flag(request, Integer.class, "early") ? param(request, "early") : "20"
         );

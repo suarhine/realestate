@@ -24,12 +24,12 @@
 
   <body data-page="input">
     <div class="headers--name">
-      บันทึกสัญญาเช่าทรัพย์สิน
+      <a data-ref=".">บันทึกสัญญาเช่าทรัพย์สิน</a>
       <c:if test="${not empty ref}">
-        บันทึกแนบท้ายของสัญญาเช่า <a href="?id=${ref.id}">${ref.code}</a>
+        <a data-ref="?id=${ref.id}">ต่ออายุสัญญาจาก ${ref.code}</a>
       </c:if>
       <c:if test="${not empty find.ref}">
-        บันทึกแนบท้ายของสัญญาเช่า <a href="?id=${find.ref.id}">${find.ref.code}</a>
+        <a data-ref="?id=${find.ref.id}">ต่ออายุสัญญาจาก ${find.ref.code}</a>
       </c:if>
     </div>
     <br />
@@ -810,7 +810,7 @@
           </c:if>
           <div class="button-control">
             <c:if test="${not empty find}">
-              <button type="button" data-ref="?id&ref=${find.id}">ทำบันทึกแนบท้าย</button>
+              <button type="button" data-ref="?id&ref=${find.id}">ต่ออายุสัญญา</button>
             </c:if>
             <button type="button" class="btn" data-rel-ctrl-tab="prev">ย้อนกลับ</button>
             <c:if test="${find != null}">
