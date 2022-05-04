@@ -5,8 +5,10 @@
 package org.realestate.db.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,6 +27,11 @@ public class Address implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
     @Size(max = 2147483647)
     @Column(name = "house")
     private String house;
@@ -53,6 +60,9 @@ public class Address implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "phone")
     private String phone;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
     @OneToMany(mappedBy = "address")
     private List<ContractRealestate> contractRealestateList;
     @OneToMany(mappedBy = "contact")
@@ -67,12 +77,25 @@ public class Address implements Serializable {
         this.id = id;
     }
 
+    public Address(Integer id, Date updated) {
+        this.id = id;
+        this.updated = updated;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public String getHouse() {
@@ -145,6 +168,14 @@ public class Address implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
     public List<ContractRealestate> getContractRealestateList() {

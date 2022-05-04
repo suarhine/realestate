@@ -5,12 +5,17 @@
  */
 package org.realestate.ctrl.page.contract;
 
+import static org.persist.model.Model.Statement.Criteria.*;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
-import static org.realestate.ctrl.app.Commons.notnull;
+import static org.realestate.ctrl.app.Commons.*;
+import static org.realestate.db.fix.UsersFuncFix.*;
+import static org.reflex.invoke.functional.Functional.*;
 import static org.web.jsp.fn.Functions.pivot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.function.Function;
 import javax.servlet.ServletException;
@@ -18,19 +23,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.persistence.model.Model;
-import org.persistence.model.Model.Statement.Criteria;
+import org.persist.model.Model;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
-import org.realestate.db.fix.UsersFix;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
 @WebServlet(name = "contract.IndexPage", urlPatterns = {"/contract/"})
-public class IndexPage extends HttpServlet implements DefaultPage {
+public class IndexPage extends HttpServlet implements PageServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,13 +50,25 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         if (flag(request, "id")) {
             if (flag(request, int.class, "id")) {
-                attr(request, "find", notnull(model(Contract.class).find(
+                var find = notnull(model(Contract.class).find(
                         param(request, Integer.class, "id")
-                ), "id = " + param(request, "id")));
+                ), "id = " + param(request, "id"));
+                if (!find.getUpdater().equals(access(request, contract_create))) {
+                    access(request, contract_update);
+                }
+                attr(request, "find", find);
+            } else {
+                access(request, contract_create);
+                if (flag(request, int.class, "ref")) {
+                    attr(request, "ref", notnull(model(Contract.class).find(
+                            param(request, Integer.class, "ref")
+                    ), "ref = " + param(request, "ref")));
+                }
             }
             jsp(request, response, "input.jsp");
         } else {
-            Criteria criteria = new Criteria.Blank();
+            var criteria = allow(request, contract_read)
+                    ? of() : entry("updater", access(request, contract));
             if (flag(request, String.class, "q")) {
                 for (var q : param(request, "q").split("\\s+")) {
                     criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -101,13 +116,10 @@ public class IndexPage extends HttpServlet implements DefaultPage {
             if (flag(request, Integer.class, "objective")) {
                 criteria = criteria.and("objective.id", param(request, Integer.class, "objective"));
             }
-            System.out.println("flag -> " + flag(request, Boolean.class, "collateral.revoke"));
-            System.out.println("parse -> " + param(request, Boolean.class, "collateral.revoke"));
-            System.out.println("raw -> " + param(request, "collateral.revoke"));
             if (flag(request, Boolean.class, "collateral.revoke")) {
                 criteria = criteria.and("id", param(request, Boolean.class, "collateral.revoke") ? "IN" : "NOT IN", Model.Statement.of("SELECT sub.id.id FROM ContractCollateralRevoke sub").blocked());
             }
-            attr(request, "finds", model(Contract.class).finds(criteria instanceof Criteria.Blank ? null : criteria));
+            attr(request, "finds", model(Contract.class).finds(criteria, order("dated DESC NULLS LAST")));
             jsp(request, response);
         }
     }
@@ -124,11 +136,13 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-//        var entity = flag(request, Integer.class, "id")
-//                ? notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"))
-//                : new Contract();
         if (flag(request, "del")) {
-            if (model(Contract.class, Integer.class).del(param(request, Integer.class, "id"))) {
+            var find = model(Contract.class, Integer.class).find(param(request, Integer.class, "id"));
+            if (!find.getUpdater().equals(access(request, contract_delete))) {
+                find.setUpdater(access(request, contract_update));
+            }
+            find.setUpdated(new Date());
+            if (model(Contract.class, Integer.class).del(true, find)) {
                 redirect(response, ".");
                 return;
             } else {
@@ -138,11 +152,10 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         Contract entity;
         if (flag(request, Integer.class, "id")) {
             entity = notnull(model(Contract.class).find(param(request, Integer.class, "id")), "id = " + request.getParameter("id"));
-
             if (flag(request, "revoke")) {
                 var revokeEntity = new ContractCollateralRevoke(entity);
                 revokeEntity.setUpdated(new Date());
-                revokeEntity.setUpdater(UsersFix.system.id);
+                revokeEntity.setUpdater(access(request, contract_revoke));
                 if (model(ContractCollateralRevoke.class).add(revokeEntity)) {
                     redirect(response, "?id=" + entity.getId());
                     return;
@@ -150,43 +163,61 @@ public class IndexPage extends HttpServlet implements DefaultPage {
                     throw ApplicationException.Type.uncommited_transaction.dispatch();
                 }
             }
-            if (entity.getContractLessor() == null) {
-                entity.setContractLessor(new ContractLessor(entity));
+            if (flag(request, "cancel-revoke")) {
+                if (entity.getContractCollateralRevoke() == null) {
+                    throw ApplicationException.Type.incomplete_parameter.dispatch("ยังไม่มีการถอนคืนหลักประกันสัญญา");
+                }
+                entity.getContractCollateralRevoke().setUpdated(new Date());
+                entity.getContractCollateralRevoke().setUpdater(access(request, contract_revoke_cancel));
+                if (model(ContractCollateralRevoke.class, Contract.class).del(true, entity.getContractCollateralRevoke())) {
+                    redirect(response, "?id=" + entity.getId());
+                    return;
+                } else {
+                    throw ApplicationException.Type.uncommited_transaction.dispatch();
+                }
+//                entity.setContractCollateralRevoke(null);
+//                entity.setUpdated(new Date());
+//                entity.setUpdater(access(request, contract_revoke_cancel));
+//                if (model(Contract.class).put(entity)) {
+//                    redirect(response, "?id=" + entity.getId());
+//                    return;
+//                } else {
+//                    throw ApplicationException.Type.uncommited_transaction.dispatch();
+//                }
             }
-            if (entity.getContractLessee() == null) {
-                entity.setContractLessee(new ContractLessee(entity));
-            }
-            if (entity.getContractLessee().getRegistry() == null) {
-                entity.getContractLessee().setRegistry(new Address());
-            }
-            if (entity.getContractLessee().getContact() == null) {
-                entity.getContractLessee().setContact(new Address());
-            }
-            if (entity.getContractRealestate() == null) {
-                entity.setContractRealestate(new ContractRealestate(entity));
-            }
-            if (entity.getContractRealestate().getAddress() == null) {
-                entity.getContractRealestate().setAddress(new Address());
-            }
-            if (entity.getContractPlan() == null) {
-                entity.setContractPlan(new ContractPlan(entity));
-            }
-            if (entity.getContractCollateral() == null) {
-                entity.setContractCollateral(new ContractCollateral(entity));
+            if (!entity.getUpdater().equals(access(request, contract_create))) {
+                entity.setUpdater(access(request, contract_update));
             }
         } else {
             entity = new Contract();
+            entity.setRef(flag(request, Integer.class, "ref") ? notnull(model(Contract.class, Integer.class).find(param(request, Integer.class, "ref")), "ref = " + param(request, "ref")) : null);
+            entity.setUpdater(access(request, contract_create));
+        }
+        if (entity.getContractLessor() == null) {
             entity.setContractLessor(new ContractLessor(entity));
+        }
+        if (entity.getContractLessee() == null) {
             entity.setContractLessee(new ContractLessee(entity));
+        }
+        if (entity.getContractLessee().getRegistry() == null) {
             entity.getContractLessee().setRegistry(new Address());
+        }
+        if (entity.getContractLessee().getContact() == null) {
             entity.getContractLessee().setContact(new Address());
+        }
+        if (entity.getContractRealestate() == null) {
             entity.setContractRealestate(new ContractRealestate(entity));
+        }
+        if (entity.getContractRealestate().getAddress() == null) {
             entity.getContractRealestate().setAddress(new Address());
+        }
+        if (entity.getContractPlan() == null) {
             entity.setContractPlan(new ContractPlan(entity));
+        }
+        if (entity.getContractCollateral() == null) {
             entity.setContractCollateral(new ContractCollateral(entity));
         }
         entity.setUpdated(new Date());
-        entity.setUpdater(UsersFix.system.id);
         entity.setType(flag(request, Integer.class, "type") ? notnull(model(ContractType.class).find(param(request, Integer.class, "type")), "type = " + param(request, "type")) : null);
         entity.setCode(param(request, "code"));
         entity.setDated(param(request, Date.class, "dated", "yyyy-MM-dd"));
@@ -210,6 +241,8 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractLessee().setCode(param(request, "lessee.code"));
         entity.getContractLessee().setRepresentative(param(request, "lessee.representative"));
         entity.getContractLessee().setRepresentativeRole(param(request, "lessee.representative_role"));
+        entity.getContractLessee().getRegistry().setUpdated(entity.getUpdated());
+        entity.getContractLessee().getRegistry().setUpdater(entity.getUpdater());
         entity.getContractLessee().getRegistry().setHouse(param(request, "lessee.registry.house"));
         entity.getContractLessee().getRegistry().setVillage(param(request, "lessee.registry.village"));
         entity.getContractLessee().getRegistry().setSoi(param(request, "lessee.registry.soi"));
@@ -219,6 +252,8 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractLessee().getRegistry().setProvince(param(request, "lessee.registry.province"));
         entity.getContractLessee().getRegistry().setZipcode(param(request, "lessee.registry.zipcode"));
         entity.getContractLessee().getRegistry().setPhone(param(request, "lessee.registry.phone"));
+        entity.getContractLessee().getContact().setUpdated(entity.getUpdated());
+        entity.getContractLessee().getContact().setUpdater(entity.getUpdater());
         entity.getContractLessee().getContact().setHouse(param(request, "lessee.contact.house"));
         entity.getContractLessee().getContact().setVillage(param(request, "lessee.contact.village"));
         entity.getContractLessee().getContact().setSoi(param(request, "lessee.contact.soi"));
@@ -235,6 +270,8 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractRealestate().setNearby(param(request, "realestate.nearby"));
         entity.getContractRealestate().setDeedCode(param(request, "realestate.deed_code"));
         entity.getContractRealestate().setDeedNo(param(request, "realestate.deed_no"));
+        entity.getContractRealestate().getAddress().setUpdated(entity.getUpdated());
+        entity.getContractRealestate().getAddress().setUpdater(entity.getUpdater());
         entity.getContractRealestate().getAddress().setHouse(param(request, "realestate.address.house"));
         entity.getContractRealestate().getAddress().setVillage(param(request, "realestate.address.village"));
         entity.getContractRealestate().getAddress().setSoi(param(request, "realestate.address.soi"));
@@ -311,7 +348,18 @@ public class IndexPage extends HttpServlet implements DefaultPage {
         entity.getContractCollateral().setBankCollateralText(param(request, "collateral.bank_collateral_text"));
         entity.getContractCollateral().setBankCollateralNo(param(request, "collateral.bank_collateral_no"));
         entity.getContractCollateral().setBankCollateralDated(param(request, Date.class, "collateral.bank_collateral_dated", "yyyy-MM-dd"));
-
+        entity.setContractAttachList(list(map(pivot(new Object[][]{
+            param(request, Integer[].class, "attach.id"),
+            param(request, String[].class, "attach.name"),
+            param(request, String[].class, "attach.type"),
+            param(request, String[].class, "attach.value")
+        }), e -> {
+            if (e[0] == null) {
+                return new ContractAttach(entity, (String) e[1], (String) e[2], Base64.getDecoder().decode(((String) e[3]).getBytes()));
+            } else {
+                return model(ContractAttach.class).find(e[0]);
+            }
+        }, ContractAttach.class)));
         if (model(Contract.class).put(entity)) {
             redirect(response, ".");
         } else {

@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package org.realestate.ctrl.page.contract;
+package org.realestate.ctrl.page.receipt;
 
-import static org.persistence.model.Model.Statement.Criteria.of;
-import static org.persistence.model.Model.Statement.Expression.order;
+import static org.persist.model.Model.Statement.Criteria.of;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
+import static org.realestate.ctrl.app.Commons.*;
+import static org.realestate.db.fix.UsersFuncFix.*;
 import static org.web.jsp.fn.Functions.parse;
 
 import java.io.IOException;
@@ -19,16 +21,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.realestate.ctrl.app.ApplicationException;
 import org.realestate.db.entity.*;
-import org.realestate.db.fix.UsersFix;
 import org.reflex.invoke.functional.Functional;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
-@WebServlet(name = "contract.LesseePage", urlPatterns = {"/contract/lessee"})
-public class LesseePage extends HttpServlet implements DefaultPage {
+@WebServlet(name = "receipt.InputPage", urlPatterns = {"/receipt/input"})
+public class InputPage extends HttpServlet implements PageServlet {
 
     public record ContractLesseeKey(
             String code,
@@ -64,10 +65,18 @@ public class LesseePage extends HttpServlet implements DefaultPage {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        var group = new LinkedHashMap<ContractLesseeKey, List<ContractAppointmentDating>>();
         var criteria = of(
-                "SQL('age(?, now()) < ''20 day'' AND (?, ?, ?) NOT IN (SELECT s.id, s.type, s.dating FROM contract_appointment_receipt s)', pk.dating, pk.id, pk.type, pk.dating)"
+                """
+                SQL(
+                'age(?, now()) < (? || '' day'')::interval AND (?, ?, ?) NOT IN (SELECT s.id, s.type, s.dating FROM contract_appointment_receipt s)',
+                pk.dating, ?1, pk.id, pk.type, pk.dating
+                )
+                """,
+                flag(request, Integer.class, "early") ? param(request, "early") : "20"
         );
+        if (!allow(request, contract_receipt_create, contract_read)) {
+            criteria = criteria.and("id.updater", access(request, contract));
+        }
         if (flag(request, String.class, "q")) {
             for (var q : param(request, "q").split("\\s+")) {
                 criteria = criteria.and((Function<Object, String> arguments) -> {
@@ -115,7 +124,8 @@ public class LesseePage extends HttpServlet implements DefaultPage {
         if (flag(request, Integer.class, "objective")) {
             criteria = criteria.and("id.objective.id", param(request, Integer.class, "objective"));
         }
-        for (var find : model(ContractAppointmentDating.class).finds(criteria, order("pk.dating", "pk.type"))) {
+        var group = new LinkedHashMap<ContractLesseeKey, List<ContractAppointmentDating>>();
+        for (var find : model(ContractAppointmentDating.class).finds(criteria, order("pk.dating NULLS LAST", "pk.type NULLS LAST"))) {
             try {
                 var key = new ContractLesseeKey(find.getId().getContractLessee());
                 var list = group.get(key);
@@ -144,7 +154,7 @@ public class LesseePage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
         var entity = new Receipt();
         entity.setUpdated(new Date());
-        entity.setUpdater(UsersFix.system.id);
+        entity.setUpdater(access(request, contract_receipt_create));
         entity.setContractAppointmentReceiptList(new Functional<>(request.getParameterValues("selected")).map(e -> {
             var entry = e.split(":");
             var carEntity = new ContractAppointmentReceipt(
@@ -161,7 +171,7 @@ public class LesseePage extends HttpServlet implements DefaultPage {
             throw ApplicationException.Type.incomplete_parameter.dispatch("selected");
         }
         if (model(Receipt.class).add(entity)) {
-            redirect(response, "lessee");
+            redirect(response, ".");
         } else {
             throw ApplicationException.Type.uncommited_transaction.dispatch();
         }

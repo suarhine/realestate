@@ -5,20 +5,22 @@
  */
 package org.realestate.ctrl.page;
 
+import static org.realestate.ctrl.app.Commons.access;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.web.ctrl.DefaultPage;
+import org.web.ctrl.PageServlet;
 
 /**
  *
  * @author Pathompong
  */
 @WebServlet(name = "IndexPage", urlPatterns = {"/index.jsp"})
-public class IndexPage extends HttpServlet implements DefaultPage {
+public class IndexPage extends HttpServlet implements PageServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -32,21 +34,8 @@ public class IndexPage extends HttpServlet implements DefaultPage {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        access(request);
         jsp(request, response, "index.jsp");
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(
-            HttpServletRequest request, HttpServletResponse response
-    ) throws ServletException, IOException {
     }
 
     /**

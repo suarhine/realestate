@@ -20,8 +20,8 @@
     font-size: var(--text-sm);
 
     tr {
-      min-height: 35px;
-      cursor: pointer;
+      min-height: 30px;
+      /*cursor: pointer;*/
 
       &:nth-child(odd) {
         background-color: lightness(var(--thead-bg), 1.23);

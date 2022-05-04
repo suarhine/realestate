@@ -24,6 +24,8 @@ public class ContractAppointmentDating implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "amount")
     private Double amount;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "dating")
+    private ContractAppointmentReceipt contractAppointmentReceipt;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Contract id;
@@ -87,6 +89,14 @@ public class ContractAppointmentDating implements Serializable {
 
     public void setId(Contract id) {
         this.id = id;
+    }
+
+    public ContractAppointmentReceipt getContractAppointmentReceipt() {
+        return contractAppointmentReceipt;
+    }
+
+    public void setContractAppointmentReceipt(ContractAppointmentReceipt contractAppointmentReceipt) {
+        this.contractAppointmentReceipt = contractAppointmentReceipt;
     }
 
     public ContractAppointment getRef() {

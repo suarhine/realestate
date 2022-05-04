@@ -1,6 +1,6 @@
 <%-- 
-    Document   : summary
-    Created on : Apr 1, 2022, 3:39:45 AM
+    Document   : logout
+    Created on : Apr 26, 2022, 2:00:14 AM
     Author     : Pathompong
 --%>
 
@@ -9,9 +9,6 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title>
+    <meta http-equiv="refresh" content="0;" >
   </head>
-  <body>
-    <h1>สรุปยอดรวมสัญญาเช่า</h1>
-  </body>
 </html>

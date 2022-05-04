@@ -5,6 +5,7 @@
 package org.realestate.db.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,6 +27,11 @@ public class ContractAppointmentFeeType implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -39,6 +45,9 @@ public class ContractAppointmentFeeType implements Serializable {
     private Boolean active;
     @OneToMany(mappedBy = "feeType")
     private List<ContractAppointment> contractAppointmentList;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
 
     public ContractAppointmentFeeType() {
     }
@@ -47,10 +56,10 @@ public class ContractAppointmentFeeType implements Serializable {
         this.id = id;
     }
 
-    public ContractAppointmentFeeType(int id, String code) {
+    public ContractAppointmentFeeType(int id, String code, String label) {
         this.id = id;
         this.code = code;
-        this.label = code;
+        this.label = label;
     }
 
     public Integer getId() {
@@ -59,6 +68,14 @@ public class ContractAppointmentFeeType implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public String getCode() {
@@ -99,6 +116,14 @@ public class ContractAppointmentFeeType implements Serializable {
 
     public void setContractList(List<ContractAppointment> contractAppointmentList) {
         this.contractAppointmentList = contractAppointmentList;
+    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
     @Override

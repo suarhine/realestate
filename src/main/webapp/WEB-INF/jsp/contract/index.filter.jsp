@@ -14,8 +14,9 @@
              || not empty param['collateral.revoke']
            }"
            readonly="${param.readonly != null}"
-           optional="${param.optional != null}">
-  <form class="search-list">
+           optional="${param.optional != null}"
+           receipt="${param.receipt != null}">
+  <form class="search-list" ${empty param.form ? '' : 'id="'.concat(param.form).concat('"')}>
     <div class="search-list--box">
       <input name="q"
              value="${param.q}"
@@ -43,25 +44,32 @@
           เพิ่มสัญญาใหม่
         </button>
       </c:if>
+      <c:if test="${receipt}">
+        <button class="btn" formaction="../receipt/input">
+
+          <i class="material-icons">add</i>
+          รับชำระ
+        </button>
+      </c:if>
     </div>
     <div class="-linebreak"></div>
     <div data-pane="option" ${option ? '' : 'data-rel-hide'}>
       ประเภทสัญญาเช่า
-      <select name="type" form="search" ${option ? '' : 'disabled'}>
+      <select name="type" ${option ? '' : 'disabled'}>
         <option value="">-- ไม่ระบุ --</option>
         <c:forEach var="i" items="${l.contractType}">
           <option value="${i.id}" ${i.id == param.type ? 'selected' : ''}>${i.label}</option>
         </c:forEach>
       </select>
       บริเวณที่เช่า
-      <select name="realestate.location" form="search" ${option ? '' : 'disabled'}>
+      <select name="realestate.location" ${option ? '' : 'disabled'}>
         <option value="">-- ไม่ระบุ --</option>
         <c:forEach var="i" items="${o.contractRealestateLocation}">
           <option value="${i}" ${i == param['realestate.location'] ? 'selected' : ''}>${i}</option>
         </c:forEach>
       </select>
       ตำบลที่เช่า
-      <select name="realestate.address.subdistrict" form="search" ${option ? '' : 'disabled'}>
+      <select name="realestate.address.subdistrict" ${option ? '' : 'disabled'}>
         <option value="">-- ไม่ระบุ --</option>
         <c:forEach var="i" items="${o.contractRealestateAddressSubdistrict}">
           <option value="${i}" ${i == param['realestate.address.subdistrict'] ? 'selected' : ''}>${i}</option>
@@ -69,7 +77,7 @@
       </select>
       <br />
       จุดประสงค์ของการเช่า
-      <select name="objective" form="search" ${option ? '' : 'disabled'}>
+      <select name="objective" ${option ? '' : 'disabled'}>
         <option value="">-- ไม่ระบุ --</option>
         <c:forEach var="i" items="${l.contractObjective}">
           <option value="${i.id}" ${i.id == param.objective ? 'selected' : ''}>${i.label}</option>
@@ -79,12 +87,14 @@
       มากกว่า <input name="period.min"
                      value="${param['period.min']}"
                      type="number"
-                     form="search"
+                     min="0"
+                     max="100"
                      ${option ? '' : 'disabled'} /> ปี
       และน้อยกว่า <input name="period.max"
                          value="${param['period.max']}"
                          type="number"
-                         form="search"
+                         min="0"
+                         max="100"
                          ${option ? '' : 'disabled'} /> ปี
       <%--select name="period">
         <option value="">-- ไม่ระบุ --</option>

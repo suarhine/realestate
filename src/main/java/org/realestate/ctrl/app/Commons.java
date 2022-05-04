@@ -10,6 +10,9 @@ import static org.reflex.invoke.functional.Triable.trie;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
+import javax.servlet.http.HttpServletRequest;
+import org.realestate.db.entity.Users;
+import org.realestate.db.fix.UsersFuncFix;
 
 /**
  *
@@ -59,7 +62,20 @@ public class Commons {
             try {
                 throw throwing.get();
             } catch (NullPointerException x) {
-                throw throwing == null ? new NullPointerException() : x;
+                throw upper(throwing == null ? new NullPointerException() : x, 2);
+            }
+        }
+        return value;
+    }
+
+    public static <T, X extends Throwable> T[] notnull(
+            T[] value, int size, Supplier<X> throwing
+    ) throws X {
+        if (notnull(value, throwing).length < size) {
+            try {
+                throw throwing.get();
+            } catch (NullPointerException x) {
+                throw upper(throwing == null ? new NullPointerException() : x, 2);
             }
         }
         return value;
@@ -73,9 +89,22 @@ public class Commons {
         }), () -> throwing.apply(null));
     }
 
+    public static <T, X extends Throwable> T[] notnull(
+            Supplier<T[]> value, int size, Function<Throwable, X> throwing
+    ) throws X {
+        return notnull(trie(() -> value.get(), x -> {
+            throw throwing.apply(x);
+        }), size, () -> throwing.apply(null));
+    }
+
     public static <T, X extends Throwable> T notnull(T value, String message)
             throws NullPointerException {
         return notnull(value, () -> upper(new NullPointerException(message), 3));
+    }
+
+    public static <T, X extends Throwable> T[] notnull(T[] value, int size, String message)
+            throws NullPointerException {
+        return notnull(value, size, () -> upper(new NullPointerException(message), 3));
     }
 
     public static <T, X extends Throwable> T notnull(T value)
@@ -83,9 +112,19 @@ public class Commons {
         return notnull(value, () -> upper(new NullPointerException(), 3));
     }
 
+    public static <T, X extends Throwable> T[] notnull(T[] value, int size)
+            throws NullPointerException {
+        return notnull(value, size, () -> upper(new NullPointerException(), 3));
+    }
+
     public static <T> T require(Supplier<T> value, String message)
             throws IllegalArgumentException {
         return notnull(value, x -> upper(new IllegalArgumentException(message), 3));
+    }
+
+    public static <T> T[] require(Supplier<T[]> value, int size, String message)
+            throws IllegalArgumentException {
+        return notnull(value, size, x -> upper(new IllegalArgumentException(message), 3));
     }
 
     public static <T> T require(T value, String message)
@@ -93,33 +132,82 @@ public class Commons {
         return notnull(value, () -> upper(new IllegalArgumentException(message), 3));
     }
 
-    public static <X extends Throwable> void conflict(
-            Object v1, Object v2, Supplier<X> throwing
+    public static <T> T[] require(T[] value, int size, String message)
+            throws IllegalArgumentException {
+        return notnull(value, size, () -> upper(new IllegalArgumentException(message), 3));
+    }
+
+    public static <T, X extends Throwable> T conflict(
+            T v1, T v2, Supplier<X> throwing
     ) throws X {
         if (v1 == null ? v2 != null : !v1.equals(v2)) {
             throw throwing.get();
         }
+        return v1;
     }
 
-    public static <X extends Throwable> void conflict(
-            Supplier<Object> v1,
-            Supplier<Object> v2,
+    public static <T, X extends Throwable> T conflict(
+            Supplier<T> v1,
+            Supplier<T> v2,
             Function<Throwable, X> throwing
     ) throws X {
-        conflict(trie(() -> v1.get(), x -> {
+        return conflict(trie(() -> v1.get(), x -> {
             throw throwing.apply(x);
         }), trie(() -> v2.get(), x -> {
             throw throwing.apply(x);
         }), () -> throwing.apply(null));
     }
 
-    public static void conflict(Object v1, Object v2, String message)
+    public static <T> T conflict(T v1, T v2, String message)
             throws IllegalArgumentException {
-        conflict(v1, v2, () -> upper(new UnsupportedOperationException(message), 3));
+        return conflict(v1, v2, () -> upper(new UnsupportedOperationException(message), 3));
     }
 
     public static void clear() {
         model().close();
         System.gc();
+    }
+
+    private static boolean allow(Users user, UsersFuncFix... require) {
+        if (!Boolean.TRUE.equals(user.getActive())) {
+            return false;
+        }
+        try {
+            for (var role : user.getUsersRolesList()) {
+                for (var func : role.getUsersFuncList()) {
+                    for (var r : require) {
+                        if (r.allow(func.getId())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        } catch (NullPointerException x) {
+        }
+        return require == null || require.length == 0;
+    }
+
+    public static Users access(HttpServletRequest request, UsersFuncFix... require) {
+        try {
+            var user = (Users) request.getSession(false).getAttribute("USER");
+            if (allow(user, require)) {
+                return user;
+            }
+            if (Boolean.TRUE.equals(user.getActive())) {
+                throw ApplicationException.Type.permission_denied.dispatch();
+            } else {
+                throw ApplicationException.Type.access_denied.dispatch();
+            }
+        } catch (NullPointerException | ClassCastException x) {
+            throw ApplicationException.Type.authentication_required.dispatch(x);
+        }
+    }
+
+    public static boolean allow(HttpServletRequest request, UsersFuncFix... require) {
+        try {
+            return allow((Users) request.getSession(false).getAttribute("USER"), require);
+        } catch (NullPointerException | ClassCastException x) {
+            return false;
+        }
     }
 }

@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
-import org.persistence.model.Model;
+import org.persist.model.Model;
 
 /**
  *

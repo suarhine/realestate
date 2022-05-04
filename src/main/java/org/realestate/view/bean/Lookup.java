@@ -4,8 +4,8 @@
  */
 package org.realestate.view.bean;
 
-import static org.persistence.model.Model.Statement.Criteria.entry;
-import static org.persistence.model.Model.Statement.Expression.order;
+import static org.persist.model.Model.Statement.Criteria.entry;
+import static org.persist.model.Model.Statement.Expression.order;
 import static org.realestate.ctrl.app.ApplicationInstance.model;
 
 import java.util.List;
@@ -35,5 +35,13 @@ public class Lookup {
 
     public List<ContractObjective> getContractObjective() {
         return model(ContractObjective.class).finds(entry("active", true), order("id"));
+    }
+
+    public List<UsersRoles> getUsersRoles() {
+        return model(UsersRoles.class).finds(entry("active", true), order("id"));
+    }
+
+    public List<UsersFunc> getUsersFunc() {
+        return model(UsersFunc.class).finds(entry("active", true), order("id"));
     }
 }

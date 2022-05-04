@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/web/js/jquery-ui-1.12.1/jquery-ui.plugin.css" />
     <script type="module" src="index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,11 +43,13 @@
             <li>
               <a target="content-preview" href="contract/">สัญญาเช่าทรัพย์สิน</a>
             </li>
+            <!--
             <li>
               <a target="content-preview" href="contract/lessee">สรุปรายชื่อผู้เช่า</a>
             </li>
+            -->
             <li>
-              <a target="content-preview" href="receipt">การรับเงินค่าเช่า</a>
+              <a target="content-preview" href="receipt">การรับชำระ</a>
             </li>
             <!--
             <li>
@@ -60,7 +63,7 @@
               <a target="content-preview" href="report">รายงาน</a>
             </li>
             <li>
-              <a target="content-preview" href="setting">ตั้งค่า</a>
+              <a target="content-preview" href="setup">ตั้งค่า</a>
             </li>
             <li>
               <a href="logout">ออกจากระบบ</a>

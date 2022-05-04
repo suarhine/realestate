@@ -4,16 +4,36 @@
  */
 package org.realestate.db.fix;
 
+import static org.realestate.ctrl.app.ApplicationInstance.model;
+
+import java.util.Date;
+import org.realestate.db.entity.Users;
+
 /**
  *
  * @author Pathompong
  */
 public enum UsersFix {
-    system(1);
-    public final int id;
+    system;
 
-    private UsersFix(int id) {
-        this.id = id;
+    public Users find() {
+        var find = model(Users.class).find("code", name());
+        if (find == null) {
+            if (this == system) {
+                model().sql(q -> {
+                    return q.executeUpdate() == 1;
+                }, """
+                INSERT INTO users (updated, updater, code) VALUES (now(), currval('users_id_seq'), ?)
+                """, name());
+                return find();
+            } else {
+                find = new Users();
+                find.setUpdated(new Date());
+                find.setUpdater(system.find());
+                find.setCode(name());
+            }
+        }
+        return find;
     }
 
 }

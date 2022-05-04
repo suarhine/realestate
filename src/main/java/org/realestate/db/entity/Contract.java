@@ -32,10 +32,6 @@ public class Contract implements Serializable {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -57,27 +53,39 @@ public class Contract implements Serializable {
     @Column(name = "ended")
     @Temporal(TemporalType.DATE)
     private Date ended;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
     private ContractCollateralRevoke contractCollateralRevoke;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractPlan contractPlan;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<ContractAppointmentReceipt> contractAppointmentReceiptList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
+    @OrderBy("pk.dating")
+    private List<ContractAppointmentDating> contractAppointmentDatingList;
+    @OneToMany(mappedBy = "ref")
+    private List<Contract> contractList;
+    @JoinColumn(name = "ref", referencedColumnName = "id")
+    @ManyToOne
+    private Contract ref;
     @JoinColumn(name = "objective", referencedColumnName = "id")
     @ManyToOne
     private ContractObjective objective;
     @JoinColumn(name = "type", referencedColumnName = "id")
     @ManyToOne
     private ContractType type;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
     private List<ContractAppointment> contractAppointmentList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
-    @OrderBy("pk.dating")
-    private List<ContractAppointmentDating> contractAppointmentDatingList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractCollateral contractCollateral;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractLessor contractLessor;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractRealestate contractRealestate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract", orphanRemoval = true)
+    private List<ContractAttach> contractAttachList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "id")
     private ContractLessee contractLessee;
 
@@ -88,10 +96,9 @@ public class Contract implements Serializable {
         this.id = id;
     }
 
-    public Contract(Integer id, Date updated, int updater) {
+    public Contract(Integer id, Date updated) {
         this.id = id;
         this.updated = updated;
-        this.updater = updater;
     }
 
     public Integer getId() {
@@ -108,14 +115,6 @@ public class Contract implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
     }
 
     public String getCode() {
@@ -190,6 +189,38 @@ public class Contract implements Serializable {
         this.contractPlan = contractPlan;
     }
 
+    public List<ContractAppointmentReceipt> getContractAppointmentReceiptList() {
+        return contractAppointmentReceiptList;
+    }
+
+    public void setContractAppointmentReceiptList(List<ContractAppointmentReceipt> contractAppointmentReceiptList) {
+        this.contractAppointmentReceiptList = contractAppointmentReceiptList;
+    }
+
+    public List<ContractAppointmentDating> getContractAppointmentDatingList() {
+        return contractAppointmentDatingList;
+    }
+
+    public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
+        this.contractAppointmentDatingList = contractAppointmentDatingList;
+    }
+
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
+    }
+
+    public Contract getRef() {
+        return ref;
+    }
+
+    public void setRef(Contract ref) {
+        this.ref = ref;
+    }
+
     public ContractObjective getObjective() {
         return objective;
     }
@@ -206,20 +237,20 @@ public class Contract implements Serializable {
         this.type = type;
     }
 
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
+    }
+
     public List<ContractAppointment> getContractAppointmentList() {
         return contractAppointmentList;
     }
 
     public void setContractAppointmentList(List<ContractAppointment> contractAppointmentList) {
         this.contractAppointmentList = contractAppointmentList;
-    }
-
-    public List<ContractAppointmentDating> getContractAppointmentDatingList() {
-        return contractAppointmentDatingList;
-    }
-
-    public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
-        this.contractAppointmentDatingList = contractAppointmentDatingList;
     }
 
     public ContractCollateral getContractCollateral() {
@@ -244,6 +275,14 @@ public class Contract implements Serializable {
 
     public void setContractRealestate(ContractRealestate contractRealestate) {
         this.contractRealestate = contractRealestate;
+    }
+
+    public List<ContractAttach> getContractAttachList() {
+        return contractAttachList;
+    }
+
+    public void setContractAttachList(List<ContractAttach> contractAttachList) {
+        this.contractAttachList = contractAttachList;
     }
 
     public ContractLessee getContractLessee() {

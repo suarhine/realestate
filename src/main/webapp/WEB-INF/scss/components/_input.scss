@@ -1,14 +1,18 @@
-input,select {
+input:not([type=checkbox]):not([type=radio]), select, textarea, .input-box--value {
   border: 1px solid var(--color-contrast-low);
   border-radius: var(--input-radius);
-  padding: calc(var(--app-space) / 2) var(--app-space);
-  height: var(--input-height);
+  padding: calc(var(--app-space)/2) var(--app-space);
   box-sizing: border-box !important;
-
-  &:hover, &:focus {
-    border: 1px solid var(--color-primary);
+}
+input:not([type=checkbox]):not([type=radio]), select, .input-box--value {
+  height: var(--input-height);
+}
+input:not([type=checkbox]):not([type=radio]), select, textarea {
+  &:not(:read-only) {
+    &:hover, &:focus {
+      border: 1px solid var(--color-primary);
+    }
   }
-
   &:focus {
     box-shadow: 0px 0px 0px 2px alpha(var(--color-primary), .4);
   }
@@ -22,9 +26,9 @@ input,select {
   box-sizing: border-box !important;
 }
 
-select{
+select {
 
 }
-input[type="date"]{
+input[type="date"] {
   max-width: 140px;
 }

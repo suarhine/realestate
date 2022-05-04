@@ -4,11 +4,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <display-name>Contract Realestate</display-name>
+    <description>
+        ระบบจัดเก็บสัญญาเช่า องค์การบริหารส่วนจังหวัดภูเก็ต
+    </description>
+    <request-character-encoding>UTF-8</request-character-encoding>
     <context-param>
         <param-name>version</param-name>
         <param-value>1.4.0</param-value>
     </context-param>
-    <request-character-encoding>UTF-8</request-character-encoding>
     <context-param>
         <param-name>version.build</param-name>
         <param-value>21.07.12</param-value>

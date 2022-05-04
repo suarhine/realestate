@@ -22,22 +22,22 @@
     -->
     <function>
         <name>appointment</name>
-        <function-class>org.realestate.view.tld.Contract</function-class>
+        <function-class>org.realestate.view.tld.ContractTld</function-class>
         <function-signature>org.realestate.db.entity.ContractAppointment getContractAppointmentByContractAppointmentType(java.util.List, org.realestate.db.entity.ContractAppointmentType)</function-signature>
     </function>
     <function>
         <name>dating</name>
-        <function-class>org.realestate.view.tld.Contract</function-class>
+        <function-class>org.realestate.view.tld.ContractTld</function-class>
         <function-signature>org.realestate.db.entity.ContractAppointmentDating getContractAppointmentDatingByContractAppointmentType(java.util.List, org.realestate.db.entity.ContractAppointmentType)</function-signature>
     </function>
     <function>
         <name>dating_json</name>
-        <function-class>org.realestate.view.tld.Contract</function-class>
+        <function-class>org.realestate.view.tld.ContractTld</function-class>
         <function-signature>java.lang.StringBuilder toContractAppointmentDatingJson(java.util.List)</function-signature>
     </function>
     <function>
-        <name>dating_amount</name>
-        <function-class>org.realestate.view.tld.Contract</function-class>
-        <function-signature>java.lang.Double summaryContractAppointmentDatingAmount(java.util.List)</function-signature>
+        <name>list_ref</name>
+        <function-class>org.realestate.view.tld.ContractTld</function-class>
+        <function-signature>java.lang.Double listRef(org.realestate.db.entity.Contract)</function-signature>
     </function>
 </taglib>

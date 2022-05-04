@@ -32,10 +32,6 @@ public class ContractType implements Serializable {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -49,6 +45,9 @@ public class ContractType implements Serializable {
     private Boolean active;
     @OneToMany(mappedBy = "type")
     private List<Contract> contractList;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
 
     public ContractType() {
     }
@@ -57,10 +56,9 @@ public class ContractType implements Serializable {
         this.id = id;
     }
 
-    public ContractType(Integer id, Date updated, int updater) {
+    public ContractType(Integer id, Date updated) {
         this.id = id;
         this.updated = updated;
-        this.updater = updater;
     }
 
     public Integer getId() {
@@ -77,14 +75,6 @@ public class ContractType implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
     }
 
     public String getCode() {
@@ -125,6 +115,14 @@ public class ContractType implements Serializable {
 
     public void setContractList(List<Contract> contractList) {
         this.contractList = contractList;
+    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
     @Override

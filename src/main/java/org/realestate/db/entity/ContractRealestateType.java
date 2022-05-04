@@ -6,6 +6,7 @@ package org.realestate.db.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,10 +32,6 @@ public class ContractRealestateType implements Serializable {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updater")
-    private int updater;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -46,6 +43,11 @@ public class ContractRealestateType implements Serializable {
     private String desc;
     @Column(name = "active")
     private Boolean active;
+    @OneToMany(mappedBy = "type")
+    private List<ContractRealestate> contractRealestateList;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
 
     public ContractRealestateType() {
     }
@@ -54,10 +56,9 @@ public class ContractRealestateType implements Serializable {
         this.id = id;
     }
 
-    public ContractRealestateType(Integer id, Date updated, int updater) {
+    public ContractRealestateType(Integer id, Date updated) {
         this.id = id;
         this.updated = updated;
-        this.updater = updater;
     }
 
     public Integer getId() {
@@ -74,14 +75,6 @@ public class ContractRealestateType implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public int getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(int updater) {
-        this.updater = updater;
     }
 
     public String getCode() {
@@ -114,6 +107,22 @@ public class ContractRealestateType implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public List<ContractRealestate> getContractRealestateList() {
+        return contractRealestateList;
+    }
+
+    public void setContractRealestateList(List<ContractRealestate> contractRealestateList) {
+        this.contractRealestateList = contractRealestateList;
+    }
+
+    public Users getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
     @Override

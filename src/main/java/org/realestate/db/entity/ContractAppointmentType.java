@@ -5,6 +5,7 @@
 package org.realestate.db.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,10 +23,16 @@ public class ContractAppointmentType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
     @Size(max = 2147483647)
     @Column(name = "code")
     private String code;
@@ -35,10 +42,13 @@ public class ContractAppointmentType implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "\"desc\"")
     private String desc;
+    @Column(name = "additional")
+    private Boolean additional;
     @Column(name = "active")
     private Boolean active;
-    @Column(name = "labelable")
-    private Boolean labelable;
+    @JoinColumn(name = "updater", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Users updater;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     private List<ContractAppointmentDating> contractAppointmentDatingList;
 
@@ -49,12 +59,25 @@ public class ContractAppointmentType implements Serializable {
         this.id = id;
     }
 
+    public ContractAppointmentType(Integer id, Date updated) {
+        this.id = id;
+        this.updated = updated;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public String getCode() {
@@ -81,6 +104,14 @@ public class ContractAppointmentType implements Serializable {
         this.desc = desc;
     }
 
+    public Boolean getAdditional() {
+        return additional;
+    }
+
+    public void setAdditional(Boolean additional) {
+        this.additional = additional;
+    }
+
     public Boolean getActive() {
         return active;
     }
@@ -89,19 +120,19 @@ public class ContractAppointmentType implements Serializable {
         this.active = active;
     }
 
-    public Boolean getLabelable() {
-        return labelable;
+    public Users getUpdater() {
+        return updater;
     }
 
-    public void setLabelable(Boolean labelable) {
-        this.labelable = labelable;
+    public void setUpdater(Users updater) {
+        this.updater = updater;
     }
 
-    public List<ContractAppointmentDating> getContractAppointmentList() {
+    public List<ContractAppointmentDating> getContractAppointmentDatingList() {
         return contractAppointmentDatingList;
     }
 
-    public void setContractAppointmentList(List<ContractAppointmentDating> contractAppointmentDatingList) {
+    public void setContractAppointmentDatingList(List<ContractAppointmentDating> contractAppointmentDatingList) {
         this.contractAppointmentDatingList = contractAppointmentDatingList;
     }
 

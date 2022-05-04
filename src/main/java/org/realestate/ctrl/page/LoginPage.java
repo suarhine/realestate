@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package org.realestate.ctrl.page.contract;
+
+package org.realestate.ctrl.page;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,18 +11,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.web.ctrl.DefaultPage;
 
 /**
  *
  * @author Pathompong
  */
-@WebServlet(name = "contract.SummaryPage", urlPatterns = {"/contract/summary"})
-public class SummaryPage extends HttpServlet implements DefaultPage {
+@WebServlet(name="LoginPage", urlPatterns={"/login"})
+public class LoginPage extends HttpServlet {
 
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -31,12 +30,10 @@ public class SummaryPage extends HttpServlet implements DefaultPage {
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        jsp(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -48,9 +45,8 @@ public class SummaryPage extends HttpServlet implements DefaultPage {
     ) throws ServletException, IOException {
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
